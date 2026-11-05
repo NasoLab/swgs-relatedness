@@ -10,7 +10,7 @@
   "reference_payloads_bundled": false,
   "images_bundled": false,
   "git_history_policy": "independent audited release root plus clean descendants; no research ancestry",
-  "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096",
+  "source_checkpoint": "2c99143ac3fb63369c133694a23c97c4aa8c096c",
   "publication_destination_decision": "selected by maintainer; public non-fork repository contains the approved v0.1.0 release",
   "publication_repository": "NasoLab/swgs-relatedness",
   "license_decision": "MIT applied to project code as instructed by the maintainer",
@@ -21,9 +21,11 @@
   "project_license": "MIT",
   "project_license_scope": "project-owned code, including retained internal Huntsman research-pipeline components",
   "external_components_relicensed": false,
-  "publication_status": "local Phase 5 candidate; no push or tag",
+  "publication_status": "local v0.1.1 final review; no push or tag; hosted metrics image licensing review unresolved",
   "reviewed_third_party_source": {
     "breakclone": "MIT; exact frozen source and upstream notice included"
   },
-  "scientific_sources_manifest": "public_relatedness/scientific_sources.json"
+  "scientific_sources_manifest": "public_relatedness/scientific_sources.json",
+  "hosted_metrics_distribution_status": "not established; QDNAseq.dev license and image-wide obligations unresolved",
+  "publication_gate": "hold pending external metrics image distribution review and final publication approval"
 }

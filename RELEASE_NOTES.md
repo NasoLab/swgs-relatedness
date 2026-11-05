@@ -1,90 +1,85 @@
-# v0.1.1 — Development candidate
+# v0.1.1 — Development
 
-Local Phase 5 source-packaging candidate for NasoLab/swgs-relatedness. No push,
-new tag or GitHub release has been performed. Published v0.1.0 is unchanged.
-End-to-end and cross-host validation remain pending.
+This development release packages the validated tumour-relatedness source and
+simplifies setup for researchers without access to internal research directories.
+Publication is pending final approval and the external-image licensing review
+described below. The existing v0.1.0 tag is unchanged.
 
-## Included scientific source
+## Changes
 
-The PCC/LLR runner and recovered MIT breakpoint matcher are bundled byte-for-byte.
-Four internal Huntsman preprocessing expressions and seven production Python
-functions are extracted without AST changes; cohort/workbook/old-output drivers
-are omitted. scientific_sources.json records original and packaged hashes
-separately. Existing adapters, scientific parameters, PFREQ identity, pair order,
-seed placement and sequential random-number consumption are preserved. The MIT
-matcher includes copyright 2022 The Authors and its full upstream license.
+- **Bundled scientific source:** the PCC/LLR runner, internal breakpoint
+  preprocessing, MIT-licensed BreakClone matcher and historical all-overlap
+  `fraction_shared` implementation resolve automatically from the repository.
+  Original and packaged source hashes are recorded separately. The inherited
+  clonality helper remains externally acquired and checksum locked.
+- **Four standard configuration parameters:** `samples`, `pairs`,
+  `resource_directory` and `outdir`. Runtime/storage settings and scientific
+  overrides are documented separately for advanced setup.
+- **Four automatically retrieved public OCI images:** Trimmomatic,
+  BWA-MEM2/samtools, Picard and QDNAseq/CGHcall use immutable Linux/amd64
+  manifests. Recorded versions are preserved; mutable `latest` tags are not
+  used for selection. Exact retained local archive overrides remain supported.
+- **Checksum-verified metrics runtime:** the optional `prepare_runtimes.py`
+  command downloads the unchanged hosted SIF with mandatory SHA256
+  `ae7c40c285c19a6db6d01bb61f839cdd348f4cfd3f7510ae533091e2ed9f7151`.
+  A valid cached file is reused; invalid files are not overwritten. Nextflow
+  finds it automatically under `resource_directory/containers/metrics.sif`.
+- **Clearer setup documentation:** the root Quick Start and detailed
+  [usage guide](docs/USAGE.md) cover manifests, resource acquisition, runtime
+  setup, writable cache/work/temp volumes, preflight, outputs and troubleshooting.
 
-Normal run-params.json now has only sample manifest, pair manifest,
-resource_directory and outdir. Bundled source resolves from the repository or
-Nextflow project directory. Explicit overrides are advanced and checksum locked.
-Standalone/cached scoring and preflight use the same default source locations.
+## Scientific integrity and validation
 
-## External setup and runtimes
+PCC usable-bin selection, rounding, log2 transformation and correlation are
+unchanged. Historical LLR model parameters, pair order, seed placement and
+sequential random-number consumption are preserved. Breakpoint matching retains
+same-chromosome, direction and boundary-type rules, inclusive 2.5-Mb tolerance,
+all eligible overlaps and historical shared/private arithmetic. Unsupported
+cases retain explicit statuses. No new relatedness classification is introduced.
 
-An opt-in setup command acquires the exact public PFREQ/helper sources and checks
-their frozen hashes, or verifies an existing resource directory. FASTA gzip
-acquisition verifies decompressed bytes. Existing hg38 indexes and the PE150
-annotation remain required external assets and are not regenerated.
+The runtime-integration checkpoint freshly passed cached regressions in the
+isolated, checksum-verified metrics SIF: **PCC 66/66**, **seeded LLR 62/62** and
+**historical breakpoint 38/38**. Maximum absolute differences were
+4.996003610813204e-16 for PCC and 4.973799150320701e-14 for LLR (tolerance 1e-12);
+breakpoint counts and supplied fraction precision matched exactly. Final
+documentation changes do not change scientific files, reference identities,
+runtime digests or fixtures; these numerical gates were not rerun for this
+documentation-only finalization.
 
-`prepare_runtimes.py` now acquires the unchanged hosted metrics SIF from the
-publisher's HTTPS URL with mandatory SHA256 verification. Valid cached files are
-reused; mismatches are not overwritten; an existing same-filesystem SIF can be
-verified and hard-linked without another copy. The resource-directory metrics
-cache is selected automatically. Four public upstream images are selected by
-immutable Linux/amd64 OCI manifests; exact retained local archive overrides remain
-supported. Original SIF hashes and OCI identities are recorded separately.
-Runtime and temporary-volume settings are evaluated after configuration merging.
+The final lightweight suite passed **75 tests**, including **seven Nextflow stub
+tests**, with one optional historical observation test skipped. The preceding
+runtime checkpoint also passed a 13-task real-image stub graph and production
+cached scoring with an identical first-pair result. Stub commands do not validate
+alignment or copy-number calculations. Detailed evidence is recorded in
+[verification/release_tests.json](verification/release_tests.json).
 
-The metrics task copies its small inputs to reduce source binds, and an added
-runtime guard rejects host mounts hiding the SIF's embedded R libraries. Its
-metadata checks use separate R processes and do not alter scoring RNG consumption.
-Keep clone/resources/work under a narrow operational workspace. The original
-absolute R prefixes remain embedded; cross-host portability is not established.
+## Remaining limitations and distribution status
 
-The source-restoration recipes remain unbuilt/unvalidated and their missing
-archives/license receipts remain unresolved. Hosting an image does not change
-its dependencies' terms. No image/reference payload is committed or published by
-these source changes, and no scientific algorithm, parameter or R package version
-is changed.
+- **Hosted image clearance is unresolved.** Availability and a matching checksum
+  establish image identity, not redistribution permission. The metrics SIF
+  contains QDNAseq.dev with an unresolved license placeholder; image-wide
+  notices, source obligations and dependency terms are not established as fully
+  satisfied by the recorded audit. Public distribution approval cannot be
+  confirmed. Resolve this image review before approving publication of the
+  candidate as the proposed public-runtime release; see the
+  [licensing audit](public_relatedness/LICENSING.md#hosted-metrics-sif-distribution-status).
+  Project MIT licensing does not relicense external packages, images or assets.
+- **References remain external:** users must supply the recorded hg38 FASTA and
+  indexes and exact PE150 500-kb annotation. Frozen PFREQ/helper acquisition is
+  opt-in with checksum checks under upstream terms. Reference-generation and
+  redistribution records remain incomplete; PE50 or alternative PFREQ models
+  are not substitutes.
+- **Cross-host portability is unproven.** The metrics SIF retains absolute R
+  prefixes. A runtime guard rejects host mounts hiding its R libraries. Use
+  narrow operational workspaces; a successful startup alone is not scientific
+  equivalence. Source-restoration recipes remain unbuilt/unvalidated, with
+  missing archives and licensing records documented.
+- **Full end-to-end validation remains pending.** Cached metric regressions and
+  stub tests do not establish full FASTQ-to-QDNAseq/CGHcall equivalence. No new
+  sequencing analysis or internal pilot results are part of this release review.
 
-## Validation
-
-Fresh cached gates using the bundled source in the checksum-verified isolated
-metrics SIF passed **PCC 66/66**, **seeded LLR 62/62** and **historical breakpoint
-38/38** exact counts and supplied fraction precision. PCC maximum absolute
-difference was 4.996003610813204e-16; LLR was 4.973799150320701e-14 (tolerance 1e-12).
-Missing cohort members were rejected and pair orientation/output schemas checked.
-The R extraction is AST-identical; runner/matcher original byte hashes are intact.
-Fixture hashes, model parameters and numerical tolerances are unchanged.
-
-The initial Phase 5 lightweight suite passed **55 tests with one optional historical
-test skipped**; all six Nextflow stubs passed, including a final recheck of
-cohort-only execution without the pair model/helper. Six synthetic R matching
-checks and seven R cohort-structure checks passed. The suite covers automatic lookup from another working
-directory, minimal resource-only Nextflow stubs, negative process failures,
-checksum/overwrite handling and actionable missing-resource errors. Final counts
-and public-release audit evidence are in verification/release_tests.json.
-No FASTQ alignment, full calling, large sequencing analysis, original output
-mutation or image publication is part of these checks.
-
-The final documentation checkpoint retains the root Quick Start, removes obsolete
-permission/user-supplied claims for bundled sources and documents generic error
-limitations. Standalone preflight now includes missing file paths and setup
-guidance. Four additional checks cover missing FASTA, annotation, index and image
-archives. The final suite passed **59 tests with one optional historical test
-skipped**, including all six Nextflow stubs. Documentation links, shell examples
-and runtime configuration parsing passed. Scientific implementations, parameters,
-reference identities and regression fixtures are unchanged; the numerical gates
-above were not rerun for these documentation/error-message changes.
-
-Runtime integration verification passed the full 66/62/38 cached gates again,
-all seven lightweight Nextflow tests and a 13-task real-image stub graph. A
-production cached Nextflow comparison selected the resource-cache SIF automatically,
-passed the library mount guard and matched the fresh full-loop first pair exactly.
-An actual broad read-only host bind was rejected before scoring. The expanded
-suite passed 75 tests with one optional historical test skipped. These checks do
-not constitute full FASTQ/QDNAseq/CGHcall or independent-host validation.
-
-Project MIT licensing, the exact Huntsman acknowledgement, original contributor
-credits and third-party terms are preserved. The candidate retains independent
-clean release ancestry; the old research fork is not a publication source.
+The release contains source, documentation, inventories and approved synthetic
+tests only: no sequencing data, clinical metadata, reference payloads, container
+binaries or historical research outputs. Project MIT licensing, Huntsman group
+acknowledgement, contributor credits and upstream BreakClone notices are retained.
+The candidate descends only from the independent audited public release history.

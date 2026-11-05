@@ -194,5 +194,50 @@
       "frozen_scientific_files_byte_identical": 18,
       "upstream_module_commands": "unchanged except container identity"
     }
+  },
+  "final_v011_review": {
+    "starting_commit": "2c99143ac3fb63369c133694a23c97c4aa8c096c",
+    "scope": "release documentation and audit metadata only",
+    "scientific_sources_references_runtime_digests_and_fixtures_unchanged": true,
+    "numerical_regressions": "confirmed against runtime-integration reports; not rerun for documentation-only changes",
+    "hosted_metrics_distribution_status": "not established; unresolved notices preserved",
+    "publication_authorized": false,
+    "published": false,
+    "pilot_modified": false,
+    "lightweight_tests": {
+      "discovered": 76,
+      "passed": 75,
+      "skipped": 1,
+      "nextflow_stubs": 7,
+      "seconds": 55.643
+    },
+    "documentation_checks": {
+      "status": "passed",
+      "markdown_files": 12,
+      "relative_links_and_anchors": 78,
+      "bash_examples_syntax_checked": 22,
+      "errors": []
+    },
+    "scientific_integrity": {
+      "all_89_non_release_metadata_files_byte_identical_to_starting_commit": true,
+      "bundled_scientific_hashes_verified": 4,
+      "four_OCI_digests_verified_against_saved_registry_manifests": true,
+      "regression_evidence_consistent": true
+    },
+    "hosted_metrics_recheck": {
+      "http_status": 200,
+      "bytes": 3454234624,
+      "etag_unchanged_from_full_stream_hash_verification": true,
+      "existing_local_SIF_SHA256_verified": true,
+      "second_remote_download": false,
+      "distribution_approval": "not established"
+    },
+    "remote_preconditions": {
+      "main": "ec24ca5ba6b9da9239f4069078b9e467df37caa2",
+      "v0.1.0_annotated_tag": "d8f6433e48a41135555a9ddb87196b3dee104be0",
+      "v0.1.1_absent": true
+    },
+    "source_snapshot_safety_audit": "passed; independent committed-history and export audit required after commit",
+    "publication_gate": "hold pending external metrics image distribution review and final publication approval"
   }
 }

@@ -61,6 +61,27 @@ permission or separate approval reference is requested or fabricated.
 
 ## Source release readiness
 
+### Hosted metrics SIF distribution status
+
+The hosted `metrics-internal.sif` is publicly reachable and its complete bytes
+were verified against SHA256
+`ae7c40c285c19a6db6d01bb61f839cdd348f4cfd3f7510ae533091e2ed9f7151`.
+The maintainer requested its download integration. Neither the URL, checksum nor
+that request supplies missing third-party licensing terms. The SIF includes
+QDNAseq.dev in both recorded R stacks with the unresolved DESCRIPTION license
+placeholder listed above. The inventories also record incomplete source/archive
+and image-wide license/source-obligation evidence. No grant or compliance record
+resolving these matters was established in this final review.
+
+**Approval for public distribution of this SIF cannot be confirmed from the
+available records.** Review its actual contents, obtain the missing QDNAseq.dev
+distribution grant or applicable license, and satisfy the other applicable
+notice/source-distribution obligations before marking the hosted runtime cleared.
+Do not fabricate clearance or extend project MIT terms to its contents. These
+are external-image issues, separate from authorization for project-owned source.
+The proposed v0.1.1 public-runtime release remains on hold for that review and
+final publication approval; the source-only safety audit may still pass.
+
 The selected destination is NasoLab/swgs-relatedness, a non-fork repository
 containing the published v0.1.0 release. The history/content checks and applied
 project license are source-readiness requirements. A passing readiness check is not an instruction

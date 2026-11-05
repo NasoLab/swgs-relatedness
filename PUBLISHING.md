@@ -13,6 +13,17 @@ required or fabricated. Source readiness is distinct from instruction to publish
 
 ## Candidate audit
 
+The hosted metrics SIF is checksum verified, but its public distribution approval
+is **not established**. The unresolved QDNAseq.dev license and image-wide
+notice/source obligations remain in the
+[licensing audit](public_relatedness/LICENSING.md#hosted-metrics-sif-distribution-status).
+Publication of the proposed public-runtime release is on hold until that review
+is resolved and the maintainer separately approves the final commit. Do not treat
+the `--require-ready` source audit as image clearance: it checks the text-only
+source snapshot, project license and external scope, not external image contents
+or distribution grants. Do not run the publication commands below while this
+gate remains unresolved.
+
 ```bash
 python verify_release.py --commit HEAD --require-ready
 PYTHONDONTWRITEBYTECODE=1 PUBLIC_NEXTFLOW=nextflow \
@@ -57,8 +68,12 @@ peels to BASE_COMMIT, and v0.1.1 is absent. If another commit/tag has appeared,
 stop for review rather than overwriting or silently merging it.
 
 ```bash
-REMOTE_REFS=$(git ls-remote publication refs/heads/main 'refs/tags/v0.1.0^{}' refs/tags/v0.1.1)
+REMOTE_REFS=$(git ls-remote publication refs/heads/main refs/tags/v0.1.0 'refs/tags/v0.1.0^{}' refs/tags/v0.1.1 'refs/tags/v0.1.1^{}')
 printf '%s\n' "$REMOTE_REFS"
+test "$(printf '%s\n' "$REMOTE_REFS" | awk '$2 == "refs/heads/main" {print $1}')" = "$BASE_COMMIT"
+test "$(printf '%s\n' "$REMOTE_REFS" | awk '$2 == "refs/tags/v0.1.0" {print $1}')" = d8f6433e48a41135555a9ddb87196b3dee104be0
+test "$(printf '%s\n' "$REMOTE_REFS" | awk '$2 == "refs/tags/v0.1.0^{}" {print $1}')" = "$BASE_COMMIT"
+test -z "$(printf '%s\n' "$REMOTE_REFS" | awk '$2 ~ /^refs\/tags\/v0\.1\.1(\^\{\})?$/ {print $1}')"
 git push --dry-run publication "$CANDIDATE_COMMIT":refs/heads/main
 ```
 
@@ -70,6 +85,17 @@ git tag -a v0.1.1 "$CANDIDATE_COMMIT" -F release/v0.1.1-tag.txt
 git push --atomic publication "$CANDIDATE_COMMIT":refs/heads/main refs/tags/v0.1.1:refs/tags/v0.1.1
 gh release create v0.1.1 --repo NasoLab/swgs-relatedness --verify-tag \
   --title 'v0.1.1 — Development' --notes-file RELEASE_NOTES.md --prerelease
+```
+
+Verify publication against the exact approved commit and unchanged v0.1.0:
+
+```bash
+PUBLISHED_REFS=$(git ls-remote publication refs/heads/main 'refs/tags/v0.1.1^{}' refs/tags/v0.1.0 'refs/tags/v0.1.0^{}')
+test "$(printf '%s\n' "$PUBLISHED_REFS" | awk '$2 == "refs/heads/main" {print $1}')" = "$CANDIDATE_COMMIT"
+test "$(printf '%s\n' "$PUBLISHED_REFS" | awk '$2 == "refs/tags/v0.1.1^{}" {print $1}')" = "$CANDIDATE_COMMIT"
+test "$(printf '%s\n' "$PUBLISHED_REFS" | awk '$2 == "refs/tags/v0.1.0" {print $1}')" = d8f6433e48a41135555a9ddb87196b3dee104be0
+test "$(printf '%s\n' "$PUBLISHED_REFS" | awk '$2 == "refs/tags/v0.1.0^{}" {print $1}')" = "$BASE_COMMIT"
+gh release view v0.1.1 --repo NasoLab/swgs-relatedness --json url,isPrerelease,tagName
 ```
 
 Those mutation commands are documentation only in Phase 5. Do not use force,

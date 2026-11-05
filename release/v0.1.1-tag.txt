@@ -1,5 +1,7 @@
 v0.1.1 — Development
 
 Self-contained project scientific source and automatic resource resolution.
+Four standard inputs, four digest-pinned public OCI images and checksum-verified
+metrics SIF acquisition. Quick Start and detailed usage guide included.
 Historical PCC, sequential seeded LLR and all-overlap breakpoint methods preserved.
 External source/data/runtime limitations are documented; no cross-host claim.
