@@ -6,6 +6,84 @@ push, tag or GitHub release has been made. End-to-end and cross-host validation
 remain pending. [NasoLab/swgs-relatedness](https://github.com/NasoLab/swgs-relatedness)
 is the public destination.
 
+## Quick Start
+
+These commands target the v0.1.1 candidate; the public clone will contain these
+additions after publication.
+
+**Prerequisites.** Install Nextflow 24.10.3, compatible Java, Python >=3.9 and
+Apptainer with its `singularity` command interface. Separately configure the
+five validated local SIF archives, including QDNAseq R 4.4.3, general R 4.5.3
+and historical LLR R 4.3.3. Supply the exact hg38 FASTA/BWA-MEM2 indexes, hg38
+PE150 500-kb annotation, frozen PFREQ model and external clonality helper.
+See [installation](public_relatedness/INSTALL.md),
+[runtime setup](public_relatedness/environments/README.md) and
+[reference identities/acquisition](public_relatedness/references/README.md).
+These runtimes and resources are not installed by cloning the repository;
+public image retrieval and a complete public rebuild are not yet available.
+
+**Clone and prepare inputs.** Use your own writable mounted storage in place of
+`/mnt/swgs`; keep inputs, configuration, work, temporary files and results outside Git.
+
+```bash
+git clone https://github.com/NasoLab/swgs-relatedness.git
+cd swgs-relatedness
+mkdir -p /mnt/swgs/run
+cp public_relatedness/examples/{samples.tsv,pairs.tsv,run-params.json,runtime.config,runtime-params.json} /mnt/swgs/run/
+```
+
+Edit the tab-separated [sample manifest](public_relatedness/examples/samples.tsv)
+to point to paired FASTQs; relative FASTQ paths resolve from the manifest directory:
+
+```tsv
+sample_id	fastq_1	fastq_2
+sampleA	/path/to/sampleA_R1.fastq.gz	/path/to/sampleA_R2.fastq.gz
+sampleB	/path/to/sampleB_R1.fastq.gz	/path/to/sampleB_R2.fastq.gz
+```
+
+Define ordered comparisons in the [pair manifest](public_relatedness/examples/pairs.tsv):
+
+```tsv
+pair_id	sample1	sample2
+comparison1	sampleA	sampleB
+```
+
+**Configure.** Set these four keys in `/mnt/swgs/run/run-params.json`:
+
+```json
+{
+  "samples": "/mnt/swgs/run/samples.tsv",
+  "pairs": "/mnt/swgs/run/pairs.tsv",
+  "resource_directory": "/mnt/swgs/resources",
+  "outdir": "/mnt/swgs/results"
+}
+```
+
+In both copied runtime files, set the same `image_directory` and an existing,
+writable `temp_directory`. Nextflow reads `runtime.config`; Python preflight
+reads `runtime-params.json`. Keep the runtime configuration's monitoring workaround.
+Bundled scientific scripts are located automatically.
+
+**Verify and run.** After supplying the resources and images above, run from the
+repository root. The resource directory must contain the exact files listed in
+the reference documentation; optional checksum-verified PFREQ/helper downloads
+are described in the installation guide.
+
+```bash
+python public_relatedness/bin/prepare_resources.py --resources /mnt/swgs/resources --verify
+python public_relatedness/bin/validate_setup.py --params /mnt/swgs/run/run-params.json \
+  --profiles singularity --check-images --runtime-params /mnt/swgs/run/runtime-params.json
+nextflow -C public_relatedness/nextflow.config,/mnt/swgs/run/runtime.config \
+  run public_relatedness/main.nf -profile singularity \
+  -params-file /mnt/swgs/run/run-params.json -work-dir /mnt/swgs/work
+```
+
+With this configuration, `/mnt/swgs/results/sample_results.tsv` contains sample
+status, QC and profile provenance; `/mnt/swgs/results/pair_results.tsv` contains
+ordered PCC, LLR and historical breakpoint `fraction_shared` results.
+End-to-end and cross-host validation remain pending. See
+[advanced configuration](public_relatedness/examples/advanced.config) for optional overrides.
+
 ## Pipeline and methods
 
 Nextflow connects Trimmomatic, BWA-MEM2/samtools, Picard, QDNAseq hg38 PE150
