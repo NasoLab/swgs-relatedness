@@ -11,7 +11,7 @@
   "images_bundled": false,
   "git_history_policy": "independent audited release root plus clean descendants; no research ancestry",
   "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096",
-  "publication_destination_decision": "selected by maintainer; existing empty public non-fork repository verified",
+  "publication_destination_decision": "selected by maintainer; public non-fork repository contains the approved v0.1.0 release",
   "publication_repository": "NasoLab/swgs-relatedness",
   "license_decision": "MIT applied to project code as instructed by the maintainer",
   "planned_tag": "v0.1.1",

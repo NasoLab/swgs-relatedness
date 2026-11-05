@@ -23,16 +23,19 @@ metrics = module('public_metrics', 'run_metrics.py')
 assets = module('asset_paths', 'assets.py')
 
 
-def require_file(value, label):
+def require_file(value, label, *, hint=None):
     if not value or not Path(value).is_file():
-        raise ValueError(f'Missing local file: {label}' + assets.missing_hint(label))
+        guidance = assets.missing_hint(label) if hint is None else hint
+        raise ValueError(f'Missing local file: {label} [{value or "not configured"}].'
+                         + guidance + ' See public_relatedness/INSTALL.md.')
     return Path(value)
 
 
 def require_executable(value, label):
     executable = shutil.which(str(value)) if value else None
     if executable is None or not os.access(executable, os.X_OK):
-        raise ValueError(f'Missing executable: {label}')
+        raise ValueError(f'Missing executable: {label} [{value or "not configured"}]. '
+                         'See public_relatedness/INSTALL.md and public_relatedness/environments/README.md.')
 
 
 def validate(params, *, metadata_only=False, check_images=False, profiles='singularity',
@@ -95,15 +98,20 @@ def validate(params, *, metadata_only=False, check_images=False, profiles='singu
     if check_images or params.get('image_directory'):
         inventory = image_inventory or json.loads((ROOT / 'environments/runtime_images.json').read_text())
         directory = params.get('image_directory')
+        image_hint = (' Configure image_directory with the validated local SIF archives; '
+                      'metrics_container overrides the metrics archive only; '
+                      'see public_relatedness/environments/README.md and '
+                      'public_relatedness/environments/runtime_images.json for filenames and frozen hashes.')
         for image in inventory.get('images', inventory.get('containers', [])):
             if cached and image['role'] != 'metrics':
                 continue
             if image['role'] == 'metrics':
-                path = require_file(params.get('metrics_container'), 'metrics_container; provide the validated metrics.sif in image_directory')
+                path = require_file(params.get('metrics_container'), 'metrics_container', hint=image_hint)
             else:
                 if not directory:
-                    raise ValueError('Supply image_directory for immutable archive verification')
-                path = require_file(Path(directory) / image['filename'], image['role'])
+                    raise ValueError('Supply image_directory for immutable archive verification. '
+                                     'See public_relatedness/INSTALL.md and public_relatedness/environments/README.md.')
+                path = require_file(Path(directory) / image['filename'], image['role'], hint=image_hint)
             if not metadata_only and metrics.sha256(path) != image['sha256']:
                 raise ValueError(f'Container archive checksum mismatch: {image["role"]}')
     return dict(status='metadata_valid' if metadata_only else 'resource_identities_verified',

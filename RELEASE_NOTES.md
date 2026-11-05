@@ -47,7 +47,7 @@ Missing cohort members were rejected and pair orientation/output schemas checked
 The R extraction is AST-identical; runner/matcher original byte hashes are intact.
 Fixture hashes, model parameters and numerical tolerances are unchanged.
 
-The expanded lightweight suite passed **55 tests with one optional historical
+The initial Phase 5 lightweight suite passed **55 tests with one optional historical
 test skipped**; all six Nextflow stubs passed, including a final recheck of
 cohort-only execution without the pair model/helper. Six synthetic R matching
 checks and seven R cohort-structure checks passed. The suite covers automatic lookup from another working
@@ -56,6 +56,16 @@ checksum/overwrite handling and actionable missing-resource errors. Final counts
 and public-release audit evidence are in verification/release_tests.json.
 No FASTQ alignment, full calling, large sequencing analysis, original output
 mutation or image publication is part of these checks.
+
+The final documentation checkpoint retains the root Quick Start, removes obsolete
+permission/user-supplied claims for bundled sources and documents generic error
+limitations. Standalone preflight now includes missing file paths and setup
+guidance. Four additional checks cover missing FASTA, annotation, index and image
+archives. The final suite passed **59 tests with one optional historical test
+skipped**, including all six Nextflow stubs. Documentation links, shell examples
+and runtime configuration parsing passed. Scientific implementations, parameters,
+reference identities and regression fixtures are unchanged; the numerical gates
+above were not rerun for these documentation/error-message changes.
 
 Project MIT licensing, the exact Huntsman acknowledgement, original contributor
 credits and third-party terms are preserved. The candidate retains independent

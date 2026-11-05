@@ -92,6 +92,50 @@ class PackagingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Container archive checksum mismatch'):
             self.validate(check_images=True, image_inventory=inventory)
 
+    def test_missing_reference_reports_path_and_installation(self):
+        reference = Path(self.params['reference'])
+        reference.unlink()
+        with self.assertRaises(ValueError) as caught:
+            self.validate(metadata_only=True)
+        message = str(caught.exception)
+        for expected in [str(reference), 'public_relatedness/INSTALL.md', 'prepare_resources.py']:
+            self.assertIn(expected, message)
+
+    def test_missing_annotation_reports_path_and_acquisition(self):
+        annotation = Path(self.params['pe150_bins'])
+        annotation.unlink()
+        resources = json.loads((ROOT / 'references/manifest.json').read_text())['resources']
+        self.refs = dict(resources=[r for r in resources if r['id'] == 'qdnaseq_pe150_500kb'])
+        with self.assertRaises(ValueError) as caught:
+            self.validate(metadata_only=True)
+        message = str(caught.exception)
+        for expected in [str(annotation), 'qdnaseq_pe150_500kb', 'prepare_resources.py',
+                         'public_relatedness/INSTALL.md', 'public_relatedness/references/README.md']:
+            self.assertIn(expected, message)
+
+    def test_missing_index_reports_path_and_reference_instructions(self):
+        resources = json.loads((ROOT / 'references/manifest.json').read_text())['resources']
+        self.refs = dict(resources=[r for r in resources if r['id'] == 'bwa_mem2_index_0123'])
+        with self.assertRaises(ValueError) as caught:
+            self.validate(metadata_only=True)
+        message = str(caught.exception)
+        for expected in [self.params['reference'] + '.0123', 'bwa_mem2_index_0123',
+                         'public_relatedness/INSTALL.md', 'public_relatedness/references/README.md']:
+            self.assertIn(expected, message)
+
+    def test_missing_images_report_paths_and_runtime_instructions(self):
+        self.params['image_directory'] = str(self.root)
+        images = json.loads((ROOT / 'environments/runtime_images.json').read_text())['images']
+        for image in images:
+            with self.subTest(role=image['role']):
+                with self.assertRaises(ValueError) as caught:
+                    self.validate(metadata_only=True, check_images=True, image_inventory=dict(images=[image]))
+                message = str(caught.exception)
+                for expected in [str(self.root / image['filename']), 'image_directory',
+                                 'public_relatedness/INSTALL.md', 'public_relatedness/environments/README.md',
+                                 'public_relatedness/environments/runtime_images.json']:
+                    self.assertIn(expected, message)
+
     def test_reference_manifest_has_approved_annotation_and_sidecars(self):
         data = json.loads((ROOT / 'references/manifest.json').read_text())
         annotation = [r for r in data['resources'] if r['config_param'] == 'pe150_bins']

@@ -34,8 +34,11 @@ def resolve(params):
 
 
 def missing_hint(label):
+    # The reference validator reports inventory IDs; acquisition uses parameter names.
+    label = next((item['config_param'] for item in REFERENCES if item['id'] == label), label)
     if label in {'pfreq', 'llr_helper', 'reference', 'pe150_bins'}:
         return (' Set resource_directory (or an explicit advanced path); run '
                 'python public_relatedness/bin/prepare_resources.py --help for acquisition and verification. '
-                'PE150 annotation and existing BWA-MEM2 sidecars must be supplied unchanged.')
+                'PE150 annotation and existing BWA-MEM2 sidecars must be supplied unchanged; '
+                'see public_relatedness/references/README.md.')
     return ''

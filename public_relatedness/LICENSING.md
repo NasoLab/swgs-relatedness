@@ -1,11 +1,12 @@
 # Project license and external redistribution scope — 2026-11-05
 
-This is an evidence/permissions inventory. No new third-party source, package
-archive, model, image or reference payload is copied into public-release
-folders. The four retained Huntsman pipeline files are identified below. External
-inherited scientific implementations are not bundled. The project runner/preprocessing/Python core are bundled under project MIT.
-The recovered matcher is bundled with its upstream MIT notice. The inherited
-helper, installed packages and reference payloads remain external.
+This inventory distinguishes bundled source from operator-supplied execution
+assets. The project PCC/LLR runner, historical breakpoint preprocessing and Python
+all-overlap core are bundled under project MIT. The recovered BreakClone matcher
+is bundled with its upstream MIT notice. The inherited clonality helper,
+installed packages and reference payloads remain external. No package archive,
+compiled software or container image is included. The four retained Huntsman
+pipeline files are identified below.
 The project MIT license covers the included project code and retained internal
 Huntsman research-pipeline components, as instructed by the maintainer. It does
 not license external assets or the originating repository's research payloads.
@@ -13,7 +14,8 @@ not license external assets or the originating repository's research payloads.
 | Component | Evidence at the relevant source/version | Required action and scope |
 | --- | --- | --- |
 | Project code / public adapters / retained internal Huntsman components | MIT applied in root LICENSE following the maintainer's project licensing instruction; original contributor attribution retained | Included in the project MIT scope; no individual-contributor permission or separate approval-reference gate |
-| Historical preprocessing | `Huntsmanlab/squamous-cell-clonality`, revision `39a918d2a38a30cc78a90a51a314b7ef83a7813d`; no root license found in that revision | Obtain explicit permission/license for the selected expressions; continue runtime loading from user-supplied source meanwhile |
+| PCC/LLR runner | Richard Corbett's project cohort-reporting implementation, commits `cd42a6c/ac33f3c`; frozen source identity in scientific_sources.json | Bundled byte-for-byte under project MIT; automatically located |
+| Historical preprocessing | Branden Lynch's internal Huntsman `test_relatedness_cohort_qc_pass.R`, revision `39a918d2a38a30cc78a90a51a314b7ef83a7813d` | Four validated expressions bundled under project MIT; automatically located; unrelated research driver excluded |
 | Recovered breakpoint matching | `argymeg/breakclone`, revision `712eb202303119588ca10889ca92a721afd0c396`; exact-revision LICENSE confirms MIT, copyright 2022 The Authors | Exact source is now bundled with upstream copyright 2022 The Authors and full MIT notice; only the historical matching functions are evaluated |
 | QDNAseq.dev 0.1 | Both installed DESCRIPTIONs literally say `What license is it under?`; no RemoteSha. Located source checkout at `8714202a7ca90124adba3ecb0d666cadc23f3d11`, with an indentation-only DESCRIPTION fix, has no license file | **Blocks distribution of that package/images, not this source-only snapshot:** obtain an explicit grant before bundling. Operators need lawful acquisition/use; a placeholder is not a grant |
 | UTANOS 0.1.0.9000 | Installed DESCRIPTION: `MIT + file LICENSE`, RemoteSha `ae8edc6464ab7bac0939a886dd7f8beae7a7410b`; exact-revision DESCRIPTION and LICENSE confirm the declaration and 2024 utanos authors notice | Retain applicable MIT notices; check data and transitive dependencies separately before distributing packages/images |
@@ -59,18 +61,19 @@ permission or separate approval reference is requested or fabricated.
 
 ## Source release readiness
 
-The selected destination is NasoLab/swgs-relatedness, previously verified as an
-empty non-fork repository. The history/content checks and applied project license
-are source-readiness requirements. A passing readiness check is not an instruction
+The selected destination is NasoLab/swgs-relatedness, a non-fork repository
+containing the published v0.1.0 release. The history/content checks and applied
+project license are source-readiness requirements. A passing readiness check is not an instruction
 to push, create a tag or publish a GitHub release; preparation stops before those
 actions as requested by the maintainer.
 
-External QDNAseq.dev, inherited runner/helper/preprocessing, PFREQ and PE150
-resources remain user-supplied under their own terms. The project MIT grant does
-not change those terms. Do not redistribute external assets or images containing
-them without satisfying their applicable conditions. The exact-revision
-breakclone/UTANOS MIT notices above remain relevant to any future distribution
-of their code/packages; they are not bundled in this source snapshot.
+External QDNAseq.dev, the modified clonality helper, installed R/native packages,
+PFREQ, PE150 and hg38/index resources remain operator-supplied under their own
+terms. The project MIT grant does not change those terms. Do not redistribute
+external assets or images containing them without satisfying their applicable
+conditions. The exact-revision BreakClone MIT notice accompanies the bundled
+matcher. UTANOS package/source/data are not bundled; its notice remains relevant
+to any future package or image distribution.
 
 Missing reference-generation receipts, unbuilt source-restoration images and
 pending end-to-end/cross-host validation remain documented reproducibility limits.

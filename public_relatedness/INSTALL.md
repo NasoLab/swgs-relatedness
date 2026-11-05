@@ -40,7 +40,18 @@ python public_relatedness/bin/prepare_resources.py --resources /mnt/swgs/resourc
 The small PFREQ/helper downloads were actually checked against their frozen hashes.
 FASTA directory availability was checked previously; full large archive retrieval
 was not repeated. The generic gzip/download/checksum path has synthetic tests.
-If any asset is unavailable, preflight stops with its filename and setup guidance.
+Run standalone `validate_setup.py` before Nextflow. Its explicit file-presence
+checks report the resource role, configured path (or that it is not configured)
+and this installation guide. Missing reference-file errors point to acquisition/verification help;
+missing image errors also point to the runtime inventory. Preflight stops at the
+first failure; it does not automatically obtain missing resources.
+
+Nextflow, manifest parsing and third-party tools may instead report generic
+filesystem, mount or package errors. Not every failure includes detailed
+acquisition instructions. Use the asset table above, the
+[reference guide](references/README.md) and the
+[runtime setup guide](environments/README.md) to resolve those failures. Missing
+PE150/index assets and validated images still require separate acquisition.
 No historical cohorts, raw reads or clinical workbooks are distributed.
 
 ## 2. Execution environment

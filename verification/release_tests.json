@@ -63,14 +63,15 @@
   "pushed": false,
   "publication_authorized": false,
   "lightweight_tests": {
-    "discovered": 56,
-    "passed": 55,
+    "discovered": 60,
+    "passed": 59,
     "skipped": 1,
-    "seconds": 48.95,
+    "seconds": 36.714,
     "nextflow_stubs": 6,
     "release_audit_guards": 9,
     "resource_tests": 8,
-    "skip": "Optional observation-only historical test; full cached numerical gates executed separately"
+    "skip": "Optional observation-only historical test; full cached numerical gates executed separately",
+    "packaging_tests": 14
   },
   "final_nextflow_verification": {
     "tests": 6,
@@ -84,9 +85,10 @@
     "passed": true
   },
   "documentation": {
-    "relative_links_checked": 38,
+    "relative_links_checked": 46,
     "broken_links": 0,
-    "bash_examples_syntax_checked": 12
+    "bash_examples_syntax_checked": 14,
+    "markdown_files_checked": 11
   },
   "acquisition": {
     "small_public_PFREQ_and_helper_hashes_verified": true,
@@ -98,5 +100,35 @@
     "mutable_registry_retrieval": false,
     "built_new_images": false,
     "full_workflow_checks_reference_source_and_image_hashes": true
+  },
+  "source_packaging_lightweight_tests": {
+    "discovered": 56,
+    "passed": 55,
+    "skipped": 1,
+    "seconds": 48.95,
+    "nextflow_stubs": 6,
+    "release_audit_guards": 9,
+    "resource_tests": 8,
+    "skip": "Optional observation-only historical test; full cached numerical gates executed separately"
+  },
+  "final_documentation_review": {
+    "date": "2026-11-05",
+    "quick_start": "existing concise section verified against workflow and examples; unchanged",
+    "bundled_source_licensing": "obsolete permission and external-source statements corrected; project MIT and upstream notices preserved",
+    "preflight": "missing local files include role, configured path and installation guidance; all five missing image roles tested",
+    "error_limitations": "generic Nextflow, manifest and third-party errors documented",
+    "scientific_and_workflow_files_byte_unchanged": 26,
+    "compared_to": "772e75d1e30fba5fcc586a79270e0ff4de8fb8e8",
+    "numerical_regressions_rerun": false,
+    "runtime_configuration_parsing": "passed",
+    "lightweight_tests": {
+      "discovered": 60,
+      "passed": 59,
+      "skipped": 1,
+      "nextflow_stubs_passed": 6
+    },
+    "sequencing_analysis_launched": false,
+    "pilot_modified": false,
+    "published": false
   }
 }
