@@ -94,8 +94,9 @@ unchanged PCC/LLR runner. Supply these external assets explicitly:
 | `--breakpoint_matching` | Recovered `breakclone_copynumber_712eb202.R` |
 | `--fraction_implementation` | Validated `regress_fraction_shared.py` reconstruction |
 
-These are code/model inputs, not patient metadata. No third-party source, model or historical fixture is bundled in this snapshot. Public acquisition and
-redistribution permission remain release blockers. All assets are checked
+These are code/model inputs, not patient metadata. No third-party source, model or historical fixture is bundled in this snapshot. Authorized acquisition remains an execution prerequisite; redistribution
+permission is required before bundling these external assets. Their absence alone
+does not block publication of independently owned pipeline source. All assets are checked
 before metric computation; supplied paths are staged into the task.
 
 R exports metric doubles with 17 significant digits; Python carries these

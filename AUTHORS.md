@@ -9,3 +9,9 @@ QDNAseq, CGHcall, DNAcopy, Clonality and other software remain the work of their
 respective authors. External historical preprocessing, QDNAseq.dev, UTANOS,
 CNA_clonality and breakclone are identified in THIRD_PARTY_NOTICES.md. No source
 or package redistribution rights are inferred from scientific citation alone.
+
+The pre-refactor Huntsman workflow also records Branden Lynch's trimming,
+alignment and duplicate-marking contributions. Current-file line attribution
+does not fully describe that predecessor history. The four retained legacy
+files are listed in LICENSE and public_relatedness/LICENSING.md. Rights-holder
+authorization, rather than an assumed grant from these credits, is required.

@@ -20,3 +20,8 @@ Primary license evidence: [breakclone MIT](https://github.com/argymeg/breakclone
 [QDNAseq.dev DESCRIPTION](https://github.com/tgac-vumc/QDNAseq.dev/blob/8714202a7ca90124adba3ecb0d666cadc23f3d11/DESCRIPTION).
 The public source-restoration recipes do not authorize distribution of their
 operator-supplied inputs. This notice does not relicense external components.
+
+The intended project MIT license covers only project-owned contributions that
+are authorized for distribution. It does not alter any external component's
+terms. Legacy Huntsman pipeline attribution is preserved in AUTHORS.md and the
+root README; its four retained files still require the authorization in LICENSE.

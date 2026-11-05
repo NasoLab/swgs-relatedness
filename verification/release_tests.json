@@ -4,19 +4,21 @@
   "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096",
   "fresh_snapshot_checks": {
     "unittest": {
-      "discovered": 38,
-      "passed": 37,
+      "discovered": 46,
+      "passed": 45,
       "skipped": 1,
-      "seconds": 25.214,
+      "seconds": 26.307,
       "nextflow_stub_tests_passed": 5,
-      "skip_reason": "opt-in historical observation test requires external authorized inputs"
+      "skip_reason": "opt-in historical observation test requires external authorized inputs",
+      "release_audit_guard_tests_passed": 8
     },
     "cached_nextflow_routing": {
       "status": "passed",
       "pairs": 1,
       "comparison": "all metric strings, counts, rational, status and orientation exactly match prior validated cached run",
       "scientific_runner": "operator-supplied frozen source, not redistributed",
-      "fresh_snapshot_cached_check": true
+      "fresh_snapshot_cached_check": false,
+      "scope": "Prior 75-file preparation cached check; not rerun during final documentation/MIT preparation"
     },
     "scientific_R_files_byte_identical_to_source": 10,
     "scientific_implementations_changed": false,
@@ -41,5 +43,23 @@
   },
   "end_to_end_validation": "pending",
   "cross_host_validation": "pending",
-  "publication_authorized": false
+  "publication_authorized": false,
+  "final_preparation": {
+    "protected_scientific_workflow_resource_files": 24,
+    "all_byte_identical_to_clean_root": true,
+    "protected_R_files": 10,
+    "relative_documentation_links_checked": 38,
+    "missing_links": [],
+    "bash_examples_syntax_checked": 11,
+    "requested_acknowledgement_exact": true,
+    "existing_research_checkout_accessed": false,
+    "pilot_files_or_processes_accessed": false,
+    "label": "v0.1.0 \u2014 Development",
+    "proposed_license": "MIT, not applied pending legacy authorization",
+    "external_links_verified": 10,
+    "external_ncbi_directory_status": "HTTP HEAD 200; no reference payload downloaded",
+    "historical_full_regressions_rerun": false,
+    "independent_history_policy": "approved clean root and audited linear release descendants",
+    "publication_authorized": false
+  }
 }

@@ -1,12 +1,24 @@
-PROJECT LICENSE PENDING — NO OPEN-SOURCE LICENSE GRANTED
+INTENDED LICENSE: MIT — APPLICATION PENDING AUTHORIZATION
 
-Ownership and publication authorization for the original project and its
-contributors have not been fully established in the available records. This
-release-preparation snapshot does not create a license grant or assign anyone's
-copyright. Public distribution is blocked until the relevant rights holders
-approve an explicit compatible project license and required notices.
+MIT is the selected release license for project-owned code and contributions the
+project is authorized to distribute. No blanket MIT grant is made by this notice.
+The proposed text is in LICENSE.MIT.proposed and is not an effective license.
 
-Third-party packages, external implementations and reference/data assets retain
-their own rights. They are not licensed by this notice. Restricted source,
-installed packages, scientific payloads and container images are not bundled.
-See AUTHORS.md, THIRD_PARTY_NOTICES.md and public_relatedness/LICENSING.md.
+Specific unresolved legacy-code scope:
+  bin/runQDNAseq.R
+  modules/local/trimmomatic/main.nf
+  modules/local/alignment/main.nf
+  modules/local/mark_duplicates/main.nf
+
+Confirm the relevant copyright holders and their authorization to distribute
+these files, their modifications and applicable predecessor contributions under
+MIT. Confirm ownership/authority for the new project contributions as well.
+Acknowledgement, Git attribution and public availability do not supply a grant.
+Until that record is established, publication remains blocked. Do not invent a
+copyright holder or replace the proposed text's placeholder by inference.
+
+Once authorized, apply the approved MIT text and accurate copyright notices to
+the cleared project scope. Preserve AUTHORS.md and THIRD_PARTY_NOTICES.md.
+External packages, reference datasets, container images and third-party scientific
+implementations retain their own terms; no MIT relicensing of them is intended.
+See public_relatedness/LICENSING.md for the file-level scope and external limits.

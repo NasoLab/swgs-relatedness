@@ -23,8 +23,10 @@ independently confirmed against the retained annotation.
 Historical Nextflow parameter logs identify the GRCh38 no-alt analysis-set
 FASTA shown above. Its canonical acquisition location is under NCBI accession
 [GCA_000001405.15](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/).
-The original download receipt/compressed-file checksum was not recovered; the
-canonical FTP location could not be independently fetched in this audit.
+The original download receipt/compressed-file checksum was not recovered; the original
+canonical FTP location was not fetched during inventory capture. Final release
+preparation confirmed directory availability with HTTP HEAD (200), without
+downloading reference payloads or recovering the original receipt.
 A future approved acquisition should retrieve that exact no-alt archive,
 verify upstream checksums, decompress it and compare the **uncompressed** SHA256
 above. Do not replace it with the full/ALT/decoy assembly or merely another file
@@ -75,4 +77,7 @@ No distribution clearance is inferred from a checksum, a public URL or the
 license of the generating software. See [LICENSING.md](../LICENSING.md) for
 project, source-code and derived-data permissions. The reference manifest
 records asset-specific source/generation uncertainty and local configuration
-parameters. Missing generation details are release blockers, not guessed pins.
+parameters. Missing generation details limit independent regeneration and full
+reproducibility; they do not prevent this source-only development release. No
+complete public acquisition route is claimed for PE150/PFREQ, and no pins are
+guessed. Execution requires authorized byte-identical external assets.

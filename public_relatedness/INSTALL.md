@@ -1,4 +1,4 @@
-# Installation — v0.1.0 development
+# Installation — v0.1.0 — Development
 
 End-to-end validation is pending. Cached numerical gates passed at the originating
 checkpoint, but public source-restoration images have not been built/validated.

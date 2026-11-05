@@ -1,4 +1,4 @@
-# Public workflow — v0.1.0 development
+# Public workflow — v0.1.0 — Development
 
 Read the [root README](../README.md), [installation](INSTALL.md),
 [metric contracts](METRIC_ADAPTERS.md), [reference manifest](references/README.md)

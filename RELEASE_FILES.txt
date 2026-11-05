@@ -1,6 +1,7 @@
 .gitignore
 AUTHORS.md
 LICENSE
+LICENSE.MIT.proposed
 PUBLISHING.md
 README.md
 RELEASE_FILES.txt
@@ -69,6 +70,7 @@ public_relatedness/tests/test_manifest.py
 public_relatedness/tests/test_metrics.py
 public_relatedness/tests/test_nextflow.py
 public_relatedness/tests/test_packaging.py
+public_relatedness/tests/test_release_audit.py
 public_relatedness/tests/test_scientific_contract.py
 public_relatedness/verification/phase4_runtime_summary.json
 verification/release_tests.json

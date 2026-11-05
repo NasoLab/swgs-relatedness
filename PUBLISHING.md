@@ -1,22 +1,48 @@
-# Publication procedure — currently blocked
+# Publication preparation — v0.1.0 — Development
 
-This is a local **v0.1.0 development** candidate. No push, tag or public release
-has been performed. The project has no approved distribution license; the
-[publication gate](RELEASE_STATUS.json) is deliberately false. Public release
-requires explicit owner authorization and a compatible grant from the applicable
-rights holders. External historical resources remain operator-supplied.
+No push, tag, GitHub release, repository creation or image publication is
+performed by this preparation. The content audit and the publication-authorization
+gate are distinct. The latter remains blocked by the specific records in
+[LICENSE](LICENSE), [the licensing audit](public_relatedness/LICENSING.md) and
+[RELEASE_STATUS.json](RELEASE_STATUS.json).
 
-The original Git history contains sequencing files, individual-level research
-tables, workbooks, references and unrelated analyses. The source checkpoint and
-remote master were inventoried privately. Existing remote history also contains
-sequencing paths; a clean branch cannot erase those objects, forks or caches.
-The owner must separately review existing exposure and choose any remediation.
-Do not assume that the remote repository is safe merely because this candidate
-has a clean tree. This task does not authorize remote history rewriting.
+## Required authorization
 
-## Local candidate inspection
+MIT is selected for project-owned code and contributions the project may lawfully
+distribute. The four retained legacy files listed in LICENSE still lack a
+confirmed MIT distribution grant. Obtain the relevant rights-holder authority,
+confirm ownership of the new contributions, and record accurate copyright
+notices. Acknowledgement is not a grant. LICENSE.MIT.proposed is a draft only.
+After approval, apply the approved text to LICENSE, remove the proposal, update
+the allowlist/checksums, and record non-sensitive approval references. Do not put
+private permission correspondence, personal contact details or workbooks in Git.
 
-Run in the isolated release worktree:
+RELEASE_STATUS.json must then record project_license_status='cleared', an empty
+legacy_authorization_required list, ownership_approval_reference,
+publication_approval_reference, the approved publication_repository (OWNER/NAME),
+and publication_authorized=true. These values represent real approvals; do not
+set them merely to pass the tool. Re-test, commit and audit the updated candidate.
+External packages, references, images and scientific implementations are outside
+the intended project MIT grant and remain user-supplied under their own terms.
+
+## Destination decision
+
+The originally requested rcorbett-match/swgs-processing-pipeline repository is a
+public fork containing historical sequencing data. Do not push this candidate
+there without an explicit owner decision about that history. A clean branch does
+not remove old refs, objects, forks, caches or existing copies. The existing
+exposure requires separate owner/PI and appropriate institutional review; this
+preparation does not authorize removal, rewriting, renaming or visibility changes.
+
+Recommended route: obtain approval to create a new **empty non-fork repository**
+under rcorbett-match, for example swgs-processing-pipeline-public. This proposed
+name has not been reserved or verified as available. Use the exact approved name
+in the commands and release metadata. Publishing elsewhere does not remediate
+the original repository's historical exposure.
+
+## Local inspection and history policy
+
+Run in the clean release worktree:
 
 ```bash
 git status --short
@@ -25,61 +51,63 @@ python verify_release.py --commit HEAD
 python verify_release.py --commit HEAD --require-publishable
 ```
 
-The last command intentionally fails while publication is blocked. The audit
-checks every snapshot blob, exact allowlist, hashes, text/size/payload/secret
-markers, and a single root commit without development ancestry. Pattern scanning
-cannot establish ownership or guarantee detection of every possible identifier.
-Human review of the selected code and notices is still required. No ancestral
-research payload is approved for publication, so the whole ancestry is excluded.
+The final command currently fails intentionally. The auditor anchors history at
+0582e6ba1ded9c099dacce8f6d3d0786de18f726, rejects merges/unrelated roots, and checks
+every reachable release commit's metadata, complete file allowlist, SHA256 set
+and contents. Thus a forbidden payload deleted from the tip still fails audit.
+The branch contains that independent clean root and release-only descendants;
+no research commit is imported. Pattern scanning does not establish ownership
+or guarantee detection of every possible identifier. Human content and rights
+review remain required. Scientific source stays unchanged during preparation.
 
-## After separate clearance and explicit publication authorization
+## Exact publication commands — only after approval
 
-Update the license, notices, authorization status and validation evidence only
-when supported by approvals. Regenerate the exact allowlist and checksums and
-prepare/review a new isolated root candidate if those files change. The commands
-below apply to that cleared candidate; they do not authorize changing this
-snapshot's gate or rewriting the development checkout. Keep the development
-branch and pilot source untouched. Do not merge source history into the candidate.
-
-Export only the approved root ref into a fresh object database. Use new empty
-scratch directories; substitute the reviewed commit SHA and candidate branch:
+The following is a future operator procedure, not authorization to run it now.
+It uses a new writable directory on an operator-selected mounted storage volume
+and exports only the reviewed release ref into a fresh Git object database.
+A local clone directly from the shared research object store is not sufficient.
+First run in the clean release worktree, substituting the approved destination:
 
 ```bash
+PUBLIC_REPO=rcorbett-match/swgs-processing-pipeline-public
 CANDIDATE_REF=refs/heads/release/public-v0.1.0-development
-CANDIDATE_COMMIT=$(git rev-parse "$CANDIDATE_REF")
+CANDIDATE_COMMIT=$(git rev-parse "$CANDIDATE_REF^{commit}")
 python verify_release.py --commit "$CANDIDATE_COMMIT" --require-publishable
-git bundle create /mnt/swgs/release-candidate.bundle "$CANDIDATE_REF"
-git clone --no-tags --single-branch -b release/public-v0.1.0-development /mnt/swgs/release-candidate.bundle /mnt/swgs/publish-check
-cd /mnt/swgs/publish-check
+test "$(python -c 'import json; print(json.load(open("RELEASE_STATUS.json"))["publication_repository"])')" = "$PUBLIC_REPO"
+PUBLISH_ROOT=$(mktemp -d /mnt/swgs/swgs-publish.XXXXXX)
+git bundle create "$PUBLISH_ROOT/release.bundle" "$CANDIDATE_REF"
+git clone --no-tags --single-branch -b release/public-v0.1.0-development "$PUBLISH_ROOT/release.bundle" "$PUBLISH_ROOT/export"
+cd "$PUBLISH_ROOT/export"
+test "$(git rev-parse HEAD)" = "$CANDIDATE_COMMIT"
 python verify_release.py --commit "$CANDIDATE_COMMIT" --require-publishable
-git rev-list --count "$CANDIDATE_COMMIT"
+git fsck --full --no-reflogs
+git rev-list --reverse --parents "$CANDIDATE_COMMIT"
 git for-each-ref --format='%(refname) %(objectname)'
 git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)'
 ```
 
-Require one approved root commit, no unexpected refs/tags, and an object inventory
-containing exactly its reachable commit, trees and allowlisted blobs. A local
-clone of the original repository may reuse its object store, so it is not an
-acceptable substitute for this bundle isolation. Keep the bundle private until
-clearance; it is not a public release artifact.
-
-After the existing remote history has been separately reviewed/remediated under
-owner authorization, inspect the exact target branch and dry run from the fresh
-export. Configure the destination there, not in the running pilot checkout:
+Require no alternates, tags or unexpected refs and exactly the approved reachable
+objects. The bundle and export must contain only the clean release root and its
+audited descendants, never other local branches or automation checkpoint refs.
+After explicit approval to create the named public repository, run from that
+fresh export; these commands must fail rather than reuse an existing repository:
 
 ```bash
-git remote set-url origin https://github.com/rcorbett-match/swgs-processing-pipeline.git
-git push --dry-run origin "$CANDIDATE_COMMIT":refs/heads/public-v0.1.0-development
+gh repo create "$PUBLIC_REPO" --public
+test "$(gh api "repos/$PUBLIC_REPO" --jq '.fork')" = false
+test -z "$(git ls-remote "https://github.com/$PUBLIC_REPO.git")"
+git remote set-url origin "https://github.com/$PUBLIC_REPO.git"
+git push --dry-run origin "$CANDIDATE_COMMIT":refs/heads/main
 ```
 
-Review the dry run and obtain the separately required publication authorization.
-Then the matching single-ref push command is:
+Review the destination, object inventory and dry run against the final publication
+approval. The final publication command, still not executed here, is:
 
 ```bash
-git push origin "$CANDIDATE_COMMIT":refs/heads/public-v0.1.0-development
+git push origin "$CANDIDATE_COMMIT":refs/heads/main
 ```
 
-Do not use --all, --mirror, --tags, force, or merge unrelated histories. A branch
-push makes that ref and its contents public; it is not a harmless preview. Do not
-create a tag or GitHub release as part of this preparation. End-to-end validation
-must remain labelled pending until the independent pilot is reviewed.
+Do not use --all, --mirror, --tags or force. Do not merge unrelated histories.
+Do not create a tag or GitHub release in this preparation. Maintain the development,
+end-to-end-pending and cross-host-pending labels until supported validation is
+reviewed. No data, reference or container payload accompanies this source release.

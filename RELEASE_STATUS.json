@@ -1,14 +1,26 @@
 {
   "version": "0.1.0-dev",
-  "label": "v0.1.0 development",
+  "label": "v0.1.0 \u2014 Development",
   "publication_authorized": false,
-  "project_license_status": "pending ownership and compatible license authorization",
+  "project_license_status": "pending legacy-code ownership and MIT distribution authorization",
   "end_to_end_validation": "pending",
   "cross_host_validation": "pending",
   "third_party_source_bundled": false,
   "sequencing_or_clinical_data_bundled": false,
   "reference_payloads_bundled": false,
   "images_bundled": false,
-  "git_history_policy": "orphan root snapshot; do not merge source history",
-  "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096"
+  "git_history_policy": "independent audited release root plus clean descendants; no research ancestry",
+  "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096",
+  "intended_project_license": "MIT",
+  "license_proposal": "LICENSE.MIT.proposed",
+  "legacy_authorization_required": [
+    "bin/runQDNAseq.R",
+    "modules/local/trimmomatic/main.nf",
+    "modules/local/alignment/main.nf",
+    "modules/local/mark_duplicates/main.nf"
+  ],
+  "publication_destination_decision": "pending; recommend new empty non-fork repository",
+  "ownership_approval_reference": null,
+  "publication_approval_reference": null,
+  "publication_repository": null
 }
