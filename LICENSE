@@ -22,3 +22,8 @@ the cleared project scope. Preserve AUTHORS.md and THIRD_PARTY_NOTICES.md.
 External packages, reference datasets, container images and third-party scientific
 implementations retain their own terms; no MIT relicensing of them is intended.
 See public_relatedness/LICENSING.md for the file-level scope and external limits.
+
+The maintainer has confirmed that no formal copyright-holder designation or
+separate written MIT authorization has been established for the four legacy
+files. The licensing question remains explicitly pending the maintainer's final
+decision before publication. No approval reference is inferred or invented.

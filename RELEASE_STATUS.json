@@ -19,8 +19,13 @@
     "modules/local/alignment/main.nf",
     "modules/local/mark_duplicates/main.nf"
   ],
-  "publication_destination_decision": "pending; recommend new empty non-fork repository",
+  "publication_destination_decision": "selected by maintainer; existing empty public non-fork repository verified",
   "ownership_approval_reference": null,
   "publication_approval_reference": null,
-  "publication_repository": null
+  "publication_repository": "NasoLab/swgs-relatedness",
+  "license_decision": "pending maintainer final decision; no formal copyright-holder designation or separate written MIT authorization established for four legacy files",
+  "planned_tag": "v0.1.0",
+  "planned_tag_annotation": "release/v0.1.0-tag.txt",
+  "planned_release_title": "v0.1.0 \u2014 Development",
+  "planned_release_prerelease": true
 }

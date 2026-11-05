@@ -1,0 +1,13 @@
+v0.1.0 — Development
+
+SWGS Processing Pipeline development source release for NasoLab/swgs-relatedness.
+
+FASTQ-to-relatedness orchestration with preserved PCC, seeded sequential LLR
+and historical all-overlap breakpoint fraction_shared methods.
+Historical cached gates: PCC 66/66, LLR 62/62, breakpoint 38/38.
+End-to-end and cross-host validation remain pending.
+
+Huntsman group acknowledgement and contributor credits are preserved.
+Project licensing and third-party scope are recorded in LICENSE,
+AUTHORS.md and THIRD_PARTY_NOTICES.md.
+No sequencing, clinical, reference or container payloads accompany this source.

@@ -59,8 +59,9 @@ Acknowledgement is preserved and does not resolve the missing grant.
 1. Record ownership and MIT distribution authorization for the included project
    scope, specifically the four files above. Apply the approved text and accurate
    copyright notices only after that approval; LICENSE.MIT.proposed is not active.
-2. Obtain explicit publication approval and choose an empty non-fork destination,
-   or an explicitly approved plan for the existing fork's historical data.
+2. The maintainer selected NasoLab/swgs-relatedness, verified as an existing
+   empty non-fork repository. Obtain final publication approval; the earlier
+   fork is not a publication destination and its historical exposure is separate.
 3. Update release metadata/checksums and audit every clean release commit.
 
 External QDNAseq.dev, inherited runner/helper/preprocessing, PFREQ and PE150
@@ -75,3 +76,10 @@ pending end-to-end/cross-host validation are documented reproducibility limits.
 They do not independently prohibit this explicitly limited development source
 release. Public test data can be added later with its own authorization.
 No scientific replacement, dependency upgrade or permission request is made here.
+
+Current decision checkpoint: the maintainer has not established a formal
+copyright-holder designation or a separate written MIT authorization for the
+four retained legacy files. This preparation preserves credits and the Huntsman
+acknowledgement, leaves the proposed MIT grant inactive, and records no invented
+approval reference. Licensing remains for the maintainer's final decision before
+publication. External implementations and assets retain their own terms.

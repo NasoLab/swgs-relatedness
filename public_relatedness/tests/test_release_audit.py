@@ -1,5 +1,6 @@
 """Release guards use synthetic in-memory artifacts; no sequencing inputs."""
 import hashlib
+import json
 import importlib.util
 import unittest
 from pathlib import Path
@@ -21,8 +22,15 @@ class ReleaseAuditTests(unittest.TestCase):
         self.assertEqual(m.audit()['status'], 'snapshot_audit_passed')
 
     def test_publication_requires_actual_approval(self):
+        files = m.working_files()
+        status = json.loads(files['RELEASE_STATUS.json'])
+        status['publication_authorized'] = False
+        files['RELEASE_STATUS.json'] = (json.dumps(status) + '\n').encode()
+        files['RELEASE_SHA256SUMS.txt'] = ''.join(
+            hashlib.sha256(data).hexdigest() + '  ' + path + '\n'
+            for path, data in sorted(files.items()) if path != 'RELEASE_SHA256SUMS.txt').encode()
         with self.assertRaisesRegex(ValueError, 'Publication blocked'):
-            m.audit(require_publishable=True)
+            m.audit_snapshot(files, require_publishable=True)
 
     def test_unapproved_root_is_rejected(self):
         with patch.object(m, 'git', return_value=(('1' * 40) + '\n').encode()):

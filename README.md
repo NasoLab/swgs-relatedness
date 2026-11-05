@@ -1,7 +1,9 @@
 # SWGS Processing Pipeline — v0.1.0 — Development
 
 **Development snapshot; end-to-end validation pending. Publication licensing is
-not yet cleared.** This local release candidate contains pipeline code, tests,
+not yet cleared.** Publication is intended for
+[NasoLab/swgs-relatedness](https://github.com/NasoLab/swgs-relatedness); no push,
+tag or release has been performed. This local release candidate contains pipeline code, tests,
 configuration templates and provenance metadata. It contains no sequencing
 reads, clinical tables, research workbooks, reference payloads or images.
 
@@ -84,7 +86,9 @@ an invitation to publish those fixtures. See [test instructions](public_relatedn
 [MIT](LICENSE.MIT.proposed) is the intended license for project-owned code and
 contributions the project is authorized to distribute. [LICENSE](LICENSE) keeps
 the grant pending because authorization for four retained legacy files remains
-unconfirmed. Acknowledgement does not replace that authorization. MIT is not
+unconfirmed. Acknowledgement does not replace that authorization. The maintainer has left
+this question for a final decision before publication; no copyright-holder
+designation or approval reference is inferred from Git history. MIT is not
 applied to external packages, scientific implementations, references or images. Preserve [author credits](AUTHORS.md) and review
 [third-party notices](THIRD_PARTY_NOTICES.md) and the [permissions audit](public_relatedness/LICENSING.md).
 The unpublished source-restoration recipes and internal metric snapshots are

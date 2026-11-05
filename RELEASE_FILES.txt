@@ -73,5 +73,6 @@ public_relatedness/tests/test_packaging.py
 public_relatedness/tests/test_release_audit.py
 public_relatedness/tests/test_scientific_contract.py
 public_relatedness/verification/phase4_runtime_summary.json
+release/v0.1.0-tag.txt
 verification/release_tests.json
 verify_release.py

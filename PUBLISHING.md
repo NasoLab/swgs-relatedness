@@ -1,48 +1,40 @@
-# Publication preparation — v0.1.0 — Development
+# Publication preparation — NasoLab/swgs-relatedness
 
-No push, tag, GitHub release, repository creation or image publication is
-performed by this preparation. The content audit and the publication-authorization
-gate are distinct. The latter remains blocked by the specific records in
-[LICENSE](LICENSE), [the licensing audit](public_relatedness/LICENSING.md) and
-[RELEASE_STATUS.json](RELEASE_STATUS.json).
+The maintainer selected the existing public repository
+[NasoLab/swgs-relatedness](https://github.com/NasoLab/swgs-relatedness).
+Read-only GitHub metadata and Git ref inspection verified that it is a non-fork
+with no branches or advertised refs. The release worktree's `publication` remote
+is https://github.com/NasoLab/swgs-relatedness.git; its existing `origin` is
+unchanged. The publication remote uses worktree-specific Git configuration.
 
-## Required authorization
+No push, tag creation or GitHub release is authorized by this preparation. The
+maintainer requested a stop for final approval. The original fork and the running
+FASTQ pilot are untouched. Do not use origin or any historical research ref for
+publication, and do not treat the old fork as a destination.
 
-MIT is selected for project-owned code and contributions the project may lawfully
-distribute. The four retained legacy files listed in LICENSE still lack a
-confirmed MIT distribution grant. Obtain the relevant rights-holder authority,
-confirm ownership of the new contributions, and record accurate copyright
-notices. Acknowledgement is not a grant. LICENSE.MIT.proposed is a draft only.
-After approval, apply the approved text to LICENSE, remove the proposal, update
-the allowlist/checksums, and record non-sensitive approval references. Do not put
-private permission correspondence, personal contact details or workbooks in Git.
+## Licensing decision still required
 
-RELEASE_STATUS.json must then record project_license_status='cleared', an empty
+MIT remains proposed for project-owned code/contributions the project may lawfully
+distribute. The maintainer has not established a formal copyright-holder
+designation or separate written MIT authorization for the four retained legacy
+files listed in [LICENSE](LICENSE). A final licensing decision is required before
+publication. Do not invent approval references or infer copyright ownership from
+Git authorship. The Huntsman acknowledgement and original credits are preserved.
+External packages, scientific implementations, references and images retain their
+own terms and are not relicensed or bundled here.
+
+After a supported licensing decision, apply the approved license and correct
+notices, remove LICENSE.MIT.proposed if MIT is approved, and update release
+metadata/checksums in a new clean descendant commit. Record only non-sensitive
+approval references; private correspondence must stay outside Git.
+RELEASE_STATUS.json must have project_license_status='cleared', an empty
 legacy_authorization_required list, ownership_approval_reference,
-publication_approval_reference, the approved publication_repository (OWNER/NAME),
-and publication_authorized=true. These values represent real approvals; do not
-set them merely to pass the tool. Re-test, commit and audit the updated candidate.
-External packages, references, images and scientific implementations are outside
-the intended project MIT grant and remain user-supplied under their own terms.
+publication_approval_reference, publication_repository='NasoLab/swgs-relatedness'
+and publication_authorized=true. Those fields must represent actual decisions;
+never change them merely to bypass the gate. Re-test and audit the resulting
+commit. The publication gate intentionally fails on the current candidate.
 
-## Destination decision
-
-The originally requested rcorbett-match/swgs-processing-pipeline repository is a
-public fork containing historical sequencing data. Do not push this candidate
-there without an explicit owner decision about that history. A clean branch does
-not remove old refs, objects, forks, caches or existing copies. The existing
-exposure requires separate owner/PI and appropriate institutional review; this
-preparation does not authorize removal, rewriting, renaming or visibility changes.
-
-Recommended route: obtain approval to create a new **empty non-fork repository**
-under rcorbett-match, for example swgs-processing-pipeline-public. This proposed
-name has not been reserved or verified as available. Use the exact approved name
-in the commands and release metadata. Publishing elsewhere does not remediate
-the original repository's historical exposure.
-
-## Local inspection and history policy
-
-Run in the clean release worktree:
+## Independent history and final audit
 
 ```bash
 git status --short
@@ -51,25 +43,24 @@ python verify_release.py --commit HEAD
 python verify_release.py --commit HEAD --require-publishable
 ```
 
-The final command currently fails intentionally. The auditor anchors history at
-0582e6ba1ded9c099dacce8f6d3d0786de18f726, rejects merges/unrelated roots, and checks
-every reachable release commit's metadata, complete file allowlist, SHA256 set
-and contents. Thus a forbidden payload deleted from the tip still fails audit.
-The branch contains that independent clean root and release-only descendants;
-no research commit is imported. Pattern scanning does not establish ownership
-or guarantee detection of every possible identifier. Human content and rights
-review remain required. Scientific source stays unchanged during preparation.
+The audit anchors history at the clean independent root
+0582e6ba1ded9c099dacce8f6d3d0786de18f726, rejects merges/unrelated roots and checks
+every reachable release commit's complete allowlist, SHA256 set, metadata and
+contents. A forbidden payload removed from the tip still fails audit. Research
+ancestors, unrelated branches and automation checkpoint refs must never be
+exported. The old fork's exposed history remains a separate owner-led issue;
+publishing this clean project does not remove old copies or caches.
 
-## Exact publication commands — only after approval
+## Exact commands after final licensing and publication approval
 
-The following is a future operator procedure, not authorization to run it now.
-It uses a new writable directory on an operator-selected mounted storage volume
-and exports only the reviewed release ref into a fresh Git object database.
-A local clone directly from the shared research object store is not sufficient.
-First run in the clean release worktree, substituting the approved destination:
+These commands are prepared for a future approved operator session. None of the
+push, tag or release commands has been executed. Start in the audited release
+worktree, using an operator-selected mounted volume for the new private export:
 
 ```bash
-PUBLIC_REPO=rcorbett-match/swgs-processing-pipeline-public
+set -euo pipefail
+PUBLIC_REPO=NasoLab/swgs-relatedness
+PUBLIC_URL=https://github.com/NasoLab/swgs-relatedness.git
 CANDIDATE_REF=refs/heads/release/public-v0.1.0-development
 CANDIDATE_COMMIT=$(git rev-parse "$CANDIDATE_REF^{commit}")
 python verify_release.py --commit "$CANDIDATE_COMMIT" --require-publishable
@@ -84,30 +75,44 @@ git fsck --full --no-reflogs
 git rev-list --reverse --parents "$CANDIDATE_COMMIT"
 git for-each-ref --format='%(refname) %(objectname)'
 git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype) %(objectsize)'
+git remote add publication "$PUBLIC_URL"
 ```
 
-Require no alternates, tags or unexpected refs and exactly the approved reachable
-objects. The bundle and export must contain only the clean release root and its
-audited descendants, never other local branches or automation checkpoint refs.
-After explicit approval to create the named public repository, run from that
-fresh export; these commands must fail rather than reuse an existing repository:
+Require exactly the approved reachable commit/tree/blob objects, no alternates,
+no tags and no unexpected refs. Use the fresh export rather than cloning directly
+from the shared research object store. Recheck the existing destination just
+before pushing. If any refs have appeared, stop and review them; do not force-push,
+merge, delete or overwrite their history. Do not create another repository:
 
 ```bash
-gh repo create "$PUBLIC_REPO" --public
 test "$(gh api "repos/$PUBLIC_REPO" --jq '.fork')" = false
-test -z "$(git ls-remote "https://github.com/$PUBLIC_REPO.git")"
-git remote set-url origin "https://github.com/$PUBLIC_REPO.git"
-git push --dry-run origin "$CANDIDATE_COMMIT":refs/heads/main
+REMOTE_REFS=$(git ls-remote --symref publication)
+test -z "$REMOTE_REFS"
+git push --dry-run publication "$CANDIDATE_COMMIT":refs/heads/main
 ```
 
-Review the destination, object inventory and dry run against the final publication
-approval. The final publication command, still not executed here, is:
+After approving the exact commit, destination, annotation and dry run, these are
+the tag and atomic branch/tag publication commands. The annotation is prepared
+in [release/v0.1.0-tag.txt](release/v0.1.0-tag.txt); it is not a Git tag yet:
 
 ```bash
-git push origin "$CANDIDATE_COMMIT":refs/heads/main
+python verify_release.py --commit "$CANDIDATE_COMMIT" --require-publishable
+if git show-ref --verify --quiet refs/tags/v0.1.0; then exit 1; fi
+git tag -a v0.1.0 "$CANDIDATE_COMMIT" -F release/v0.1.0-tag.txt
+test "$(git rev-parse 'v0.1.0^{commit}')" = "$CANDIDATE_COMMIT"
+git push --atomic publication "$CANDIDATE_COMMIT":refs/heads/main refs/tags/v0.1.0:refs/tags/v0.1.0
 ```
 
-Do not use --all, --mirror, --tags or force. Do not merge unrelated histories.
-Do not create a tag or GitHub release in this preparation. Maintain the development,
-end-to-end-pending and cross-host-pending labels until supported validation is
-reviewed. No data, reference or container payload accompanies this source release.
+Only if GitHub release publication is also explicitly approved, use the existing
+verified tag and prepared [release notes](RELEASE_NOTES.md):
+
+```bash
+gh release create v0.1.0 --repo NasoLab/swgs-relatedness --verify-tag \
+  --title 'v0.1.0 — Development' --notes-file RELEASE_NOTES.md --prerelease
+```
+
+The v0.1.0 tag designates a development prerelease. End-to-end and cross-host
+validation remain pending. Do not use --all, --mirror, --tags or force; push only
+the two named refs. Do not regenerate references, distribute unapproved assets or
+modify scientific parameters to simplify publication. Any approved license change
+will change CANDIDATE_COMMIT: recompute it and rerun the audits before publication.

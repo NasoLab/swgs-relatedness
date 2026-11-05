@@ -1,65 +1,77 @@
 # v0.1.0 — Development
 
-Status: local release-preparation commit; no tag or public release created.
-End-to-end validation remains pending. This is not a stable or clinically
-validated release, and cross-host portability has not been established.
+Prepared for [NasoLab/swgs-relatedness](https://github.com/NasoLab/swgs-relatedness).
+This is a development source release. No push, tag or GitHub release has been
+performed. Project licensing remains pending the maintainer's final decision;
+MIT is proposed and has not been applied to the unresolved legacy scope.
 
-Included: manifest validation, fail-fast Nextflow orchestration, preserved
-QDNAseq/CGHcall source, ordered metric adapters, precise sample/pair aggregation,
-version/dependency metadata, reference checksums, container recipe candidates,
-synthetic tests and public configuration templates. Temporary, work and output
-storage are independently configurable.
+## Purpose and included components
 
-Packaging changes: historical research files and all development ancestors are
-excluded. The legacy PCC/LLR runner is now an explicit `pcc_llr_runner` parameter
-and CLI `--runner` input, checked against its existing frozen SHA256. This avoids
-redistributing unresolved inherited source. CGHcall's project-owned preparation
-script is relocated to `bin/prepare_cghcall_cohort.R` with its contents unchanged.
-No metric function, model, matching rule, seed, numerical tolerance or scientific
-parameter is changed. Existing scientific guards remain in force.
+The Nextflow workflow connects paired FASTQs to Trimmomatic, BWA-MEM2/samtools,
+Picard, QDNAseq hg38 PE150 500-kb profiles, complete-cohort CGHcall and ordered
+PCC, LLR and historical breakpoint `fraction_shared` adapters. It includes
+manifest validation, configuration examples, installation/usage documentation,
+environment specifications, reference identities, synthetic tests and cached
+regression infrastructure. Work, temporary and published-output storage are
+configurable. Sample/pair outputs retain precision, orientation and method status.
 
-Prior cached gates: PCC 66/66 (max absolute difference 4.996003610813204e-16),
-LLR 62/62 (4.973799150320701e-14), fraction_shared 38/38 exact historical counts
-and supplied fraction precision. The LLR loop remains seeded once at 1337 with
-original pair order and sequential RNG consumption. These gates came from the
-originating development/runtime checkpoint; lightweight snapshot checks are
-recorded separately in [snapshot test evidence](verification/release_tests.json).
-The preceding snapshot preparation included a fresh one-pair cached Nextflow run through this snapshot matched every metric
-string, breakpoint count, rational, status and orientation exactly against the
-previously validated cached output. It did not process FASTQs or rerun all
-66/62/38 historical cases.
+## Scientific methods
 
-Known limits: own-project licensing is unresolved; QDNAseq.dev/helper/runner
-permissions and source receipts remain incomplete; frozen PFREQ/PE150 assets
-are external; new source-restoration Dockerfiles are unbuilt; no public raw or
-CNV fixture is bundled. A retained Picard image's uutils date is incompatible
-with Nextflow 24.10 resource tracing. The isolated execution example disables
-optional trace/report/timeline monitoring without replacing software.
+PCC preserves QDNAseq usable-bin selection, three-decimal segmented values, log2
+transformation and Pearson correlation. LLR preserves the frozen TCGA LUSC PFREQ
+model, historical chromosome-arm preprocessing and inherited implementations,
+with seed 1337 set once and sequential scoring in input pair order. Breakpoint
+matching preserves same chromosome, DUP/DEL direction, start/end boundary type,
+inclusive 2.5-Mb tolerance and every eligible overlap. Unsupported both-zero or
+negative-private cases retain explicit statuses. No new classification thresholds
+or alternative algorithms are introduced.
 
-The original running pilot is independent of this worktree and is not modified,
-restarted or used as a source of publishable patient-level test data. The independent release root and audited clean descendants exclude research
-ancestry; it does not remediate old remote
-branches, tags, caches or previously exposed files.
+## Validation
 
-Final preparation adds the requested Huntsman group acknowledgement and preserves
-all existing author/external-component notices. MIT is the intended license for
-authorized project-owned code; its proposed text is not activated while the
-four-file legacy grant remains unresolved. No package, scientific implementation,
-reference or image is relicensed. Documentation distinguishes included-code
-permission gates from external execution requirements and reproducibility limits.
+Prior contained-runtime cached gates passed: PCC **66/66**, seeded LLR **62/62**
+and historical breakpoint counts/fractions **38/38**. A preceding one-pair cached
+workflow comparison matched all metric strings, counts and orientation exactly.
+These are originating checkpoint results; the full historical gates were not
+rerun for this documentation/destination update. See [recorded numerical evidence](public_relatedness/verification/phase4_runtime_summary.json).
 
-The final documentation commit descends only from the audited clean root. The
-release audit checks each reachable commit and its complete allowlist/checksums;
-its independent history does not incorporate research commits. The recommended
-destination is a new empty non-fork repository under the intended account, with
-no publication action performed. Scientific R, workflow modules, scoring adapters,
-parameters, models and reference manifests are unchanged from the clean root.
+Final lightweight results and source-identity checks are recorded in
+[release verification](verification/release_tests.json). The history auditor
+checks every reachable clean release snapshot and rejects unexpected files,
+modified hashes, known secret markers, unrelated ancestry and merges.
+**End-to-end FASTQ validation and cross-host reproducibility remain pending.**
+This is not a stable or clinically validated release.
 
-Final lightweight verification: 46 tests discovered, 45 passed and one optional
-historical test skipped; all five Nextflow stub and eight release-audit guard
-tests passed. The guards reject unknown roots, merged ancestry, changed blobs,
-secret markers and a forbidden artifact present only in an older snapshot.
-Twenty-four scientific/workflow/reference-manifest files, including all ten R
-files, remain byte-identical to the clean root. Full historical numerical gates
-were not rerun during these documentation/licensing changes. Relative links and
-shell examples passed validation; external link results are recorded separately.
+## External requirements and known limits
+
+Operators must supply authorized byte-identical hg38/indexes, PE150 annotation,
+frozen PFREQ and scientific implementations, together with the recorded runtimes.
+No sequencing data, clinical metadata, research workbooks, scientific output
+payloads, reference payloads, package source or container images are bundled.
+Reference-generation receipts and public acquisition paths are incomplete.
+Source-restoration Dockerfiles remain unbuilt/unvalidated. The retained Picard
+image requires the documented optional resource-monitoring workaround.
+
+## Attribution and licensing
+
+The exact Huntsman group acknowledgement and original contributor credits are
+preserved in the [README](README.md#acknowledgements) and [AUTHORS.md](AUTHORS.md).
+Third-party attribution remains in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+The four retained legacy pipeline files still lack a confirmed ownership/MIT
+distribution grant. [LICENSE](LICENSE) records the pending decision; the MIT
+proposal does not relicense external packages, scientific implementations,
+references or images. No copyright holder or approval reference is inferred.
+
+## Release and history preparation
+
+The independent clean root and release-only descendants contain no research
+commits. Scientific R files, workflow modules, model/resource identities and
+parameters are unchanged from that root. The running internal FASTQ pilot and
+the original fork are untouched by this destination preparation.
+
+The selected destination is the existing empty non-fork NasoLab/swgs-relatedness
+repository. The planned annotated tag is `v0.1.0`, with title
+**v0.1.0 — Development** and a GitHub prerelease designation. Its annotation is
+prepared in [release/v0.1.0-tag.txt](release/v0.1.0-tag.txt); no tag exists from
+this preparation. [PUBLISHING.md](PUBLISHING.md) contains gated commands for the
+maintainer's approval. The original fork's historical exposure is a separate
+owner-led issue and is not remediated by this source release.
