@@ -17,6 +17,9 @@ FIXTURE_HASHES = {
 spec = importlib.util.spec_from_file_location('metrics', ROOT / 'bin/run_metrics.py')
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
+spec_assets = importlib.util.spec_from_file_location('asset_defaults', ROOT / 'bin/assets.py')
+assets = importlib.util.module_from_spec(spec_assets)
+spec_assets.loader.exec_module(assets)
 
 
 def prepare(case, folder, rscript):
@@ -53,6 +56,11 @@ def main():
                    help='Reuse a completed run of this adapter after verifying profile and resource hashes')
     args = p.parse_args()
     config = json.loads(args.config.read_text())
+    resolved = assets.resolve({'resource_directory': config.get('resource_directory')})
+    config.setdefault('resources', {})
+    for key, param in dict(assets.PARAMS, helper='llr_helper', pfreq='pfreq').items():
+        if key not in config['resources'] and resolved.get(param): config['resources'][key] = resolved[param]
+
     for key, expected in FIXTURE_HASHES.items():
         assert m.sha256(config[key]['fixture']) == expected, 'Frozen fixture checksum mismatch'
     args.output.mkdir(exist_ok=False, parents=True)

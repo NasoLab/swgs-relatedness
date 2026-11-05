@@ -3,8 +3,9 @@
 This is an evidence/permissions inventory. No new third-party source, package
 archive, model, image or reference payload is copied into public-release
 folders. The four retained Huntsman pipeline files are identified below. External
-inherited scientific implementations are not bundled. The scientific
-runner, preprocessing, helper, matcher and references are external inputs.
+inherited scientific implementations are not bundled. The project runner/preprocessing/Python core are bundled under project MIT.
+The recovered matcher is bundled with its upstream MIT notice. The inherited
+helper, installed packages and reference payloads remain external.
 The project MIT license covers the included project code and retained internal
 Huntsman research-pipeline components, as instructed by the maintainer. It does
 not license external assets or the originating repository's research payloads.
@@ -13,7 +14,7 @@ not license external assets or the originating repository's research payloads.
 | --- | --- | --- |
 | Project code / public adapters / retained internal Huntsman components | MIT applied in root LICENSE following the maintainer's project licensing instruction; original contributor attribution retained | Included in the project MIT scope; no individual-contributor permission or separate approval-reference gate |
 | Historical preprocessing | `Huntsmanlab/squamous-cell-clonality`, revision `39a918d2a38a30cc78a90a51a314b7ef83a7813d`; no root license found in that revision | Obtain explicit permission/license for the selected expressions; continue runtime loading from user-supplied source meanwhile |
-| Recovered breakpoint matching | `argymeg/breakclone`, revision `712eb202303119588ca10889ca92a721afd0c396`; exact-revision LICENSE confirms MIT, copyright 2022 The Authors | Retain the exact copyright and full MIT notice if source is later copied; current runtime input remains external |
+| Recovered breakpoint matching | `argymeg/breakclone`, revision `712eb202303119588ca10889ca92a721afd0c396`; exact-revision LICENSE confirms MIT, copyright 2022 The Authors | Exact source is now bundled with upstream copyright 2022 The Authors and full MIT notice; only the historical matching functions are evaluated |
 | QDNAseq.dev 0.1 | Both installed DESCRIPTIONs literally say `What license is it under?`; no RemoteSha. Located source checkout at `8714202a7ca90124adba3ecb0d666cadc23f3d11`, with an indentation-only DESCRIPTION fix, has no license file | **Blocks distribution of that package/images, not this source-only snapshot:** obtain an explicit grant before bundling. Operators need lawful acquisition/use; a placeholder is not a grant |
 | UTANOS 0.1.0.9000 | Installed DESCRIPTION: `MIT + file LICENSE`, RemoteSha `ae8edc6464ab7bac0939a886dd7f8beae7a7410b`; exact-revision DESCRIPTION and LICENSE confirm the declaration and 2024 utanos authors notice | Retain applicable MIT notices; check data and transitive dependencies separately before distributing packages/images |
 | Inherited clonality helper | `tgac-vumc/CNA_clonality` revision `bbffb4a15a425ce032537cf95b2d68dbc1d87f15`; no root license located in that revision; helper provenance involves Clonality (installed package declares GPL-3) | Clarify authorship, derivative-code provenance and applicable license; do not infer permission for the helper from another package's license |
@@ -75,3 +76,26 @@ Missing reference-generation receipts, unbuilt source-restoration images and
 pending end-to-end/cross-host validation remain documented reproducibility limits.
 No scientific replacement, dependency upgrade, reference regeneration or new
 sequencing test dataset is introduced by the licensing update.
+
+## Phase 5 source packaging
+
+The runner is Richard Corbett's cohort-reporting implementation (cd42a6c/ac33f3c).
+Internal preprocessing is Branden Lynch's test_relatedness_cohort_qc_pass.R at
+39a918d; only four previously evaluated expressions are included. The Python
+all-overlap core is a project-local regression reconstruction with no separate
+Git author record; no individual author is invented. These project components
+use MIT. Original full-file hashes and extracted-file identities are recorded
+separately, with AST/numerical equivalence checks.
+
+The upstream matcher source is byte-identical and MIT-licensed at 712eb202;
+its exact notice accompanies the file. The helper is byte-identical to
+CNA_clonality scripts/clonality_analysis_PFREQ_MOD.R at bbffb4a, introduced under
+jurriaanjanssen at 579148f. Read-only comparison found 11/12 functions identical
+to GPL-3 Clonality 1.47.0; calc.freq differs. No root grant covering the modification
+was located. It remains externally acquired and checksum locked, rather than
+being relabelled MIT or replaced with an unvalidated package implementation.
+
+Direct upstream acquisition is opt-in under upstream terms and does not publish
+those assets with this project. PFREQ and the PE150 annotation remain unbundled;
+checksums are identities, not redistribution grants. Source-restoration images
+require their own archive/license/source review, particularly QDNAseq.dev.

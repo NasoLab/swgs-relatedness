@@ -1,0 +1,31 @@
+{
+  "images": [
+    {
+      "role": "trimmomatic",
+      "filename": "staphb-trimmomatic-latest.img",
+      "sha256": "4fc157e9efae136912a483afacc43667992eaca68cc37c3e9b85778171710cf9"
+    },
+    {
+      "role": "alignment",
+      "filename": "blcdsdockerregistry-bwa-mem2_samtools-1.12-2.2.1.img",
+      "sha256": "5b4ec2e0f7cc549cf31a81bf3942b1aa26413bed95ab001516d961e609286d3c"
+    },
+    {
+      "role": "mark_duplicates",
+      "filename": "broadinstitute-picard-latest.img",
+      "sha256": "42df35afa8ba4c4ae6db16399af2a044305e8b266c65044702d6b55bebe4d054"
+    },
+    {
+      "role": "qdnaseq_cghcall",
+      "filename": "huntsmanlab-qdnaseq-latest.img",
+      "sha256": "42c23d1c17adc3d0a734d9705ed351861c8a087de63f7d53f9d2df5c424607d8"
+    },
+    {
+      "role": "metrics",
+      "filename": "metrics.sif",
+      "sha256": "ae7c40c285c19a6db6d01bb61f839cdd348f4cfd3f7510ae533091e2ed9f7151"
+    }
+  ],
+  "automatic_registry_retrieval": false,
+  "reason": "Original OCI digests not recovered; latest tags are not immutable or validated. No SIF archives are distributed."
+}

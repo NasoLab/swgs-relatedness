@@ -47,3 +47,8 @@ __pycache__/
 .aws/
 *.pem
 *.key
+
+# Operator-supplied source/data/image caches stay outside public commits.
+/external-resources/
+/resource-cache/
+/runtime-images/

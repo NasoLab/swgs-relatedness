@@ -20,11 +20,12 @@ def module(name, filename):
 
 manifest = module('public_manifest', 'prepare_manifest.py')
 metrics = module('public_metrics', 'run_metrics.py')
+assets = module('asset_paths', 'assets.py')
 
 
 def require_file(value, label):
     if not value or not Path(value).is_file():
-        raise ValueError(f'Missing local file: {label}')
+        raise ValueError(f'Missing local file: {label}' + assets.missing_hint(label))
     return Path(value)
 
 
@@ -36,6 +37,7 @@ def require_executable(value, label):
 
 def validate(params, *, metadata_only=False, check_images=False, profiles='singularity',
              reference_manifest=None, image_inventory=None):
+    params = assets.resolve(params)
     selected = profiles.split(',')
     if any(p not in {'local', 'singularity', 'docker', 'slurm'} for p in selected):
         raise ValueError('Unknown execution profile')
@@ -90,13 +92,18 @@ def validate(params, *, metadata_only=False, check_images=False, profiles='singu
     output = Path(outdir)
     if any((output / name).exists() for name in ['sample_results.tsv', 'pair_results.tsv']):
         raise ValueError('Output directory already contains result tables')
-    if check_images:
-        inventory = image_inventory or json.loads((ROOT / 'environments/inventory.json').read_text())
+    if check_images or params.get('image_directory'):
+        inventory = image_inventory or json.loads((ROOT / 'environments/runtime_images.json').read_text())
         directory = params.get('image_directory')
-        if not directory:
-            raise ValueError('Supply image_directory for archive verification')
-        for image in inventory['containers']:
-            path = require_file(Path(directory) / image['filename'], image['role'])
+        for image in inventory.get('images', inventory.get('containers', [])):
+            if cached and image['role'] != 'metrics':
+                continue
+            if image['role'] == 'metrics':
+                path = require_file(params.get('metrics_container'), 'metrics_container; provide the validated metrics.sif in image_directory')
+            else:
+                if not directory:
+                    raise ValueError('Supply image_directory for immutable archive verification')
+                path = require_file(Path(directory) / image['filename'], image['role'])
             if not metadata_only and metrics.sha256(path) != image['sha256']:
                 raise ValueError(f'Container archive checksum mismatch: {image["role"]}')
     return dict(status='metadata_valid' if metadata_only else 'resource_identities_verified',
@@ -109,11 +116,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--params', type=Path, required=True)
     parser.add_argument('--profiles', default='singularity')
+    parser.add_argument('--runtime-params', type=Path, help='Optional execution-environment JSON merged before run parameters')
     parser.add_argument('--metadata-only', action='store_true', help='Validate structure/presence only; does not verify file contents')
     parser.add_argument('--check-images', action='store_true')
     args = parser.parse_args()
     try:
-        result = validate(json.loads(args.params.read_text()), metadata_only=args.metadata_only,
+        params = json.loads(args.runtime_params.read_text()) if args.runtime_params else {}
+        params.update(json.loads(args.params.read_text()))
+        result = validate(params, metadata_only=args.metadata_only,
                           check_images=args.check_images, profiles=args.profiles)
     except (ValueError, TypeError, KeyError, OSError) as error:
         parser.exit(2, f'Configuration validation failed: {error}\n')

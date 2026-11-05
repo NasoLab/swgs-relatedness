@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "runner": {
+      "path": "lib/relatedness/run_pcc_llr.R",
+      "sha256": "411676813fde9d1f3bd2b74fe08a59970a060e5bff564b561264c7a35b2ea15f",
+      "historical_full_source_sha256": "411676813fde9d1f3bd2b74fe08a59970a060e5bff564b561264c7a35b2ea15f",
+      "license": "MIT",
+      "provenance": "project cohort-reporting commits cd42a6c/ac33f3c; Richard Corbett",
+      "packaging": "byte-identical"
+    },
+    "preprocessing": {
+      "path": "lib/relatedness/breakpoint_preprocessing.R",
+      "sha256": "677782aa108d7fb728ba183e61721b2f3b6df8cff46c99c9318fbbab3201e3cb",
+      "historical_full_source_sha256": "16655beb5ea51c3f9297418d04a5a288d23689259f7845e6db553564232cabf6",
+      "license": "MIT",
+      "provenance": "Huntsman internal test_relatedness_cohort_qc_pass.R at 39a918d2a38a30cc78a90a51a314b7ef83a7813d; Branden Lynch; four parsed expressions",
+      "packaging": "exact selected expressions/functions; surrounding analysis driver excluded"
+    },
+    "matching": {
+      "path": "vendor/breakclone/copynumber.R",
+      "sha256": "ac0a06306bcbc048a06180d7a06584695a3aa8e3279ca57068f9ade6544e8330",
+      "historical_full_source_sha256": "ac0a06306bcbc048a06180d7a06584695a3aa8e3279ca57068f9ade6544e8330",
+      "license": "MIT (upstream)",
+      "provenance": "argymeg/breakclone R/copynumber.R at 712eb202303119588ca10889ca92a721afd0c396; copyright 2022 The Authors",
+      "packaging": "byte-identical"
+    },
+    "fraction_implementation": {
+      "path": "lib/relatedness/fraction_shared_historical.py",
+      "sha256": "b6434a7265e6b1a795f8af24c1721d7f20b5276fdb24d67ec980e04712c323b6",
+      "historical_full_source_sha256": "e127424de7f54233dfc0281887d273e9e9deb81437250e1d08ac145070bb7f31",
+      "license": "MIT",
+      "provenance": "project-local historical regression reconstruction; individual author not recorded in Git; exact production functions extracted",
+      "packaging": "exact selected expressions/functions; surrounding analysis driver excluded"
+    },
+    "helper": {
+      "filename": "clonality_analysis_PFREQ_MOD.R",
+      "sha256": "fed28e2eca2ae213957c5e382e8e3deee698aae1d9eed0d39b57401e7cdc7f35",
+      "url": "https://raw.githubusercontent.com/tgac-vumc/CNA_clonality/bbffb4a15a425ce032537cf95b2d68dbc1d87f15/scripts/clonality_analysis_PFREQ_MOD.R",
+      "bundled": false,
+      "license": "Clonality GPL-3-derived; modification terms not established in source repository",
+      "provenance": "jurriaanjanssen, 579148f (2024-08-13); 11/12 functions AST-identical to Irina Ostrovnaya Clonality 1.47.0, calc.freq differs"
+    }
+  }
+}

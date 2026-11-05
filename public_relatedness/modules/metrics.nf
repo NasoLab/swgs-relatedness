@@ -33,14 +33,14 @@ process SCORE_AND_AGGREGATE {
                      matching: matching, 'fraction-implementation': fraction_implementation]
         .findAll { key, value -> value }.collect { key, value -> "--${key} ${shellQuote(value)}" }.join(' ')
     """
-    python3 ${orchestrator} --called-rds ${called} --samples ${samples} --pairs ${pairs} \\
-      --runner ${runner} --pcc-adapter ${pcc_adapter} --breakpoint-adapter ${breakpoint_adapter} \\
+    python3 ${shellQuote(orchestrator)} --called-rds ${called} --samples ${samples} --pairs ${pairs} \\
+      --runner ${shellQuote(runner)} --pcc-adapter ${shellQuote(pcc_adapter)} --breakpoint-adapter ${shellQuote(breakpoint_adapter)} \\
       --rscript ${shellQuote(params.metrics_rscript)} --breakpoint-rscript ${shellQuote(params.breakpoint_rscript)} \\
       --profile-location ${shellQuote(profile_location)} --provenance-location metrics/metric_provenance.json ${resources} --output metrics
     """
     stub:
     """
-    python3 ${orchestrator} --stub --called-rds ${called} --samples ${samples} --pairs ${pairs} \\
+    python3 ${shellQuote(orchestrator)} --stub --called-rds ${called} --samples ${samples} --pairs ${pairs} \\
       --profile-location ${shellQuote(profile_location)} --provenance-location metrics/metric_provenance.json --output metrics
     """
 }

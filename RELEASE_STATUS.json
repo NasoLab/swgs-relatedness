@@ -1,11 +1,11 @@
 {
-  "version": "0.1.0-dev",
-  "label": "v0.1.0 \u2014 Development",
+  "version": "0.1.1-dev",
+  "label": "v0.1.1 \u2014 Development candidate",
   "publication_authorized": false,
   "project_license_status": "applied",
   "end_to_end_validation": "pending",
   "cross_host_validation": "pending",
-  "third_party_source_bundled": false,
+  "third_party_source_bundled": true,
   "sequencing_or_clinical_data_bundled": false,
   "reference_payloads_bundled": false,
   "images_bundled": false,
@@ -14,12 +14,16 @@
   "publication_destination_decision": "selected by maintainer; existing empty public non-fork repository verified",
   "publication_repository": "NasoLab/swgs-relatedness",
   "license_decision": "MIT applied to project code as instructed by the maintainer",
-  "planned_tag": "v0.1.0",
-  "planned_tag_annotation": "release/v0.1.0-tag.txt",
-  "planned_release_title": "v0.1.0 \u2014 Development",
+  "planned_tag": "v0.1.1",
+  "planned_tag_annotation": "release/v0.1.1-tag.txt",
+  "planned_release_title": "v0.1.1 \u2014 Development",
   "planned_release_prerelease": true,
   "project_license": "MIT",
   "project_license_scope": "project-owned code, including retained internal Huntsman research-pipeline components",
   "external_components_relicensed": false,
-  "publication_status": "source preparation; stop before push, tag creation or GitHub release"
+  "publication_status": "local Phase 5 candidate; no push or tag",
+  "reviewed_third_party_source": {
+    "breakclone": "MIT; exact frozen source and upstream notice included"
+  },
+  "scientific_sources_manifest": "public_relatedness/scientific_sources.json"
 }

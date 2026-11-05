@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 @unittest.skipUnless(os.environ.get('PUBLIC_NEXTFLOW'), 'Set PUBLIC_NEXTFLOW to a Nextflow command for stub tests')
 class NextflowTests(unittest.TestCase):
-    def run_stub(self, with_pairs=True, fail_process=None, custom_temp=False):
+    def run_stub(self, with_pairs=True, fail_process=None, custom_temp=False, resource_directory_only=False):
         tmp = tempfile.TemporaryDirectory(prefix='public-relatedness-stub-')
         self.addCleanup(tmp.cleanup)
         root = Path(tmp.name)
@@ -64,17 +64,24 @@ class NextflowTests(unittest.TestCase):
             '-stub-run', '-ansi-log', 'false', '-work-dir', str(root / 'work'),
             '--samples', str(samples), '--reference', str(ref), '--pe150_bins', str(bins),
             '--pe150_bins_sha256', hashlib.sha256(bins.read_bytes()).hexdigest(), '--outdir', str(root / 'out')]
-        runner = root / 'runner.stub'
-        runner.write_text('STUB ONLY: no scientific implementation\n')
-        cmd += ['--pcc_llr_runner', str(runner)]
         if custom_temp:
             cmd += ['--temp_directory', str(volume)]
         if with_pairs:
             cmd += ['--pairs', str(pairs)]
-            for key in ['pfreq', 'llr_helper', 'breakpoint_preprocessing', 'breakpoint_matching', 'fraction_implementation']:
+            for key in ['pfreq', 'llr_helper']:
                 asset = root / (key + '.stub')
                 asset.write_text('STUB ONLY: not a scientific resource\n')
                 cmd += ['--' + key, str(asset)]
+        if resource_directory_only:
+            resources = ref.parent
+            (resources / '1000g_hg38_bins_500kbp_PE150.rds').write_bytes(bins.read_bytes())
+            if with_pairs:
+                (resources / 'pfreq_lusc_tcga_split.csv').write_text('STUB ONLY: model marker')
+                (resources / 'clonality_analysis_PFREQ_MOD.R').write_text('STUB ONLY: external dependency marker')
+            for key in ['--reference', '--pe150_bins', '--pfreq', '--llr_helper']:
+                if key in cmd:
+                    at = cmd.index(key); del cmd[at:at+2]
+            cmd += ['--resource_directory', str(resources)]
         result = subprocess.run(cmd, cwd=root, env=env, text=True, capture_output=True, timeout=120)
         if result.returncode and (root / '.nextflow.log').exists():
             log = (root / '.nextflow.log').read_text()
@@ -101,8 +108,13 @@ class NextflowTests(unittest.TestCase):
                          [('comparison2', 'sampleC', 'sampleB'), ('comparison1', 'sampleC', 'sampleA')])
         self.assertTrue(all(r['processing_status'] == 'stub_not_computed' and r['pcc'] == 'NA' for r in scored))
 
+    def test_minimal_resource_directory_and_automatic_sources(self):
+        root, result = self.run_stub(resource_directory_only=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue((root / 'out/pair_results.tsv').is_file())
+
     def test_optional_pairs(self):
-        root, result = self.run_stub(with_pairs=False)
+        root, result = self.run_stub(with_pairs=False, resource_directory_only=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertTrue((root / 'out/cghcall/cohort_500kb_noXY_CGHcall.rds').exists())
         with (root / 'out/pair_results.tsv').open() as handle:

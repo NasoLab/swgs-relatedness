@@ -9,12 +9,12 @@ No alignment, normalization or calling occurs in the cached scoring entry point.
 
 ## PCC and LLR
 
-`bin/pcc_llr_adapter.R` parses the unchanged
-the operator-supplied, checksum-pinned `pcc_llr_runner` (`run_pcc_llr.R`), evaluates its original imports and
-function definitions, and stops before its standalone CLI driver. It calls the
-original `validate_called_rds`, `read_pair_metadata`, `make_segment_long`,
-`compute_pcc`, `prepare_llr` and `compute_llr` functions. The full source checksum
-is pinned; a changed implementation requires an explicit version review.
+`bin/pcc_llr_adapter.R` parses the unchanged bundled
+`lib/relatedness/run_pcc_llr.R`, evaluates its imports/definitions and stops before
+its standalone CLI driver. It calls the same validate_called_rds,
+read_pair_metadata, make_segment_long, compute_pcc, prepare_llr and compute_llr
+functions. Its original full-file hash is unchanged. The standard configuration
+has no runner-path input; an advanced override must match the same frozen bytes.
 
 PCC retains QDNAseq usable-bin selection, segmented values rounded to three
 decimals, log2 transformation and Pearson correlation in the original pair
@@ -39,7 +39,8 @@ no new thresholds or classification rules are introduced.
 
 ## Historical breakpoint fraction_shared
 
-`bin/breakpoints_adapter.R` loads operator-supplied, checksum-pinned sources.
+`bin/breakpoints_adapter.R` loads bundled, checksum-pinned preprocessing and
+matcher sources.
 It evaluates only `rcn_cohort_segs`, `rcn_cohort_calls`, `rcn_cohort_collapse`
 and `df_cohort` assignments from historical preprocessing revision
 `39a918d2a38a30cc78a90a51a314b7ef83a7813d`, using the entire manifest as
@@ -51,8 +52,8 @@ remain the recovered implementation, including `utanos` functions.
 The recovered `getHit` and `calculateMaxGap` functions come from matching
 revision `712eb202303119588ca10889ca92a721afd0c396`. Only those definitions are
 loaded; frequency-weighted scorers are never executed. The modal-bin-derived
-tolerance must equal 2,500,000 bp. The supplied Python reconstruction module
-`regress_fraction_shared.py` is imported without running its CLI. Its original
+tolerance must equal 2,500,000 bp. The bundled Python reconstruction core
+`lib/relatedness/fraction_shared_historical.py` is imported without an analysis CLI. Its original
 `group_observations` and `counts` functions independently score the extracted
 observations, and **every pair's counts must agree exactly with recovered R**.
 Any discrepancy fails the task before final tables are written.
@@ -83,21 +84,26 @@ The tested utanos version is 0.1.0.9000, RemoteSha
 
 ## Resources, precision and statuses
 
-All six authority hashes are in `bin/run_metrics.py::HASHES`, including the
-unchanged PCC/LLR runner. Supply these external assets explicitly:
+The original full-source identities and packaged file hashes are both preserved
+in scientific_sources.json. Runner and matcher are byte-identical. Four selected
+R expressions and seven Python functions are AST-identical to their historical
+sources; only unrelated cohort/CLI drivers are omitted. HASHES in run_metrics.py
+pins the actual packaged sources. No historical source identity is silently
+reassigned to a derived file. Full numerical fixture identities are unchanged.
 
-| Parameter | Frozen resource |
+| Component | Default location |
 | --- | --- |
-| `--pfreq` | `pfreq_lusc_tcga_split.csv` |
-| `--llr_helper` | `clonality_analysis_PFREQ_MOD.R` |
-| `--breakpoint_preprocessing` | Complete historical `test_relatedness_cohort_qc_pass.R` at the revision above |
-| `--breakpoint_matching` | Recovered `breakclone_copynumber_712eb202.R` |
-| `--fraction_implementation` | Validated `regress_fraction_shared.py` reconstruction |
+| PCC/LLR runner | `lib/relatedness/run_pcc_llr.R` |
+| Breakpoint preprocessing | `lib/relatedness/breakpoint_preprocessing.R` |
+| Recovered matcher | `vendor/breakclone/copynumber.R` and upstream MIT notice |
+| Python all-overlap core | `lib/relatedness/fraction_shared_historical.py` |
+| Frozen PFREQ | resource_directory/pfreq_lusc_tcga_split.csv; external |
+| Modified LLR helper | resource_directory/clonality_analysis_PFREQ_MOD.R; external |
 
-These are code/model inputs, not patient metadata. No third-party source, model or historical fixture is bundled in this snapshot. Authorized acquisition remains an execution prerequisite; redistribution
-permission is required before bundling these external assets. Their absence alone
-does not block publication of independently owned pipeline source. All assets are checked
-before metric computation; supplied paths are staged into the task.
+Standalone Python, preflight, Nextflow and cached regression resolve the same
+bundled defaults. Explicit overrides are advanced options and remain hash locked.
+The external helper/PFREQ can be acquired directly from frozen public upstream
+URLs through prepare_resources.py; no historical internal source path is needed.
 
 R exports metric doubles with 17 significant digits; Python carries these
 strings unchanged into final TSVs. Fractions also include an exact rational

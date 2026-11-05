@@ -30,8 +30,6 @@ def git(*args):
 def inspect(path, data):
     if Path(path).parts[0] in FORBIDDEN_ROOTS or path.lower().endswith(FORBIDDEN_SUFFIXES):
         raise ValueError(f'Forbidden release artifact: {path}')
-    if Path(path).name == 'run_pcc_llr.R':
-        raise ValueError('Legacy scientific runner must remain external')
     if len(data) > 512 * 1024 or b'\0' in data:
         raise ValueError(f'Large or binary artifact: {path}')
     text = data.decode('utf-8')
@@ -96,15 +94,29 @@ def audit_snapshot(files, require_publishable=False):
         inspect(path, data)
         if path in sums and hashlib.sha256(data).hexdigest() != sums[path]:
             raise ValueError(f'Release checksum mismatch: {path}')
+    # New source packaging may include only the declared MIT-licensed vendor file.
+    if 'public_relatedness/scientific_sources.json' in files:
+        sources = json.loads(files['public_relatedness/scientific_sources.json'])['sources']
+        for key in ['runner', 'preprocessing', 'matching', 'fraction_implementation']:
+            entry = sources[key]
+            path = 'public_relatedness/' + entry['path']
+            if path not in files or hashlib.sha256(files[path]).hexdigest() != entry['sha256']:
+                raise ValueError('Bundled scientific source identity mismatch: ' + key)
+        allowed_vendor = {'public_relatedness/vendor/breakclone/copynumber.R', 'public_relatedness/vendor/breakclone/LICENSE'}
+        if {p for p in files if p.startswith('public_relatedness/vendor/')} != allowed_vendor:
+            raise ValueError('Unexpected third-party source in vendor directory')
+        if b'Copyright (c) 2022 The Authors' not in files['public_relatedness/vendor/breakclone/LICENSE']:
+            raise ValueError('Missing upstream breakclone notice')
+        if any(Path(p).name == 'clonality_analysis_PFREQ_MOD.R' or hashlib.sha256(data).hexdigest() == sources['helper']['sha256'] for p, data in files.items()):
+            raise ValueError('Unbundled third-party helper must remain externally acquired')
     status = json.loads(files['RELEASE_STATUS.json'])
-    if status['version'] != '0.1.0-dev' or status['end_to_end_validation'] != 'pending':
+    if status['version'] not in {'0.1.0-dev', '0.1.1-dev'} or status['end_to_end_validation'] != 'pending':
         raise ValueError('Unexpected development release/validation label')
     if require_publishable:
         if (status.get('project_license') != 'MIT' or status['project_license_status'] != 'applied'
                 or status.get('publication_repository') != 'NasoLab/swgs-relatedness'):
             raise ValueError('Source not ready: applied project MIT license and selected destination are required')
         if (status.get('external_components_relicensed') is not False
-                or status.get('third_party_source_bundled') is not False
                 or status.get('reference_payloads_bundled') is not False
                 or status.get('images_bundled') is not False):
             raise ValueError('Source not ready: external license boundaries and payload exclusions must be preserved')

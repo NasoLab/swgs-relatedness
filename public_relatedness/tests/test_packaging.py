@@ -45,10 +45,9 @@ class PackagingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'checksum mismatch'):
             self.validate()
 
-    def test_external_runner_is_required_and_checksum_locked(self):
+    def test_bundled_runner_is_automatic_and_overrides_checksum_locked(self):
         del self.params['pcc_llr_runner']
-        with self.assertRaisesRegex(ValueError, 'pcc_llr_runner'):
-            self.validate(metadata_only=True)
+        self.assertEqual(self.validate(metadata_only=True)['status'], 'metadata_valid')
         self.params['pcc_llr_runner'] = str(self.runner)
         self.runner.write_text('changed test marker')
         with self.assertRaisesRegex(ValueError, 'pcc_llr_runner'):

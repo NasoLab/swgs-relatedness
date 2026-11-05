@@ -14,9 +14,9 @@ HASHES = {
     'runner': '411676813fde9d1f3bd2b74fe08a59970a060e5bff564b561264c7a35b2ea15f',
     'pfreq': '582b6b53c4a4f70149b115c504685f24e983c522d63c1cb42c25a90db103e04f',
     'helper': 'fed28e2eca2ae213957c5e382e8e3deee698aae1d9eed0d39b57401e7cdc7f35',
-    'preprocessing': '16655beb5ea51c3f9297418d04a5a288d23689259f7845e6db553564232cabf6',
+    'preprocessing': '677782aa108d7fb728ba183e61721b2f3b6df8cff46c99c9318fbbab3201e3cb',
     'matching': 'ac0a06306bcbc048a06180d7a06584695a3aa8e3279ca57068f9ade6544e8330',
-    'fraction_implementation': 'e127424de7f54233dfc0281887d273e9e9deb81437250e1d08ac145070bb7f31',
+    'fraction_implementation': 'b6434a7265e6b1a795f8af24c1721d7f20b5276fdb24d67ec980e04712c323b6',
 }
 PAIR_FIELDS = ['pair_id', 'sample1', 'sample2', 'pcc', 'llr', 'shared', 'private_sample1',
                'private_sample2', 'total', 'fraction_shared', 'fraction_shared_rational',
@@ -117,6 +117,19 @@ def finite(value):
 
 def run(args):
     samples, pairs = contracts(args.samples, args.pairs)
+    # Standalone/cached invocation also locates packaged source automatically.
+    needed = ['runner'] + (['preprocessing', 'matching', 'fraction_implementation', 'helper', 'pfreq'] if pairs else [])
+    if not args.stub and any(getattr(args, key) is None for key in needed):
+        module_path = Path(__file__).with_name('assets.py')
+        if not module_path.is_file():
+            raise ValueError('Staged metric task is missing an asset; workflow must resolve all source paths before staging')
+        spec = importlib.util.spec_from_file_location('asset_defaults', module_path)
+        defaults = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(defaults)
+        resolved = defaults.resolve({'resource_directory': getattr(args, 'resource_directory', None)})
+        mapping = dict(defaults.PARAMS, helper='llr_helper', pfreq='pfreq')
+        for key in needed:
+            if getattr(args, key) is None: setattr(args, key, Path(resolved[mapping[key]]) if resolved.get(mapping[key]) else None)
     # Fail before producing partial tables if an asset differs from the frozen authority.
     assets = ({k: getattr(args, k) for k in HASHES} if pairs else {'runner': args.runner}) if not args.stub else {}
     hashes = {}
@@ -181,6 +194,7 @@ def main():
         p.add_argument('--' + flag, type=Path, required=True)
     for key in HASHES:
         p.add_argument('--' + key.replace('_', '-'), type=Path)
+    p.add_argument('--resource-directory', type=Path, help='External frozen assets; bundled code is located automatically')
     p.add_argument('--pcc-adapter', type=Path)
     p.add_argument('--breakpoint-adapter', type=Path)
     p.add_argument('--rscript', default='Rscript')

@@ -1,60 +1,62 @@
-# Public workflow — v0.1.0 — Development
+# Public workflow — v0.1.1 development candidate
 
 Read the [root README](../README.md), [installation](INSTALL.md),
-[metric contracts](METRIC_ADAPTERS.md), [reference manifest](references/README.md)
-and [licensing status](LICENSING.md). End-to-end validation remains pending.
+[metric contract](METRIC_ADAPTERS.md) and [source provenance](scientific_sources.json).
+End-to-end and cross-host validation remain pending.
 
-Use the exact three-column TSV headers in [samples.tsv](examples/samples.tsv)
-and [pairs.tsv](examples/pairs.tsv). IDs use letters, digits, underscores and
-hyphens; reads are paired-end without CROP:50. Relative read paths resolve
-against the sample manifest. One mate pair per sample is required; prepare
-multi-lane inputs separately. The complete cohort is called once and its input
-sample order is checked before scoring. Original pair orientation and order are
-retained. Multiple comparisons may involve the same sample.
+The normal [run configuration](examples/run-params.json) contains only sample
+manifest, pair manifest, resource_directory and outdir. Manifest formats remain
+unchanged; multiple comparisons may reuse a sample. Pair row order/orientation
+and full-cohort membership are preserved. Bundled source paths resolve from the
+pipeline directory, not the launch directory. A resource directory may also be
+selected by SWGS_RESOURCE_DIR. Optional explicit reference/source/executable
+locations are documented in [advanced.config](examples/advanced.config).
 
-The legacy scientific runner is not included: supply `pcc_llr_runner` pointing to
-an independently authorized file matching its frozen hash. This is required even
-for cohort-only execution because the inherited QC adapter loads that runner.
-PCC, LLR, historical preprocessing/matching and PFREQ are not replaced with
-alternative scientific implementations. Additional frozen resources are required
-when pairs are supplied. The [parameter template](examples/run-params.json)
-lists all paths.
+The runner is required even for cohort-only sample QC and is now automatic.
+The preprocessing and Python core contain only exact expressions/functions used
+by existing adapters. The third-party matcher includes its upstream MIT notice.
+The inherited modified LLR helper remains external, acquired from its exact
+public source and checked against its existing hash. No new scientific method,
+classification threshold, package upgrade or model is introduced.
 
-Outputs are `sample_results.tsv`, `pair_results.tsv` and metric provenance, plus
-alignment, copy-number and calling outputs. Scores retain 17-digit numeric
-precision; fractions include a rational representation. Unsupported both-zero
-or negative-private breakpoint cases retain their counts and explicit status.
-No new relatedness classifications or QC thresholds are introduced.
+Outputs are sample_results.tsv, pair_results.tsv and native provenance, with
+17-digit numeric score precision and an exact rational fraction. Unsupported
+both-zero and negative-private cases remain explicit; missing samples fail.
+Stub output metrics are NA/stub_not_computed and are not biological fixtures.
 
-For authorized cached objects, use `-entry CACHED_METRICS` and supply
-`called_rds`, `validated_samples`, `validated_pairs`, `pcc_llr_runner`, frozen
-resources and the validated runtimes. This mode does not run alignment or calling.
-
-## Lightweight verification
+## Lightweight checks
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s public_relatedness/tests -v
-PUBLIC_NEXTFLOW=nextflow PYTHONDONTWRITEBYTECODE=1 \
-  python -m unittest discover -s public_relatedness/tests -p test_nextflow.py -v
+PYTHONDONTWRITEBYTECODE=1 PUBLIC_NEXTFLOW=nextflow \
+  python -m unittest discover -s public_relatedness/tests -v
 ```
 
-Stub tests create tiny artificial markers; they perform no sequencing or
-scientific computation. Their outputs must remain `stub_not_computed`/NA.
+The tests create synthetic markers only. No FASTQ alignment or real calling is
+performed. Source lookup is exercised from a different working directory and
+Nextflow stubs use a resource directory without any source-path arguments.
 
-## Authorized numerical regression inputs
+## Authorized cached regression checks
 
-Historical profiles, observation tables and fixtures are not distributed. For
-an operator with separate permission, copy [cached_regression.json](examples/cached_regression.json)
-to a private file and provide the exact authorized resources, then run:
+Historical profiles and fixtures are not redistributed. Copy the
+[cached regression template](examples/cached_regression.json) to private storage,
+provide authorized called objects/fixtures and the separate validated R runtimes,
+then run:
 
 ```bash
 python public_relatedness/tests/cached_regression.py \
-  --config /path/to/private_regression.json --output /path/to/new_regression_output
+  --config /path/to/private-regression.json --output /path/to/new-regression-output
 ```
 
-This checks frozen fixture hashes, the ordered 62-pair LLR loop, 66 PCC values,
-38 historical breakpoint cases, cohort membership, pair orientation, precision
-and output schemas. The optional local observation-only test also accepts
-`PUBLIC_HISTORICAL_CONFIG` plus `PUBLIC_HISTORICAL_REGRESSION=1` when its external
-`observations` and `availability` tables are authorized and supplied. No fixture
-may be copied into a public commit merely to make this test runnable.
+Bundled source paths are automatic here too. Only the external helper/PFREQ
+require supplied resources or resource_directory. The harness checks frozen
+fixture hashes, all 66 PCC values, the original seeded ordered 62-pair LLR loop,
+all 38 historical breakpoint cases, cohort/pair ordering, missing samples and
+output schemas. The optional observation-only test remains available with
+PUBLIC_HISTORICAL_CONFIG and PUBLIC_HISTORICAL_REGRESSION=1. Historical fixture
+SHA256 values and numerical tolerances are unchanged.
+
+For a cached Nextflow run use `-entry CACHED_METRICS` with called_rds,
+validated_samples, validated_pairs, resource_directory and a recorded runtime.
+No alignment/calling is invoked. A null metrics_container selects the separate
+host Rscript-llr/Rscript-general executables; explicit advanced overrides remain
+available. The full FASTQ workflow requires validated local SIF selection.

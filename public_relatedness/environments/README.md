@@ -105,3 +105,39 @@ Metadata-only checks on existing runtimes:
 For fresh inventory capture, use `capture_r.R OUTPUT_DIRECTORY` and
 `capture_conda.py --prefix PREFIX --output NEW_DIRECTORY`, then review diffs.
 Capture is an observation, not permission to update a scientific environment.
+
+## Phase 5 source restoration procedure
+
+No public registry contains a verified replacement for the retained SIF hashes,
+and original OCI digests are unknown. The workflow therefore uses the role-specific
+local archive matrix in runtime_images.json and rejects altered archives. A tag
+named latest is not accepted as a reproducibility claim. Images are not included
+or uploaded by this candidate. The metrics SIF interface is Rscript-llr and
+Rscript-general under /opt/swgs/bin, preserving separate R installations.
+
+The restoration Dockerfiles install the recorded explicit Conda layers into
+/opt/swgs/general-r and /opt/swgs/llr-r, restore reviewed local R overlays and
+check their versions. metrics.Dockerfile combines those same-prefix artifacts
+without relocating either R tree, then exposes the canonical wrappers. Required
+external build context: approved-sources/manifest.tsv plus exact source archives,
+with archive hashes/terms, and independently pinned base images. Do not fabricate
+missing archive hashes or use current packages instead. The original QDNAseq OCI
+digest and complete manual R source-archive set have not been recovered. These
+are real build inputs still required for a complete public rebuild; recipes are
+provided, but a clean-room build has not been completed or validated.
+
+Prospective commands, only with those inputs available, from the environments
+build context (do not distribute restricted archives/images):
+
+```bash
+docker build -f containers/general-r.Dockerfile --build-arg BASE_IMAGE="$PINNED_BASE" -t local/swgs-general .
+docker build -f containers/llr-r.Dockerfile --build-arg BASE_IMAGE="$PINNED_BASE" -t local/swgs-llr .
+docker build -f containers/metrics.Dockerfile --build-arg GENERAL_IMAGE="$PINNED_GENERAL" --build-arg LLR_IMAGE="$PINNED_LLR" -t local/swgs-metrics .
+```
+
+The input variables must be immutable, independently approved digests. Local
+build outputs are not validated merely because versions match. Run verify_r.R
+and the 66/62/38 gates inside the newly built runtime, inspect linked dependencies
+with cleanenv/containall and no host Conda binds, and test on another host before
+claiming portability. A new validated archive hash requires a reviewed runtime
+matrix update. No image build, upgrade or publication occurred in Phase 5.

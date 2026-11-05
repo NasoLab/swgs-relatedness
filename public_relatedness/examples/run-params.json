@@ -1,19 +1,6 @@
 {
   "samples": "/path/to/samples.tsv",
   "pairs": "/path/to/pairs.tsv",
-  "reference": "/path/to/reference/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
-  "pe150_bins": "/path/to/annotations/1000g_hg38_bins_500kbp_PE150.rds",
-  "pe150_bins_sha256": "1d62a94b9a88845978c7bf709d00b35b0f3b1243ef894b442c3ac2861a23337c",
-  "pfreq": "/path/to/pfreq_lusc_tcga_split.csv",
-  "llr_helper": "/path/to/clonality_analysis_PFREQ_MOD.R",
-  "breakpoint_preprocessing": "/path/to/test_relatedness_cohort_qc_pass.R",
-  "breakpoint_matching": "/path/to/breakclone_copynumber_712eb202.R",
-  "fraction_implementation": "/path/to/regress_fraction_shared.py",
-  "metrics_rscript": "/path/to/llr-r/bin/Rscript",
-  "breakpoint_rscript": "/path/to/general-r/bin/Rscript",
-  "metrics_container": null,
-  "image_directory": "/path/to/verified_images",
-  "outdir": "/path/to/new_results",
-  "temp_directory": "/path/to/large_volume/tmp",
-  "pcc_llr_runner": "/path/to/permission_cleared/run_pcc_llr.R"
+  "resource_directory": "/path/to/frozen_resources",
+  "outdir": "/path/to/new_results"
 }

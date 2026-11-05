@@ -1,0 +1,5 @@
+v0.1.1 — Development
+
+Self-contained project scientific source and automatic resource resolution.
+Historical PCC, sequential seeded LLR and all-overlap breakpoint methods preserved.
+External source/data/runtime limitations are documented; no cross-host claim.

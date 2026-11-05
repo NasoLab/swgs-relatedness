@@ -1,0 +1,4 @@
+{
+  "image_directory": "/path/to/verified_images",
+  "temp_directory": "/path/to/large_volume/tmp"
+}
