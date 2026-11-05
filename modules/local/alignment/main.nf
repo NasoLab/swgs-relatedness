@@ -1,6 +1,6 @@
 process ALIGNMENT {
     tag "Aligning ${sample_id}"
-	container 'docker://blcdsdockerregistry/bwa-mem2_samtools-1.12:2.2.1'
+	container 'docker://blcdsdockerregistry/bwa-mem2_samtools-1.12@sha256:d22cc3f091e2064ae501d4958a2466a2cb60a0e5fe5d340fe38335cdf71b1ad9'
 	cpus 16
 	memory '72 GB'
 	scratch '/tmp'

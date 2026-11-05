@@ -1,7 +1,7 @@
 process TRIMMOMATIC {
     tag "trimming reads of $sample_id"
 
-	container 'docker://staphb/trimmomatic:latest'    
+	container 'docker://staphb/trimmomatic@sha256:97a09b4b6e3af6c372629ea79322237e031e9e0d19e9891b48b5423c096c6157'
 	cpus 8
 	memory '32 GB'
 	scratch '/tmp'

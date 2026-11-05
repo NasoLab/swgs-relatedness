@@ -34,16 +34,14 @@ mkdir -p /mnt/swgs/run
 cp public_relatedness/examples/{samples.tsv,pairs.tsv,run-params.json,runtime.config,runtime-params.json} /mnt/swgs/run/
 ```
 
-Full FASTQ runs currently require five validated local SIF archives and the frozen
-references below. They are not included in the repository or installed by the
-workflow. Automatic registry retrieval is not configured in this release, and
-fresh conversions of public images are not accepted merely because their tool
-versions match. A complete public rebuild of every R runtime is not yet available.
-The validated metrics image is not publicly distributed. If you cannot obtain
-the required archives, full FASTQ execution is not yet independently installable
-from this repository. Obtain authorized assets before attempting a full run; see
-[installation and acquisition limits](../public_relatedness/INSTALL.md) and
-[external licensing scope](../public_relatedness/LICENSING.md).
+Full FASTQ runs use four digest-pinned public OCI images and the hosted,
+checksum-verified metrics SIF. Nextflow retrieves upstream images as needed;
+metrics acquisition is an explicit setup step. The metrics SIF contains both
+historical R stacks, so a host R/Conda installation is unnecessary. Reference
+assets remain separate inputs. All payloads stay outside the source checkout.
+See [installation](../public_relatedness/INSTALL.md) and
+[external license scope](../public_relatedness/LICENSING.md); source MIT licensing
+does not change image, package or reference terms.
 
 ## References
 
@@ -81,18 +79,46 @@ or BWA-MEM2 indexes. Existing mismatching files are not overwritten.
 
 ## Runtime setup
 
-Obtain the exact local archives listed in
-[runtime_images.json](../public_relatedness/environments/runtime_images.json)
-and put them in `image_directory`. These filenames identify local archives;
-the word `latest` in a filename is not an instruction to pull a moving tag.
+Download the validated metrics SIF once:
 
-| Local archive | Role and recorded software |
-| --- | --- |
-| `staphb-trimmomatic-latest.img` | Trimmomatic 0.40; Java 11.0.28+6 |
-| `blcdsdockerregistry-bwa-mem2_samtools-1.12-2.2.1.img` | BWA-MEM2 2.2.1; samtools/HTSlib 1.12 |
-| `broadinstitute-picard-latest.img` | Picard 3.5.0-1-gc2a483d49-SNAPSHOT; Java 17.0.19+10 |
-| `huntsmanlab-qdnaseq-latest.img` | R 4.4.3; Bioconductor 3.20.0; QDNAseq 1.42.0; CGHcall 2.68.0 |
-| `metrics.sif` | Separate R 4.3.3 historical LLR and R 4.5.3 general/breakpoint stacks, plus Python |
+```bash
+python public_relatedness/bin/prepare_runtimes.py --resources /mnt/swgs/resources --fetch-metrics
+```
+
+The fixed source is [metrics-internal.sif](https://bcgsc.ca/downloads/rcorbett/metrics-internal.sif).
+Its mandatory SHA256 is
+`ae7c40c285c19a6db6d01bb61f839cdd348f4cfd3f7510ae533091e2ed9f7151`.
+Setup saves it as `/mnt/swgs/resources/containers/metrics.sif`, which the full
+workflow locates automatically from `resource_directory`. Wrong/partial downloads
+are not published, valid existing files are reused, and mismatching files are
+never overwritten. No checksum override or image rebuilding is performed.
+
+To reuse a local copy without another download, use `--existing-metrics /path/to/metrics.sif`
+instead of `--fetch-metrics`. The file is verified and hard-linked on the same
+filesystem. Across filesystems, choose a cache on that volume or use the existing
+`metrics_container` path override; setup does not silently copy another 3.22 GiB.
+`--verify` verifies a cached SIF without network access. For a different cache,
+replace `--resources` with `--directory DIRECTORY` and set `image_directory` to
+that directory in the runtime configuration and preflight JSON.
+
+The other four runtimes are pulled automatically by Nextflow/Apptainer using
+immutable Linux/amd64 manifests from
+[runtime_images.json](../public_relatedness/environments/runtime_images.json):
+
+| Runtime | Recorded software | Public source |
+| --- | --- | --- |
+| Trimming | Trimmomatic 0.40; Java 11.0.28+6 | `staphb/trimmomatic` at the recorded digest |
+| Alignment | BWA-MEM2 2.2.1; samtools/HTSlib 1.12 | `blcdsdockerregistry/bwa-mem2_samtools-1.12` at the recorded digest |
+| Duplicate marking | Picard 3.5.0-1-gc2a483d49-SNAPSHOT; Java 17.0.19+10 | `broadinstitute/picard` at the recorded digest |
+| QDNAseq/CGHcall | R 4.4.3; Bioconductor 3.20.0; QDNAseq 1.42.0; CGHcall 2.68.0 | `huntsmanlab/qdnaseq` at the recorded digest |
+
+Do not replace these with `latest`, Picard's separate 3.5.0 release tag, or a
+newer R image. OCI digests identify manifests; SIF SHA256s identify archive bytes
+and are not interchangeable. A fresh OCI-to-SIF conversion can have a different
+SIF SHA256 while containing the same software. Exact retained local upstream
+archives remain optional overrides when their recorded filenames exist in an
+explicit `image_directory`; those overrides must match the original SIF hashes.
+An invalid local override stops execution instead of silently changing sources.
 
 The metrics SIF provides `/opt/swgs/bin/Rscript-llr` and
 `/opt/swgs/bin/Rscript-general`. The historical LLR stack includes QDNAseq 1.36.0,
@@ -107,7 +133,7 @@ to `/mnt/swgs/run/runtime.config` and set its existing parameters:
 
 ```groovy
 params {
-    image_directory = '/mnt/swgs/images'
+    image_directory = null // metrics defaults to resource_directory/containers
     temp_directory = '/mnt/swgs/tmp'
 }
 ```
@@ -122,7 +148,8 @@ mkdir -p /mnt/swgs/tmp /mnt/swgs/work
 cp public_relatedness/examples/runtime-params.json /mnt/swgs/run/runtime-params.json
 ```
 
-Set the same `image_directory` and `temp_directory` in the copied JSON file.
+Set the same optional `image_directory` and chosen `temp_directory` in the copied JSON file.
+Keep `image_directory` null for the default resource-directory cache.
 Nextflow reads Groovy `runtime.config`; standalone Python preflight reads
 `runtime-params.json`. The JSON is only needed for that standalone preflight.
 
@@ -131,6 +158,20 @@ digits, `/`, `.`, `_` and `-`. It is bound at the same path inside containers.
 On a cluster, input/reference/image/work/temp/output paths must be accessible
 on every relevant worker. Image cache/build storage is separate from task temp
 storage; select it with `APPTAINER_CACHEDIR` and `APPTAINER_TMPDIR` as needed.
+Set `NXF_SINGULARITY_CACHEDIR` to a persistent writable project-volume directory
+for Nextflow's converted upstream images. The first pull requires network access;
+subsequent runs can reuse that cache. These three environment variables are
+storage settings, not workflow parameters.
+
+The preserved metrics SIF contains absolute R installation prefixes. Keep the
+clone, resources and work below one operational storage directory where possible
+and avoid broad mounts over runtime paths. Scoring inputs are copied into the
+task directory to reduce source-tree binds. A contained-runtime guard rejects
+host mounts hiding embedded R libraries instead of silently using host Conda.
+If it fails, inspect the task's `.command.run` binds and use a narrower workspace
+layout; do not bind a host Conda installation as a workaround. This guard and
+one-host checks do not establish cross-host portability. Empty or corrupted caches need
+reacquisition from the same pinned digests.
 
 ## Manifests
 
@@ -194,7 +235,9 @@ from the pipeline directory automatically and needs no user-supplied code paths.
 ## Run
 
 Run these commands from the repository root after setup. They verify the full
-resource set and image identities before launching sequencing tasks:
+resource set, source identities and metrics SIF before launching sequencing tasks.
+Preflight lists the four pinned OCI identities but does not inspect images that
+have not been pulled; Nextflow/Apptainer performs digest-based retrieval:
 
 ```bash
 python public_relatedness/bin/prepare_resources.py --resources /mnt/swgs/resources --verify
@@ -244,8 +287,12 @@ For example, create `/mnt/swgs/run/cached-params.json` with paths to existing in
 }
 ```
 
-For host scoring, omit `image_directory`/`metrics_container` and provide the
-validated `Rscript-llr` and `Rscript-general` wrappers on PATH:
+Cached scoring automatically uses `resource_directory/containers/metrics.sif`
+when it exists and explicit host executable selectors are absent. Use
+`-profile singularity` and the same runtime configuration for that route.
+For host scoring, omit `image_directory`/`metrics_container`, set
+`metrics_rscript` to `Rscript-llr` and `breakpoint_rscript` to `Rscript-general`
+in the cached JSON, and provide both validated wrappers on PATH:
 
 ```bash
 nextflow -C public_relatedness/nextflow.config run public_relatedness/main.nf \
@@ -279,9 +326,9 @@ such as `-profile`, `-entry`, `-params-file`, `-work-dir` and `-resume`.
 
 | Parameter | Declared default | Effective use |
 | --- | --- | --- |
-| `image_directory` | `null` | Required for full FASTQ execution; directory of the five recorded local SIF archives |
+| `image_directory` | `null` | Optional metrics-cache directory; otherwise the full workflow uses `resource_directory/containers`. Exact retained local upstream files in this directory override OCI retrieval |
 | `temp_directory` | `null` | Task TMPDIR and upstream task scratch; defaults to `/tmp` when unset |
-| `metrics_container` | `null` | Defaults to `image_directory/metrics.sif` when that directory is set; any override must match the frozen metrics SIF SHA256 |
+| `metrics_container` | `null` | Defaults to `image_directory/metrics.sif`, or `resource_directory/containers/metrics.sif` for full runs. Cached scoring also auto-selects an existing resource-cache SIF unless host R executables are explicitly selected. SHA256 is always enforced before execution |
 | `metrics_rscript` | `null` | `/opt/swgs/bin/Rscript-llr` with a metrics container; otherwise `Rscript-llr` on PATH; runs the public PCC/LLR adapter |
 | `breakpoint_rscript` | `null` | `/opt/swgs/bin/Rscript-general` with a metrics container; otherwise `Rscript-general` on PATH; runs breakpoint preprocessing/matching |
 
@@ -323,6 +370,7 @@ CPU/memory requests are Nextflow process directives, not additional `params` key
 
 | Utility | Options and defaults |
 | --- | --- |
+| `prepare_runtimes.py` | Choose `--resources DIRECTORY` or `--directory CACHE`; choose `--fetch-metrics`, `--existing-metrics FILE` or `--verify`. Downloading is opt-in and SHA256 verification is mandatory |
 | `prepare_resources.py` | `--resources DIRECTORY` required; repeatable `--fetch hg38`, `--fetch pfreq` or `--fetch llr-helper` defaults to no downloads; `--verify` defaults to off |
 | `validate_setup.py` | `--params JSON` required; `--runtime-params JSON` optional; `--profiles` defaults to `singularity`; `--check-images` and `--metadata-only` default to off |
 
@@ -390,7 +438,8 @@ parsing and third-party tools may report generic errors instead.
 | Duplicate sample/pair, self-comparison or missing member | Use unique IDs, remove duplicate unordered comparisons and reference existing samples |
 | Missing reference/helper/annotation | Verify `resource_directory` and expected filenames; use the [acquisition guide](../public_relatedness/INSTALL.md); PE150/index files must be supplied separately |
 | Reference, source or image checksum mismatch | Obtain the recorded asset; do not replace an expected hash with the hash of an unvalidated substitute |
-| Missing image or FASTQ runtime-profile error | Configure the exact SIF filenames in `image_directory` and use `-profile singularity`; Docker is not a full-workflow alternative in this release |
+| Missing metrics image or FASTQ runtime-profile error | Run `prepare_runtimes.py --resources DIRECTORY --fetch-metrics`, check the cache path and use `-profile singularity`; Docker is not a full-workflow alternative |
+| OCI download/conversion fails | Check registry/network access, cache space and permissions; retry the unchanged digest with a clean/private cache if needed. Do not switch to a different tag |
 | Missing `singularity`, `sbatch` or R executable | Check the selected profile and PATH; cached host scoring needs both validated R wrappers |
 | Temporary directory invalid or a bind/mount fails | Create an absolute writable directory with the permitted characters and verify the same path on execution workers |
 | Output directory already contains results | Select a fresh `outdir`; use Nextflow `-resume` with the original work directory for interrupted runs |

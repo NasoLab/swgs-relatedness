@@ -22,6 +22,7 @@ process SCORE_AND_AGGREGATE {
     path orchestrator
     path pcc_adapter
     path breakpoint_adapter
+    path runtime_guard
     val profile_location
     output:
     path 'metrics/sample_results.tsv', emit: samples
@@ -32,7 +33,9 @@ process SCORE_AND_AGGREGATE {
     def resources = [pfreq: pfreq, helper: helper, preprocessing: preprocessing,
                      matching: matching, 'fraction-implementation': fraction_implementation]
         .findAll { key, value -> value }.collect { key, value -> "--${key} ${shellQuote(value)}" }.join(' ')
+    def runtimeCheck = params.metrics_container ? "python3 ${shellQuote(runtime_guard)} --rscript ${shellQuote(params.metrics_rscript)} --rscript ${shellQuote(params.breakpoint_rscript)}" : ''
     """
+    ${runtimeCheck}
     python3 ${shellQuote(orchestrator)} --called-rds ${called} --samples ${samples} --pairs ${pairs} \\
       --runner ${shellQuote(runner)} --pcc-adapter ${shellQuote(pcc_adapter)} --breakpoint-adapter ${shellQuote(breakpoint_adapter)} \\
       --rscript ${shellQuote(params.metrics_rscript)} --breakpoint-rscript ${shellQuote(params.breakpoint_rscript)} \\
@@ -60,7 +63,7 @@ workflow PUBLIC_METRICS {
     SCORE_AND_AGGREGATE(called, samples, pairs, pfreq, helper, preprocessing, matching, implementation,
         file(params.pcc_llr_runner, checkIfExists: true),
         file("${projectDir}/bin/run_metrics.py"), file("${projectDir}/bin/pcc_llr_adapter.R"),
-        file("${projectDir}/bin/breakpoints_adapter.R"), profile_location)
+        file("${projectDir}/bin/breakpoints_adapter.R"), file("${projectDir}/bin/check_runtime_mounts.py"), profile_location)
     emit:
     sample_results = SCORE_AND_AGGREGATE.out.samples
     pair_results = SCORE_AND_AGGREGATE.out.pairs

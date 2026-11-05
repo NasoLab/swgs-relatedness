@@ -129,12 +129,28 @@ class PackagingTests(unittest.TestCase):
         for image in images:
             with self.subTest(role=image['role']):
                 with self.assertRaises(ValueError) as caught:
-                    self.validate(metadata_only=True, check_images=True, image_inventory=dict(images=[image]))
+                    local_override = {k: v for k, v in image.items() if k != 'oci_uri'}
+                    self.validate(metadata_only=True, check_images=True, image_inventory=dict(images=[local_override]))
                 message = str(caught.exception)
                 for expected in [str(self.root / image['filename']), 'image_directory',
                                  'public_relatedness/INSTALL.md', 'public_relatedness/environments/README.md',
                                  'public_relatedness/environments/runtime_images.json']:
                     self.assertIn(expected, message)
+
+    def test_public_images_need_only_local_metrics_sif(self):
+        self.params['image_directory'] = str(self.root)
+        (self.root / 'metrics.sif').write_text('synthetic image marker; metadata-only check')
+        result = self.validate(metadata_only=True, check_images=True)
+        selected = result['runtime_selection']
+        self.assertEqual(sum(v['source'] == 'oci' for v in selected.values()), 4)
+        self.assertEqual(selected['metrics']['source'], 'local_sif')
+
+    def test_invalid_legacy_override_does_not_fall_back_to_oci(self):
+        self.params['image_directory'] = str(self.root)
+        first = json.loads((ROOT / 'environments/runtime_images.json').read_text())['images'][0]
+        (self.root / first['filename']).write_text('wrong synthetic image marker')
+        with self.assertRaisesRegex(ValueError, 'Container archive checksum mismatch: trimmomatic'):
+            self.validate(check_images=True)
 
     def test_reference_manifest_has_approved_annotation_and_sidecars(self):
         data = json.loads((ROOT / 'references/manifest.json').read_text())

@@ -18,10 +18,11 @@ historical breakpoint `fraction_shared` for each ordered comparison.
 ## Quick Start
 
 Install Nextflow 24.10.3, compatible Java, Python >=3.9 and Apptainer with its
-`singularity` command interface. **Obtain and configure the validated runtime
-images and frozen reference resources separately** using the
-[setup instructions](docs/USAGE.md#requirements). This release does not install
-them automatically; full end-to-end and cross-host validation remain pending.
+`singularity` command interface. Obtain the frozen references using the
+[setup instructions](docs/USAGE.md#requirements). Download the checksum-verified
+metrics SIF below; Nextflow retrieves the four pinned upstream images automatically.
+The SIF supplies the required R runtimes, so no host Conda/R installation is needed.
+Full end-to-end and cross-host validation remain pending.
 
 Use your own writable mounted storage in place of `/mnt/swgs`:
 
@@ -47,8 +48,14 @@ in `/mnt/swgs/run/run-params.json`:
 }
 ```
 
-After completing [resource verification and preflight](docs/USAGE.md#run), run
-from the repository root:
+Obtain the metrics runtime once (existing valid downloads are reused):
+
+```bash
+python public_relatedness/bin/prepare_runtimes.py --resources /mnt/swgs/resources --fetch-metrics
+```
+
+After [resource verification and preflight](docs/USAGE.md#run), run from the
+repository root. The other images are retrieved into Nextflow's container cache:
 
 ```bash
 nextflow -C public_relatedness/nextflow.config,/mnt/swgs/run/runtime.config \

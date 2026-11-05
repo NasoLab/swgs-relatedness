@@ -1,5 +1,18 @@
 # Runtime specifications and preservation recipes
 
+## Current runtime acquisition
+
+Nextflow selects four public Linux/amd64 OCI manifests pinned in
+[runtime_images.json](runtime_images.json). The hosted metrics SIF is acquired
+explicitly by `prepare_runtimes.py` with mandatory SHA256 verification and used
+from `resource_directory/containers/metrics.sif` (or `image_directory`).
+See the [user setup procedure](../../docs/USAGE.md#runtime-setup).
+No internal filesystem access is needed to obtain these runtime payloads.
+The historical inventories below retain their original evidence scope; matching
+software/payload checks are not a completed upstream end-to-end validation.
+The metrics archive is supplied unchanged, not reconstructed by these recipes.
+
+
 Source-restoration Dockerfiles in `containers/` are **unbuilt and unvalidated**.
 The inventories below describe the originating environments. Separately, private
 installed-prefix preservation SIFs passed the cached metric/isolation checks
@@ -108,9 +121,11 @@ Capture is an observation, not permission to update a scientific environment.
 
 ## Phase 5 source restoration procedure
 
-No public registry contains a verified replacement for the retained SIF hashes,
-and original OCI digests are unknown. The workflow therefore uses the role-specific
-local archive matrix in runtime_images.json and rejects altered archives. A tag
+The current manifest adds public OCI candidates whose recorded scientific
+payloads match the retained upstream images. Original SIF identities remain
+baseline/optional local-override identities, not expected hashes of fresh OCI
+conversions. Current runtime acquisition uses the four pinned OCI manifests and
+the exact hosted metrics SIF. The original source-build receipts remain incomplete. A tag
 named latest is not accepted as a reproducibility claim. Images are not included
 or uploaded by this candidate. The metrics SIF interface is Rscript-llr and
 Rscript-general under /opt/swgs/bin, preserving separate R installations.

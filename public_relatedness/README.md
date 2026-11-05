@@ -59,6 +59,8 @@ SHA256 values and numerical tolerances are unchanged.
 
 For a cached Nextflow run use `-entry CACHED_METRICS` with called_rds,
 validated_samples, validated_pairs, resource_directory and a recorded runtime.
-No alignment/calling is invoked. A null metrics_container selects the separate
-host Rscript-llr/Rscript-general executables; explicit advanced overrides remain
-available. The full FASTQ workflow requires validated local SIF selection.
+No alignment/calling is invoked. An existing resource-directory metrics cache is selected automatically when
+host R selectors are absent. Explicit Rscript-llr/Rscript-general executable
+selectors retain host scoring. The full FASTQ workflow uses pinned public OCI
+images plus the checksum-verified hosted metrics SIF; see the
+[setup procedure](../docs/USAGE.md#runtime-setup).

@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 @unittest.skipUnless(os.environ.get('PUBLIC_NEXTFLOW'), 'Set PUBLIC_NEXTFLOW to a Nextflow command for stub tests')
 class NextflowTests(unittest.TestCase):
-    def run_stub(self, with_pairs=True, fail_process=None, custom_temp=False, resource_directory_only=False):
+    def run_stub(self, with_pairs=True, fail_process=None, custom_temp=False, resource_directory_only=False, late_runtime_config=False):
         tmp = tempfile.TemporaryDirectory(prefix='public-relatedness-stub-')
         self.addCleanup(tmp.cleanup)
         root = Path(tmp.name)
@@ -64,8 +64,11 @@ class NextflowTests(unittest.TestCase):
             '-stub-run', '-ansi-log', 'false', '-work-dir', str(root / 'work'),
             '--samples', str(samples), '--reference', str(ref), '--pe150_bins', str(bins),
             '--pe150_bins_sha256', hashlib.sha256(bins.read_bytes()).hexdigest(), '--outdir', str(root / 'out')]
-        if custom_temp:
+        if custom_temp and not late_runtime_config:
             cmd += ['--temp_directory', str(volume)]
+        if late_runtime_config:
+            with config.open('a') as handle:
+                handle.write("params.temp_directory = '" + str(volume) + "'\n")
         if with_pairs:
             cmd += ['--pairs', str(pairs)]
             for key in ['pfreq', 'llr_helper']:
@@ -127,6 +130,13 @@ class NextflowTests(unittest.TestCase):
         proofs = list(volume.glob('temp-proof-*'))
         self.assertEqual(len(proofs), 13)
         self.assertEqual(sum(Path(p.read_text()).is_relative_to(volume) for p in proofs), 9)
+
+    def test_later_runtime_configuration_sets_task_temp_directory(self):
+        root, result = self.run_stub(custom_temp=True, late_runtime_config=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        proofs = list((root / 'large_volume_tmp').glob('temp-proof-*'))
+        self.assertEqual(len(proofs), 13)
+        self.assertEqual(sum(Path(p.read_text()).is_relative_to(root / 'large_volume_tmp') for p in proofs), 9)
 
     def test_duplicate_marking_failure_terminates(self):
         root, result = self.run_stub(fail_process='MARK_DUPLICATES')

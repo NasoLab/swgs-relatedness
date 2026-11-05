@@ -22,20 +22,30 @@ Standalone/cached scoring and preflight use the same default source locations.
 ## External setup and runtimes
 
 An opt-in setup command acquires the exact public PFREQ/helper sources and checks
-their frozen hashes, or verifies an existing resource directory. Wrong or partial
-downloads are not published and existing assets are not overwritten. FASTA gzip
-acquisition is supported with decompressed-hash verification. Existing hg38
-BWA-MEM2 sidecars and the PE150 annotation must still be supplied; neither is
-regenerated or replaced. The modified GPL-3-derived LLR helper remains outside
-Git until its modification terms are established; no scientific substitute is
-introduced. QDNAseq.dev and reference redistribution limits remain documented.
+their frozen hashes, or verifies an existing resource directory. FASTA gzip
+acquisition verifies decompressed bytes. Existing hg38 indexes and the PE150
+annotation remain required external assets and are not regenerated.
 
-Nextflow selects the separate trimming, alignment, Picard, QDNAseq/CGHcall and
-metrics SIFs by recorded identity. Missing/changed images stop execution. Mutable
-registry tags are never silently retrieved; original OCI digests are unknown.
-Separate-prefix source-restoration and combined runtime recipes are supplied but
-remain unbuilt/unvalidated and require missing external archives/source receipts.
-They do not establish a complete public rebuild or cross-host portability.
+`prepare_runtimes.py` now acquires the unchanged hosted metrics SIF from the
+publisher's HTTPS URL with mandatory SHA256 verification. Valid cached files are
+reused; mismatches are not overwritten; an existing same-filesystem SIF can be
+verified and hard-linked without another copy. The resource-directory metrics
+cache is selected automatically. Four public upstream images are selected by
+immutable Linux/amd64 OCI manifests; exact retained local archive overrides remain
+supported. Original SIF hashes and OCI identities are recorded separately.
+Runtime and temporary-volume settings are evaluated after configuration merging.
+
+The metrics task copies its small inputs to reduce source binds, and an added
+runtime guard rejects host mounts hiding the SIF's embedded R libraries. Its
+metadata checks use separate R processes and do not alter scoring RNG consumption.
+Keep clone/resources/work under a narrow operational workspace. The original
+absolute R prefixes remain embedded; cross-host portability is not established.
+
+The source-restoration recipes remain unbuilt/unvalidated and their missing
+archives/license receipts remain unresolved. Hosting an image does not change
+its dependencies' terms. No image/reference payload is committed or published by
+these source changes, and no scientific algorithm, parameter or R package version
+is changed.
 
 ## Validation
 
@@ -66,6 +76,14 @@ skipped**, including all six Nextflow stubs. Documentation links, shell examples
 and runtime configuration parsing passed. Scientific implementations, parameters,
 reference identities and regression fixtures are unchanged; the numerical gates
 above were not rerun for these documentation/error-message changes.
+
+Runtime integration verification passed the full 66/62/38 cached gates again,
+all seven lightweight Nextflow tests and a 13-task real-image stub graph. A
+production cached Nextflow comparison selected the resource-cache SIF automatically,
+passed the library mount guard and matched the fresh full-loop first pair exactly.
+An actual broad read-only host bind was rejected before scoring. The expanded
+suite passed 75 tests with one optional historical test skipped. These checks do
+not constitute full FASTQ/QDNAseq/CGHcall or independent-host validation.
 
 Project MIT licensing, the exact Huntsman acknowledgement, original contributor
 credits and third-party terms are preserved. The candidate retains independent

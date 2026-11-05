@@ -1,7 +1,7 @@
 process MARK_DUPLICATES {
 	tag "marking duplicates reads in $sample_id"
 	publishDir params.output_directory, mode:'copy'
-	container 'docker://broadinstitute/picard:latest'
+	container 'docker://broadinstitute/picard@sha256:de4d1f713e6b42ac3cb7b74a68174f00f7fdba8366eedcd13a30b242625a10c5'
 	cpus 1
 	memory '128 G'
 	scratch '/tmp'

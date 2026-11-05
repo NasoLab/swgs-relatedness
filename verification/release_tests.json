@@ -130,5 +130,69 @@
     "sequencing_analysis_launched": false,
     "pilot_modified": false,
     "published": false
+  },
+  "public_runtime_integration": {
+    "date": "2026-11-05",
+    "hosted_metrics_url": "https://bcgsc.ca/downloads/rcorbett/metrics-internal.sif",
+    "metrics_sha256": "ae7c40c285c19a6db6d01bb61f839cdd348f4cfd3f7510ae533091e2ed9f7151",
+    "hosted_bytes": 3454234624,
+    "verification": "complete HTTPS response streamed through SHA256 and compared with validated local SIF; no second payload saved",
+    "metrics_rebuilt": false,
+    "oci_roles": 4,
+    "oci_platform": "linux/amd64",
+    "scientific_command_bodies_and_metric_sources_unchanged": true,
+    "fresh_cached_gates": {
+      "llr": {
+        "pairs": 62,
+        "matched": 62,
+        "max_abs_difference": 4.973799150320701e-14,
+        "tolerance": 1e-12
+      },
+      "missing_sample_guard": {
+        "rejected": true,
+        "results_published": false
+      },
+      "pcc": {
+        "pairs": 66,
+        "matched": 66,
+        "max_abs_difference": 4.996003610813204e-16,
+        "tolerance": 1e-12
+      },
+      "fraction_shared": {
+        "pairs": 38,
+        "exact_counts": 38,
+        "supplied_fraction_precision_matches": 38
+      }
+    },
+    "real_container_stub_tasks": 13,
+    "real_container_stub_scientific_values": "not computed",
+    "production_cached_nextflow_first_pair": "all pair fields identical to fresh full-loop first pair; PCC/LLR differences zero",
+    "contained_library_guard": "passed in production cached scoring; real broad read-only host bind rejected before scoring",
+    "late_runtime_configuration": "TMPDIR, scratch and image selection evaluated after config merge",
+    "source_restoration_recipes_built": false,
+    "sequencing_analysis_launched": false,
+    "pilot_modified": false,
+    "cross_host_validated": false,
+    "remaining_limits": [
+      "upstream FASTQ/QDNAseq/CGHcall numerical/end-to-end validation pending",
+      "embedded absolute R prefixes require narrow mounts",
+      "external package/reference terms remain unchanged"
+    ],
+    "lightweight_tests": {
+      "discovered": 76,
+      "passed": 75,
+      "skipped": 1,
+      "nextflow_stubs": 7,
+      "seconds": 55.603
+    },
+    "documentation_checks": {
+      "status": "passed",
+      "markdown_files": 12,
+      "relative_links": 74,
+      "bash_examples": 21,
+      "parameters_and_defaults": 25,
+      "frozen_scientific_files_byte_identical": 18,
+      "upstream_module_commands": "unchanged except container identity"
+    }
   }
 }

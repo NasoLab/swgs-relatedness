@@ -59,23 +59,39 @@ No historical cohorts, raw reads or clinical workbooks are distributed.
 
 ## 2. Execution environment
 
-Use Nextflow 24.10.3, compatible Java, Python >=3.9 and Apptainer/Singularity.
-[Runtime inventories](environments/README.md) preserve the exact scientific
-versions. The complete FASTQ path currently requires the singularity profile and
-five local byte-identical SIF archives from
-[runtime_images.json](environments/runtime_images.json). No approved OCI manifest
-digest is known, so automatic registry pulls of mutable tags are disabled.
-Docker and cross-host execution are not validated.
+Use Nextflow 24.10.3, compatible Java, Python >=3.9 and Apptainer/Singularity
+on Linux x86_64. Four upstream runtimes are selected by immutable OCI digest and
+retrieved by Nextflow. Their software/payload comparisons and the metrics image
+identity are recorded in [runtime_images.json](environments/runtime_images.json).
 
-Copy [runtime.config](examples/runtime.config) outside Git and set image_directory
-and a writable temp_directory. Its images select trimming, alignment, duplicate
-marking, QDNAseq/CGHcall and combined metric roles separately. `metrics.sif` must
-match the frozen metrics hash and provide `/opt/swgs/bin/Rscript-llr` plus
-`/opt/swgs/bin/Rscript-general`; these wrappers keep the validated R 4.3.3 and
-R 4.5.3 stacks separate. The QDNAseq stack remains R 4.4.3. The existing validated
-image is internal, not published; acquisition/distribution rights are separate.
+Fetch the hosted metrics SIF with mandatory SHA256 verification:
 
-For operators without those archives, the [source-restoration procedure](environments/README.md#phase-5-source-restoration-procedure)
+```bash
+python public_relatedness/bin/prepare_runtimes.py --resources /mnt/swgs/resources --fetch-metrics
+```
+
+The URL is [metrics-internal.sif](https://bcgsc.ca/downloads/rcorbett/metrics-internal.sif)
+and SHA256 is `ae7c40c285c19a6db6d01bb61f839cdd348f4cfd3f7510ae533091e2ed9f7151`.
+The full workflow automatically uses `resource_directory/containers/metrics.sif`.
+Valid cached files are reused and invalid files are not overwritten. `--verify`
+checks without downloading; `--existing-metrics FILE` verifies and hard-links an
+existing same-filesystem copy without rebuilding/modifying it. An explicit
+`--directory CACHE` is supported with `image_directory` set to that cache.
+
+Copy [runtime.config](examples/runtime.config) and
+[runtime-params.json](examples/runtime-params.json) outside Git. Set a writable
+existing `temp_directory`; leave `image_directory` null for the default metrics
+cache, or set the same explicit cache in both files. The three R stacks remain
+separate: QDNAseq/CGHcall R 4.4.3, historical LLR R 4.3.3 and general R 4.5.3.
+The metrics SIF provides `/opt/swgs/bin/Rscript-llr` and
+`/opt/swgs/bin/Rscript-general`; host Conda/R is unnecessary for container runs.
+No image, package or reference payload is committed with this source release.
+See the [usage guide](../docs/USAGE.md#runtime-setup) for cache/storage configuration
+and optional retained local-image overrides. Docker and cross-host execution
+remain unvalidated; automatic retrieval does not establish scientific equivalence
+for future images or permit dependency upgrades.
+
+For operators rebuilding from source rather than consuming these runtimes, the [source-restoration procedure](environments/README.md#phase-5-source-restoration-procedure)
 provides distinct-prefix recipes, explicit Conda locks and checked local R source
 archives. It is not yet a complete public rebuild: exact archives/source receipts
 for every manual overlay, QDNAseq.dev rights and original upstream OCI digests

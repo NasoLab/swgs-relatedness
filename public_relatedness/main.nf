@@ -21,7 +21,10 @@ if (!settings.pairs && !settings.called_rds) {
     settings.pfreq = null
     settings.llr_helper = null
 }
-if (!settings.metrics_container && settings.image_directory) settings.metrics_container = "${settings.image_directory}/metrics.sif"
+def resourceMetrics = resourceDirectory ? "${resourceDirectory}/containers/metrics.sif" : null
+def useResourceCache = resourceDirectory && (!settings.called_rds || (file(resourceMetrics).exists() && !settings.metrics_rscript))
+def metricsCache = settings.image_directory ?: (useResourceCache ? "${resourceDirectory}/containers" : null)
+if (!settings.metrics_container && metricsCache) settings.metrics_container = "${metricsCache}/metrics.sif"
 if (!settings.metrics_rscript) settings.metrics_rscript = settings.metrics_container ? '/opt/swgs/bin/Rscript-llr' : 'Rscript-llr'
 if (!settings.breakpoint_rscript) settings.breakpoint_rscript = settings.metrics_container ? '/opt/swgs/bin/Rscript-general' : 'Rscript-general'
 
@@ -43,12 +46,22 @@ include { PUBLIC_METRICS } from './modules/metrics' addParams(settings)
 
 workflow {
     if (!workflow.stubRun) {
-        if (workflow.containerEngine != 'singularity') error 'FASTQ execution currently requires the singularity profile with validated local SIFs; no approved OCI digest is available'
-        if (!settings.image_directory) error 'Supply image_directory in the execution-environment configuration; automatic pulls of latest tags are disabled'
+        if (workflow.containerEngine != 'singularity') error 'FASTQ execution requires the singularity profile with pinned OCI images and the verified metrics SIF'
+        if (!(System.getProperty('os.arch') in ['amd64', 'x86_64'])) error 'The frozen runtimes require Linux x86_64; other architectures are not validated'
         def runtimeImages = new groovy.json.JsonSlurper().parse(file("${projectDir}/environments/runtime_images.json").toFile()).images
         runtimeImages.each { image ->
-            def path = file(image.role == 'metrics' ? settings.metrics_container : "${settings.image_directory}/${image.filename}", checkIfExists: true)
-            if (frozenSha256(path) != image.sha256) error "Runtime image checksum mismatch: ${image.role}; use the recorded environment or validate a separately reviewed replacement"
+            if (image.role == 'metrics') {
+                if (!settings.metrics_container || !file(settings.metrics_container).exists()) error 'Missing metrics SIF; run python public_relatedness/bin/prepare_runtimes.py --resources RESOURCE_DIRECTORY --fetch-metrics, or set image_directory/metrics_container. See docs/USAGE.md#runtime-setup'
+                if (frozenSha256(file(settings.metrics_container)) != image.sha256) error 'Metrics SIF checksum mismatch; use the unchanged hosted SIF'
+            } else {
+                def local = settings.image_directory ? file("${settings.image_directory}/${image.filename}") : null
+                if (local && local.exists()) {
+                    if (frozenSha256(local) != image.sha256) error "Runtime image checksum mismatch: ${image.role}; remove an unintended local override to use the pinned OCI image"
+                } else {
+                    if (!(image.oci_uri ==~ /docker:\/\/.+@sha256:[a-f0-9]{64}/)) error "Missing immutable OCI identity: ${image.role}"
+                    log.info "Runtime ${image.role}: ${image.oci_uri}"
+                }
+            }
         }
     }
     for (key in ['samples', 'reference', 'pe150_bins', 'pe150_bins_sha256', 'pcc_llr_runner']) {

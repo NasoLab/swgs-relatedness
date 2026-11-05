@@ -34,7 +34,7 @@ process PREPARE_MANIFEST {
 }
 
 process QDNASEQ_COHORT {
-    container 'docker://huntsmanlab/qdnaseq:latest'
+    container 'docker://huntsmanlab/qdnaseq@sha256:d7dc98dff858d0663bc84ceccaa8e2792af18bcf54af964e20c633eb7668cbb9'
     cpus 16
     memory '32 GB'
     publishDir params.outdir, mode: 'copy'
@@ -65,7 +65,7 @@ process QDNASEQ_COHORT {
 }
 
 process CGHCALL_COHORT {
-    container 'docker://huntsmanlab/qdnaseq:latest'
+    container 'docker://huntsmanlab/qdnaseq@sha256:d7dc98dff858d0663bc84ceccaa8e2792af18bcf54af964e20c633eb7668cbb9'
     cpus 1
     memory '32 GB'
     publishDir "${params.outdir}/cghcall", mode: 'copy'

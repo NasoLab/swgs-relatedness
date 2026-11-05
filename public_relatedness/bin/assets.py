@@ -24,8 +24,13 @@ def resolve(params):
                 out[param] = str(directory / item['filename'])
         if not out.get('llr_helper'):
             out['llr_helper'] = str(directory / SOURCES['helper']['filename'])
-    if out.get('image_directory') and not out.get('metrics_container'):
-        out['metrics_container'] = str(Path(out['image_directory']) / 'metrics.sif')
+    # Cached host scoring stays available through explicit R executable selectors.
+    cached_image = directory / 'containers/metrics.sif' if directory else None
+    use_resource_cache = directory and (not out.get('called_rds') or
+                                        (cached_image.is_file() and not out.get('metrics_rscript')))
+    cache = out.get('image_directory') or (directory / 'containers' if use_resource_cache else None)
+    if cache and not out.get('metrics_container'):
+        out['metrics_container'] = str(Path(cache) / 'metrics.sif')
     if not out.get('metrics_rscript'):
         out['metrics_rscript'] = '/opt/swgs/bin/Rscript-llr' if out.get('metrics_container') else 'Rscript-llr'
     if not out.get('breakpoint_rscript'):

@@ -4,6 +4,7 @@ import argparse
 import importlib.util
 import json
 import os
+import platform
 import re
 import shutil
 from pathlib import Path
@@ -95,10 +96,14 @@ def validate(params, *, metadata_only=False, check_images=False, profiles='singu
     output = Path(outdir)
     if any((output / name).exists() for name in ['sample_results.tsv', 'pair_results.tsv']):
         raise ValueError('Output directory already contains result tables')
-    if check_images or params.get('image_directory'):
+    runtime_selection = {}
+    if check_images or params.get('image_directory') or params.get('metrics_container'):
+        if platform.machine().lower() not in {'x86_64', 'amd64'}:
+            raise ValueError('Frozen containers require Linux x86_64; other architectures are not validated')
         inventory = image_inventory or json.loads((ROOT / 'environments/runtime_images.json').read_text())
         directory = params.get('image_directory')
-        image_hint = (' Configure image_directory with the validated local SIF archives; '
+        image_hint = (' Run python public_relatedness/bin/prepare_runtimes.py --resources RESOURCE_DIRECTORY --fetch-metrics; '
+                      'the default cache is RESOURCE_DIRECTORY/containers. Configure image_directory for a different cache; '
                       'metrics_container overrides the metrics archive only; '
                       'see public_relatedness/environments/README.md and '
                       'public_relatedness/environments/runtime_images.json for filenames and frozen hashes.')
@@ -108,16 +113,25 @@ def validate(params, *, metadata_only=False, check_images=False, profiles='singu
             if image['role'] == 'metrics':
                 path = require_file(params.get('metrics_container'), 'metrics_container', hint=image_hint)
             else:
+                local = Path(directory) / image['filename'] if directory else None
+                if image.get('oci_uri') and not (local and local.is_file()):
+                    if not re.fullmatch(r'docker://.+@sha256:[a-f0-9]{64}', image['oci_uri']):
+                        raise ValueError('Missing immutable OCI identity: ' + image['role'])
+                    runtime_selection[image['role']] = dict(source='oci', uri=image['oci_uri'],
+                                                           content_verification='Nextflow/Apptainer digest retrieval; not inspected by this preflight')
+                    continue
                 if not directory:
                     raise ValueError('Supply image_directory for immutable archive verification. '
                                      'See public_relatedness/INSTALL.md and public_relatedness/environments/README.md.')
                 path = require_file(Path(directory) / image['filename'], image['role'], hint=image_hint)
             if not metadata_only and metrics.sha256(path) != image['sha256']:
                 raise ValueError(f'Container archive checksum mismatch: {image["role"]}')
+            runtime_selection[image['role']] = dict(source='local_sif', path=str(path))
     return dict(status='metadata_valid' if metadata_only else 'resource_identities_verified',
                 content_verification='not_performed' if metadata_only else 'sha256',
                 samples=len(samples), pairs=len(pairs), profiles=selected,
-                containers_scientifically_validated=False, mode='cached' if cached else 'fastq')
+                containers_scientifically_validated=False, runtime_selection=runtime_selection,
+                mode='cached' if cached else 'fastq')
 
 
 def main():
