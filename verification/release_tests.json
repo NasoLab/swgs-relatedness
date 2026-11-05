@@ -1,0 +1,45 @@
+{
+  "version": "0.1.0-dev",
+  "date": "2026-11-05",
+  "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096",
+  "fresh_snapshot_checks": {
+    "unittest": {
+      "discovered": 38,
+      "passed": 37,
+      "skipped": 1,
+      "seconds": 25.214,
+      "nextflow_stub_tests_passed": 5,
+      "skip_reason": "opt-in historical observation test requires external authorized inputs"
+    },
+    "cached_nextflow_routing": {
+      "status": "passed",
+      "pairs": 1,
+      "comparison": "all metric strings, counts, rational, status and orientation exactly match prior validated cached run",
+      "scientific_runner": "operator-supplied frozen source, not redistributed",
+      "fresh_snapshot_cached_check": true
+    },
+    "scientific_R_files_byte_identical_to_source": 10,
+    "scientific_implementations_changed": false,
+    "sequencing_analysis_launched": false,
+    "whitespace_audit": {
+      "edited_or_new_files_whitespace": "passed",
+      "unchanged_source_files_with_legacy_whitespace": [
+        "bin/runQDNAseq.R",
+        "modules/local/alignment/main.nf",
+        "modules/local/mark_duplicates/main.nf",
+        "modules/local/trimmomatic/main.nf"
+      ],
+      "scientific_and_source_bytes_preserved": true
+    }
+  },
+  "prior_cached_numerical_regressions": {
+    "evidence": "public_relatedness/verification/phase4_runtime_summary.json",
+    "pcc": "66/66",
+    "llr": "62/62",
+    "fraction_shared": "38/38 exact counts and supplied precision",
+    "scope": "Originating contained Phase 4 runtime checkpoint; not a fresh full-regression run of this snapshot"
+  },
+  "end_to_end_validation": "pending",
+  "cross_host_validation": "pending",
+  "publication_authorized": false
+}

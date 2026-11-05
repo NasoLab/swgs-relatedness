@@ -1,0 +1,131 @@
+{
+  "capture_date": "2026-11-05",
+  "platform": "linux-64/x86_64",
+  "containers": [
+    {
+      "filename": "staphb-trimmomatic-latest.img",
+      "bytes": 105484288,
+      "sha256": "4fc157e9efae136912a483afacc43667992eaca68cc37c3e9b85778171710cf9",
+      "role": "trimmomatic",
+      "declared_uri": "docker://staphb/trimmomatic:latest",
+      "os": "Ubuntu 22.04.5",
+      "observed_version": "Trimmomatic 0.40; OpenJDK 11.0.28+6",
+      "oci_manifest_digest": null,
+      "validation_status": "cached archive inspected; not rebuilt or scientifically validated in public workflow"
+    },
+    {
+      "filename": "blcdsdockerregistry-bwa-mem2_samtools-1.12-2.2.1.img",
+      "bytes": 57815040,
+      "sha256": "5b4ec2e0f7cc549cf31a81bf3942b1aa26413bed95ab001516d961e609286d3c",
+      "role": "alignment",
+      "declared_uri": "docker://blcdsdockerregistry/bwa-mem2_samtools-1.12:2.2.1",
+      "os": "Ubuntu 20.04.2",
+      "observed_version": "BWA-MEM2 2.2.1; samtools/HTSlib 1.12",
+      "oci_manifest_digest": null,
+      "validation_status": "cached archive inspected; not rebuilt or scientifically validated in public workflow"
+    },
+    {
+      "filename": "broadinstitute-picard-latest.img",
+      "bytes": 382640128,
+      "sha256": "42df35afa8ba4c4ae6db16399af2a044305e8b266c65044702d6b55bebe4d054",
+      "role": "mark_duplicates",
+      "declared_uri": "docker://broadinstitute/picard:latest",
+      "os": "Ubuntu 26.04",
+      "observed_version": "Picard 3.5.0-1-gc2a483d49-SNAPSHOT; Temurin OpenJDK 17.0.19+10",
+      "oci_manifest_digest": null,
+      "validation_status": "cached archive inspected; not rebuilt or scientifically validated in public workflow"
+    },
+    {
+      "filename": "huntsmanlab-qdnaseq-latest.img",
+      "bytes": 530939904,
+      "sha256": "42c23d1c17adc3d0a734d9705ed351861c8a087de63f7d53f9d2df5c424607d8",
+      "role": "qdnaseq_cghcall",
+      "declared_uri": "docker://huntsmanlab/qdnaseq:latest",
+      "os": "Debian trixie/sid",
+      "observed_version": "R 4.4.3; Bioconductor 3.20.0; QDNAseq 1.42.0; CGHcall 2.68.0",
+      "oci_manifest_digest": null,
+      "validation_status": "cached archive inspected; not rebuilt or scientifically validated in public workflow"
+    }
+  ],
+  "runtime_stacks": [
+    {
+      "id": "qdnaseq-r",
+      "origin": "captured cached SIF",
+      "r": "4.4.3",
+      "bioconductor": "3.20.0",
+      "inventory": "qdnaseq-r/r-packages.tsv",
+      "validation": "version inspection only; no QDNAseq/CGHcall numerical run in this phase"
+    },
+    {
+      "id": "general-r",
+      "origin": "existing host Conda environment",
+      "r": "4.5.3",
+      "bioconductor": "3.22.0",
+      "inventory": "general-r/r-packages.tsv",
+      "validation": "cached PCC and breakpoint regressions; container restoration untested"
+    },
+    {
+      "id": "llr-r",
+      "origin": "existing separate host Conda environment",
+      "r": "4.3.3",
+      "bioconductor": null,
+      "bioconductor_uncertainty": "BiocVersion absent; mixed package set, do not infer a release from R alone",
+      "inventory": "llr-r/r-packages.tsv",
+      "validation": "cached seeded LLR regression; container restoration untested"
+    }
+  ],
+  "source_commits": [
+    {
+      "component": "public pipeline baseline",
+      "commit": "39eaeb9146d3de3e9edf22d120fc72796ed4d2fb"
+    },
+    {
+      "component": "historical preprocessing",
+      "commit": "39a918d2a38a30cc78a90a51a314b7ef83a7813d",
+      "repository": "https://github.com/Huntsmanlab/squamous-cell-clonality"
+    },
+    {
+      "component": "recovered breakpoint matcher",
+      "commit": "712eb202303119588ca10889ca92a721afd0c396",
+      "repository": "https://github.com/argymeg/breakclone"
+    },
+    {
+      "component": "PFREQ and clonality helper",
+      "commit": "bbffb4a15a425ce032537cf95b2d68dbc1d87f15",
+      "repository": "https://github.com/tgac-vumc/CNA_clonality"
+    },
+    {
+      "component": "utanos",
+      "commit": "ae8edc6464ab7bac0939a886dd7f8beae7a7410b",
+      "evidence": "installed RemoteSha",
+      "repository": "https://github.com/Huntsmanlab/utanos"
+    },
+    {
+      "component": "QDNAseq.dev candidate source checkout",
+      "commit": "8714202a7ca90124adba3ecb0d666cadc23f3d11",
+      "evidence": "located source checkout with DESCRIPTION indentation fix; installed package has no RemoteSha; entire installed-source identity not established",
+      "repository": "https://github.com/tgac-vumc/QDNAseq.dev"
+    },
+    {
+      "component": "Picard",
+      "commit": null,
+      "abbreviated_runtime_commit": "c2a483d49",
+      "evidence": "version string; full build commit/receipt unknown"
+    }
+  ],
+  "java": {
+    "nextflow_driver": "Zulu OpenJDK 11.0.1+13-LTS",
+    "general_environment": "Conda OpenJDK 17.0.18-internal",
+    "llr": "not used by LLR; no Java requirement added"
+  },
+  "host_system": "Rocky Linux 9.2; glibc/kernel/BLAS affect portability; native Conda builds captured separately",
+  "build_status": "All new recipes are unbuilt and unvalidated; no reference payloads or third-party source included",
+  "driver": {
+    "nextflow": "24.10.3",
+    "python": "3.12.2",
+    "apptainer": "1.3.1-1",
+    "platform": "linux-x86_64",
+    "kernel": "5.14.0-284.11.1.el9_2.x86_64",
+    "glibc": "glibc 2.34"
+  }
+}

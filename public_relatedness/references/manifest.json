@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "genome": "hg38",
+  "capture_date": "2026-11-05",
+  "assets_bundled": false,
+  "resources": [
+    {
+      "filename": "GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
+      "bytes": 3144230986,
+      "sha256": "9cce8b926416dd96b152deea85188495b75f7ac8d634cc723a017067be8702b7",
+      "config_param": "reference",
+      "suffix": "",
+      "redistribution_status": "not redistributed; rights/acquisition review required",
+      "id": "hg38_fasta",
+      "source": "NCBI GCA_000001405.15 GRCh38 no-alt analysis set; exact original download receipt unknown",
+      "source_url": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz",
+      "generation": "Decompression of matching NCBI analysis-set FASTA; verify the recorded uncompressed SHA256. No download performed.",
+      "generation_status": "canonical upstream location identified; receipt not recovered"
+    },
+    {
+      "filename": "GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.0123",
+      "bytes": 6199845082,
+      "sha256": "8ba8b25121ad5f0a59d72ae02882dddd86f272dfaa00f58db70557b02aa74f86",
+      "config_param": "reference",
+      "suffix": ".0123",
+      "redistribution_status": "not redistributed; rights/acquisition review required",
+      "id": "bwa_mem2_index_0123",
+      "source": "Existing local BWA-MEM2 sidecar set associated with the historical FASTA",
+      "generation": "Expected command: bwa-mem2 index <FASTA>, version 2.2.1; original invocation/build receipt unknown. Do not regenerate in this phase.",
+      "generation_status": "byte identity captured; exact historical generation not established"
+    },
+    {
+      "filename": "GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.amb",
+      "bytes": 17478,
+      "sha256": "937fb382f79b8382cb3be2f13dc88d29147661919bb8c398d307b1bcc52c0890",
+      "config_param": "reference",
+      "suffix": ".amb",
+      "redistribution_status": "not redistributed; rights/acquisition review required",
+      "id": "bwa_mem2_index_amb",
+      "source": "Existing local BWA-MEM2 sidecar set associated with the historical FASTA",
+      "generation": "Expected command: bwa-mem2 index <FASTA>, version 2.2.1; original invocation/build receipt unknown. Do not regenerate in this phase.",
+      "generation_status": "byte identity captured; exact historical generation not established"
+    },
+    {
+      "filename": "GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.ann",
+      "bytes": 27715,
+      "sha256": "71b231aee7bd25800756f1165d2cf9dd41501ca248a147de70c2bb83f2849f1c",
+      "config_param": "reference",
+      "suffix": ".ann",
+      "redistribution_status": "not redistributed; rights/acquisition review required",
+      "id": "bwa_mem2_index_ann",
+      "source": "Existing local BWA-MEM2 sidecar set associated with the historical FASTA",
+      "generation": "Expected command: bwa-mem2 index <FASTA>, version 2.2.1; original invocation/build receipt unknown. Do not regenerate in this phase.",
+      "generation_status": "byte identity captured; exact historical generation not established"
+    },
+    {
+      "filename": "GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.bwt.2bit.64",
+      "bytes": 10074748356,
+      "sha256": "3021440b3f10dc91f92af368ba0503806dfae813cd5bcf053fa606a585e2c454",
+      "config_param": "reference",
+      "suffix": ".bwt.2bit.64",
+      "redistribution_status": "not redistributed; rights/acquisition review required",
+      "id": "bwa_mem2_index_bwt_2bit_64",
+      "source": "Existing local BWA-MEM2 sidecar set associated with the historical FASTA",
+      "generation": "Expected command: bwa-mem2 index <FASTA>, version 2.2.1; original invocation/build receipt unknown. Do not regenerate in this phase.",
+      "generation_status": "byte identity captured; exact historical generation not established"
+    },
+    {
+      "filename": "GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.pac",
+      "bytes": 774980637,
+      "sha256": "1b598382ddcf7e4ce8b120b22ba4c66ec837795e22b5a9caa21cc61797a6561a",
+      "config_param": "reference",
+      "suffix": ".pac",
+      "redistribution_status": "not redistributed; rights/acquisition review required",
+      "id": "bwa_mem2_index_pac",
+      "source": "Existing local BWA-MEM2 sidecar set associated with the historical FASTA",
+      "generation": "Expected command: bwa-mem2 index <FASTA>, version 2.2.1; original invocation/build receipt unknown. Do not regenerate in this phase.",
+      "generation_status": "byte identity captured; exact historical generation not established"
+    },
+    {
+      "filename": "1000g_hg38_bins_500kbp_PE150.rds",
+      "bytes": 123673,
+      "sha256": "1d62a94b9a88845978c7bf709d00b35b0f3b1243ef894b442c3ac2861a23337c",
+      "config_param": "pe150_bins",
+      "suffix": "",
+      "redistribution_status": "not redistributed; rights/acquisition review required",
+      "id": "qdnaseq_pe150_500kb",
+      "source": "Approved retained hg38 paired-end PE150 annotation, checksum supplied by user and independently verified locally",
+      "generation": "QDNAseq createBins, GC/bases, mappability, blacklist and 1000 Genomes residual correction family identified; exact PE150 inputs and build environment unresolved. Nearby PE50 generator is not equivalent.",
+      "generation_status": "asset identity established; complete PE150 generation receipt missing"
+    },
+    {
+      "id": "llr_pfreq",
+      "filename": "pfreq_lusc_tcga_split.csv",
+      "config_param": "pfreq",
+      "suffix": "",
+      "sha256": "582b6b53c4a4f70149b115c504685f24e983c522d63c1cb42c25a90db103e04f",
+      "source": "tgac-vumc/CNA_clonality at bbffb4a15a425ce032537cf95b2d68dbc1d87f15; reference/pfreq_lusc_tcga_split.csv",
+      "source_url": "https://github.com/tgac-vumc/CNA_clonality/tree/bbffb4a15a425ce032537cf95b2d68dbc1d87f15/reference",
+      "generation": "Frozen TCGA LUSC split-chromosome frequency model; exact training data/filter/build receipt unresolved. Do not retrain from incoming cohort.",
+      "generation_status": "frozen asset identity established",
+      "redistribution_status": "no explicit license located at recorded source revision; permission required"
+    }
+  ]
+}

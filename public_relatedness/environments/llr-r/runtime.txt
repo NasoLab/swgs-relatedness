@@ -1,0 +1,13 @@
+R: 4.3.3
+Platform: x86_64-conda-linux-gnu
+Bioconductor recorded: unknown (BiocVersion absent)
+RNGkind: Mersenne-Twister / Inversion / Rejection
+zlib: 1.3.2
+bzlib: 1.0.8, 13-Jul-2019
+xz: 5.8.3
+PCRE: 10.47 2025-10-21
+ICU: 75.1
+TRE: TRE 0.8.0 R_fixes (BSD)
+iconv: GNU libiconv 1.18
+readline: 8.3
+BLAS: libopenblasp-r0.3.34.so

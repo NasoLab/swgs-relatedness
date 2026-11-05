@@ -1,0 +1,90 @@
+Package	Version	Built	License	Depends	Imports	LinkingTo	SystemRequirements	Repository	RemoteType	RemoteHost	RemoteUsername	RemoteRepo	RemoteRef	RemoteSha	GithubSHA1	URL	LibraryScope
+assertthat	0.2.1	R 4.3.3; ; 2024-06-30 09:23:27 UTC; unix	GPL-3		tools			CRAN									runtime
+base	4.3.3	R 4.3.3; ; 2025-11-21 17:00:30 UTC; unix	Part of R 4.3.3														runtime
+BH	1.87.0-1	R 4.3.3; ; 2024-12-19 09:50:12 UTC; unix	BSL-1.0					CRAN								https://github.com/eddelbuettel/bh, https://dirk.eddelbuettel.com/code/bh.html	runtime
+Biobase	2.60.0	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 16:08:11 UTC; unix	Artistic-2.0	R (>= 2.10), BiocGenerics (>= 0.27.1), utils	methods											https://bioconductor.org/packages/Biobase	runtime
+BiocGenerics	0.46.0	R 4.3.0; ; 2023-07-07 08:41:25 UTC; unix	Artistic-2.0	R (>= 4.0.0), methods, utils, graphics, stats	methods, utils, graphics, stats											https://bioconductor.org/packages/BiocGenerics	runtime
+BiocParallel	1.34.2	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 09:32:50 UTC; unix	GPL-2 | GPL-3	methods, R (>= 3.5.0)	stats, utils, futile.logger, parallel, snow, codetools	BH, cpp11	C++11									https://github.com/Bioconductor/BiocParallel	runtime
+Biostrings	2.68.1	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-10 21:48:53 UTC; unix	Artistic-2.0	R (>= 4.0.0), methods, BiocGenerics (>= 0.37.0), S4Vectors (>= 0.27.12), IRanges (>= 2.31.2), XVector (>= 0.37.1), GenomeInfoDb	methods, utils, grDevices, graphics, stats, crayon	S4Vectors, IRanges, XVector										https://bioconductor.org/packages/Biostrings	runtime
+bit	4.6.0	R 4.3.3; x86_64-conda-linux-gnu; 2025-03-06 20:19:05 UTC; unix	GPL-2 | GPL-3	R (>= 3.4.0)				CRAN								https://github.com/r-lib/bit	runtime
+bit64	4.6.0-1	R 4.3.3; x86_64-conda-linux-gnu; 2025-03-12 15:12:40 UTC; unix	GPL-2 | GPL-3	R (>= 3.4.0), bit (>= 4.0.0)	graphics, methods, stats, utils			CRAN								https://github.com/r-lib/bit64	runtime
+bitops	1.0-9	R 4.3.3; x86_64-conda-linux-gnu; 2024-10-04 06:05:40 UTC; unix	GPL (>= 2)					CRAN								https://github.com/mmaechler/R-bitops	runtime
+CGHbase	1.60.0	R 4.3.0; ; 2023-07-10 20:42:32 UTC; unix	GPL	R (>= 2.10), methods, Biobase (>= 2.5.5), marray												https://github.com/tgac-vumc/CGHbase	runtime
+CGHcall	2.62.0	R 4.3.1; ; 2023-07-17 20:18:46 UTC; unix	GPL (http://www.gnu.org/copyleft/gpl.html)	R (>= 2.0.0), impute(>= 1.8.0), DNAcopy (>= 1.6.0), methods, Biobase, CGHbase (>= 1.15.1), snowfall													runtime
+cli	3.6.5	R 4.3.3; x86_64-conda-linux-gnu; 2025-04-23 15:40:30 UTC; unix	MIT + file LICENSE	R (>= 3.4)	utils			CRAN								https://cli.r-lib.org, https://github.com/r-lib/cli	runtime
+clipr	0.8.0	R 4.3.3; ; 2024-06-30 12:59:14 UTC; unix	GPL-3		utils		xclip (https://github.com/astrand/xclip) or xsel (http://www.vergenet.net/~conrad/software/xsel/) for accessing the X11 clipboard, or wl-clipboard (https://github.com/bugaevc/wl-clipboard) for systems using Wayland.	CRAN								https://github.com/mdlincoln/clipr, http://matthewlincoln.net/clipr/	runtime
+Clonality	1.47.0	R 4.3.0; ; 2023-07-07 12:25:53 UTC; unix	GPL-3	R (>= 2.12.2), DNAcopy	grDevices, graphics, stats, utils												runtime
+codetools	0.2-20	R 4.3.3; ; 2024-06-30 07:02:54 UTC; unix	GPL	R (>= 2.1)				CRAN								https://gitlab.com/luke-tierney/codetools	runtime
+compiler	4.3.3	R 4.3.3; ; 2025-11-21 16:58:58 UTC; unix	Part of R 4.3.3														runtime
+cpp11	0.5.2	R 4.3.3; ; 2025-03-19 08:39:15 UTC; unix	MIT + file LICENSE	R (>= 4.0.0)				CRAN								https://cpp11.r-lib.org, https://github.com/r-lib/cpp11	runtime
+crayon	1.5.3	R 4.3.3; ; 2024-06-30 06:56:57 UTC; unix	MIT + file LICENSE		grDevices, methods, utils			CRAN								https://r-lib.github.io/crayon/, https://github.com/r-lib/crayon	runtime
+datasets	4.3.3	R 4.3.3; ; 2025-11-21 17:00:08 UTC; unix	Part of R 4.3.3														runtime
+digest	0.6.37	R 4.3.3; x86_64-conda-linux-gnu; 2024-08-19 20:43:01 UTC; unix	GPL (>= 2)	R (>= 3.3.0)	utils			CRAN								https://github.com/eddelbuettel/digest, https://dirk.eddelbuettel.com/code/digest.html	runtime
+DNAcopy	1.74.1	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 09:19:21 UTC; unix	GPL (>= 2)														runtime
+dplyr	1.1.4	R 4.3.3; x86_64-conda-linux-gnu; 2024-07-18 07:43:34 UTC; unix	MIT + file LICENSE	R (>= 3.5.0)	cli (>= 3.4.0), generics, glue (>= 1.3.2), lifecycle (>= 1.0.3), magrittr (>= 1.5), methods, pillar (>= 1.9.0), R6, rlang (>= 1.1.0), tibble (>= 3.2.0), tidyselect (>= 1.2.0), utils, vctrs (>= 0.6.4)			CRAN								https://dplyr.tidyverse.org, https://github.com/tidyverse/dplyr	runtime
+ellipsis	0.3.2	R 4.3.3; x86_64-conda-linux-gnu; 2024-06-30 07:18:07 UTC; unix	MIT + file LICENSE	R (>= 3.2)	rlang (>= 0.3.0)			CRAN								https://ellipsis.r-lib.org, https://github.com/r-lib/ellipsis	runtime
+fansi	1.0.6	R 4.3.3; x86_64-conda-linux-gnu; 2024-06-30 07:18:27 UTC; unix	GPL-2 | GPL-3	R (>= 3.1.0)	grDevices, utils			CRAN								https://github.com/brodieG/fansi	runtime
+formatR	1.14	R 4.3.3; ; 2024-07-01 12:29:41 UTC; unix	GPL	R (>= 3.2.3)				CRAN								https://github.com/yihui/formatR	runtime
+futile.logger	1.4.3	R 4.3.3; ; 2024-07-02 04:02:52 UTC; unix	LGPL-3	R (>= 3.0.0)	utils, lambda.r (>= 1.1.0), futile.options			CRAN									runtime
+futile.options	1.0.1	R 4.3.3; ; 2024-07-01 22:11:21 UTC; unix	LGPL-3	R (>= 2.8.0)				CRAN									runtime
+future	1.67.0	R 4.3.3; ; 2025-07-29 20:03:57 UTC; unix	LGPL (>= 2.1)	R (>= 3.2.0)	digest, globals (>= 0.18.0), listenv (>= 0.8.0), parallel, parallelly (>= 1.44.0), utils			CRAN								https://future.futureverse.org, https://github.com/futureverse/future	runtime
+future.apply	1.20.0	R 4.3.3; ; 2025-06-06 13:52:52 UTC; unix	GPL (>= 2)	R (>= 3.2.0), future (>= 1.49.0)	globals, parallel, utils			CRAN								https://future.apply.futureverse.org, https://github.com/futureverse/future.apply	runtime
+generics	0.1.4	R 4.3.3; ; 2025-05-10 07:20:53 UTC; unix	MIT + file LICENSE	R (>= 3.6)	methods			CRAN								https://generics.r-lib.org, https://github.com/r-lib/generics	runtime
+GenomeInfoDb	1.36.1	R 4.3.0; ; 2023-07-10 19:35:09 UTC; unix	Artistic-2.0	R (>= 4.0.0), methods, BiocGenerics (>= 0.37.0), S4Vectors (>= 0.25.12), IRanges (>= 2.13.12)	stats, stats4, utils, RCurl, GenomeInfoDbData											https://bioconductor.org/packages/GenomeInfoDb	runtime
+GenomeInfoDbData	1.2.11	R 4.3.3; ; 2026-09-28 16:22:06 UTC; unix	Artistic-2.0	R (>= 3.5.0)													runtime
+GenomicRanges	1.52.0	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-10 21:58:09 UTC; unix	Artistic-2.0	R (>= 4.0.0), methods, stats4, BiocGenerics (>= 0.37.0), S4Vectors (>= 0.27.12), IRanges (>= 2.31.2), GenomeInfoDb (>= 1.15.2)	utils, stats, XVector (>= 0.29.2)	S4Vectors, IRanges										https://bioconductor.org/packages/GenomicRanges	runtime
+globals	0.18.0	R 4.3.3; ; 2025-05-08 19:30:56 UTC; unix	LGPL (>= 2.1)	R (>= 3.1.2)	codetools			CRAN								https://globals.futureverse.org, https://github.com/futureverse/globals	runtime
+glue	1.8.0	R 4.3.3; x86_64-conda-linux-gnu; 2024-10-01 03:54:21 UTC; unix	MIT + file LICENSE	R (>= 3.6)	methods			CRAN								https://glue.tidyverse.org/, https://github.com/tidyverse/glue	runtime
+graphics	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 16:59:36 UTC; unix	Part of R 4.3.3		grDevices												runtime
+grDevices	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 16:59:29 UTC; unix	Part of R 4.3.3														runtime
+grid	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 17:00:20 UTC; unix	Part of R 4.3.3		grDevices, utils												runtime
+hms	1.1.3	R 4.3.3; ; 2024-07-17 15:11:10 UTC; unix	MIT + file LICENSE		lifecycle, methods, pkgconfig, rlang (>= 1.0.2), vctrs (>= 0.3.8)			CRAN								https://hms.tidyverse.org/, https://github.com/tidyverse/hms	runtime
+impute	1.74.1	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 10:16:33 UTC; unix	GPL-2	R (>= 2.10)													runtime
+IRanges	2.34.1	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-10 16:23:53 UTC; unix	Artistic-2.0	R (>= 4.0.0), methods, utils, stats, BiocGenerics (>= 0.39.2), S4Vectors (>= 0.33.3)	stats4	S4Vectors										https://bioconductor.org/packages/IRanges	runtime
+lambda.r	1.2.4	R 4.3.3; ; 2024-07-02 00:04:57 UTC; unix	LGPL-3	R (>= 3.0.0)	formatR			CRAN									runtime
+lifecycle	1.0.4	R 4.3.3; ; 2024-07-17 00:39:53 UTC; unix	MIT + file LICENSE	R (>= 3.6)	cli (>= 3.4.0), glue, rlang (>= 1.1.0)			CRAN								https://lifecycle.r-lib.org/, https://github.com/r-lib/lifecycle	runtime
+limma	3.56.2	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 09:01:16 UTC; unix	GPL (>=2)	R (>= 3.6.0)	grDevices, graphics, stats, utils, methods											https://bioinf.wehi.edu.au/limma/	runtime
+listenv	0.9.1	R 4.3.3; ; 2024-06-30 14:44:16 UTC; unix	LGPL (>= 2.1)	R (>= 3.1.2)				CRAN								https://listenv.futureverse.org, https://github.com/HenrikBengtsson/listenv	runtime
+magrittr	2.0.3	R 4.3.3; x86_64-conda-linux-gnu; 2024-06-30 05:41:25 UTC; unix	MIT + file LICENSE	R (>= 3.4.0)				CRAN								https://magrittr.tidyverse.org, https://github.com/tidyverse/magrittr	runtime
+marray	1.78.0	R 4.3.0; ; 2023-07-10 17:52:25 UTC; unix	LGPL	R (>= 2.10.0), limma, methods												http://www.maths.usyd.edu.au/u/jeany/	runtime
+matrixStats	1.5.0	R 4.3.3; x86_64-conda-linux-gnu; 2025-01-07 23:47:54 UTC; unix	Artistic-2.0	R (>= 3.4.0)				CRAN								https://github.com/HenrikBengtsson/matrixStats	runtime
+methods	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 17:00:09 UTC; unix	Part of R 4.3.3		utils, stats												runtime
+parallel	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 17:00:29 UTC; unix	Part of R 4.3.3		tools, compiler												runtime
+parallelly	1.45.1	R 4.3.3; x86_64-conda-linux-gnu; 2025-07-25 20:34:48 UTC; unix	LGPL (>= 2.1)		parallel, tools, utils			CRAN								https://parallelly.futureverse.org, https://github.com/futureverse/parallelly	runtime
+pillar	1.11.0	R 4.3.3; ; 2025-07-04 21:28:02 UTC; unix	MIT + file LICENSE		cli (>= 2.3.0), glue, lifecycle, rlang (>= 1.0.2), utf8 (>= 1.1.0), utils, vctrs (>= 0.5.0)			CRAN								https://pillar.r-lib.org/, https://github.com/r-lib/pillar	runtime
+pkgconfig	2.0.3	R 4.3.3; ; 2024-06-30 05:29:17 UTC; unix	MIT + file LICENSE		utils			CRAN								https://github.com/r-lib/pkgconfig#readme	runtime
+prettyunits	1.2.0	R 4.3.3; ; 2024-06-30 12:40:18 UTC; unix	MIT + file LICENSE	R(>= 2.10)				CRAN								https://github.com/r-lib/prettyunits	runtime
+progress	1.2.3	R 4.3.3; ; 2024-07-17 21:29:12 UTC; unix	MIT + file LICENSE	R (>= 3.6)	crayon, hms, prettyunits, R6			CRAN								https://github.com/r-lib/progress#readme, http://r-lib.github.io/progress/	runtime
+purrr	1.1.0	R 4.3.3; x86_64-conda-linux-gnu; 2025-07-11 07:45:54 UTC; unix	MIT + file LICENSE	R (>= 4.1)	cli (>= 3.6.1), lifecycle (>= 1.0.3), magrittr (>= 1.5.0), rlang (>= 1.1.1), vctrs (>= 0.6.3)	cli		CRAN								https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr	runtime
+QDNAseq	1.36.0	R 4.3.1; ; 2023-07-17 21:00:20 UTC; unix	GPL	R (>= 3.1.0)	graphics, methods, stats, utils, Biobase (>= 2.18.0), CGHbase (>= 1.18.0), CGHcall (>= 2.18.0), DNAcopy (>= 1.32.0), GenomicRanges (>= 1.20), IRanges (>= 2.2), matrixStats (>= 0.60.0), R.utils (>= 2.9.0), Rsamtools (>= 1.20), future.apply (>= 1.8.1)											https://github.com/ccagc/QDNAseq	runtime
+QDNAseq.dev	0.1	R 4.3.3; ; 2026-09-28 18:14:07 UTC; unix	What license is it under?	QDNAseq, Clonality													runtime
+R.methodsS3	1.8.2	R 4.3.3; ; 2024-06-30 03:44:58 UTC; unix	LGPL (>= 2.1)	R (>= 2.13.0)	utils			CRAN								https://github.com/HenrikBengtsson/R.methodsS3	runtime
+R.oo	1.27.1	R 4.3.3; ; 2025-05-02 23:08:49 UTC; unix	LGPL (>= 2.1)	R (>= 2.13.0), R.methodsS3 (>= 1.8.2)	methods, utils			CRAN								https://henrikbengtsson.github.io/R.oo/, https://github.com/HenrikBengtsson/R.oo	runtime
+R.utils	2.13.0	R 4.3.3; ; 2025-02-24 23:10:34 UTC; unix	LGPL (>= 2.1)	R (>= 2.14.0), R.oo	methods, utils, tools, R.methodsS3			CRAN								https://henrikbengtsson.github.io/R.utils/, https://github.com/HenrikBengtsson/R.utils	runtime
+R6	2.6.1	R 4.3.3; ; 2025-02-15 07:31:18 UTC; unix	MIT + file LICENSE	R (>= 3.6)				CRAN								https://r6.r-lib.org, https://github.com/r-lib/R6	runtime
+RCurl	1.98-1.17	R 4.3.3; x86_64-conda-linux-gnu; 2025-08-05 15:32:00 UTC; unix	BSD_3_clause + file LICENSE	R (>= 3.4.0), methods	bitops		GNU make, libcurl	CRAN									runtime
+readr	2.1.5	R 4.3.3; x86_64-conda-linux-gnu; 2024-07-18 16:18:08 UTC; unix	MIT + file LICENSE	R (>= 3.6)	cli (>= 3.2.0), clipr, crayon, hms (>= 0.4.1), lifecycle (>= 0.2.0), methods, R6, rlang, tibble, utils, vroom (>= 1.6.0)	cpp11, tzdb (>= 0.1.1)		CRAN								https://readr.tidyverse.org, https://github.com/tidyverse/readr	runtime
+Rhtslib	2.2.0	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 15:09:40 UTC; unix	LGPL (>= 2)		zlibbioc	zlibbioc	libbz2 & liblzma & libcurl (with header files), GNU make									https://bioconductor.org/packages/Rhtslib, http://www.htslib.org/	runtime
+rlang	1.1.6	R 4.3.3; x86_64-conda-linux-gnu; 2025-04-11 15:50:54 UTC; unix	MIT + file LICENSE	R (>= 3.5.0)	utils			CRAN								https://rlang.r-lib.org, https://github.com/r-lib/rlang	runtime
+Rsamtools	2.16.0	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-11 15:38:57 UTC; unix	Artistic-2.0 | file LICENSE	methods, GenomeInfoDb (>= 1.1.3), GenomicRanges (>= 1.31.8), Biostrings (>= 2.47.6), R (>= 3.5.0)	utils, BiocGenerics (>= 0.25.1), S4Vectors (>= 0.17.25), IRanges (>= 2.13.12), XVector (>= 0.19.7), zlibbioc, bitops, BiocParallel, stats	Rhtslib (>= 1.99.3), S4Vectors, IRanges, XVector, Biostrings	GNU make									https://bioconductor.org/packages/Rsamtools	runtime
+S4Vectors	0.38.1	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 17:06:58 UTC; unix	Artistic-2.0	R (>= 4.0.0), methods, utils, stats, stats4, BiocGenerics (>= 0.37.0)												https://bioconductor.org/packages/S4Vectors	runtime
+snow	0.4-4	R 4.3.3; ; 2024-07-01 13:51:51 UTC; unix	GPL	R (>= 2.13.1), utils				CRAN									runtime
+snowfall	1.84-6.3	R 4.3.3; ; 2024-07-02 13:54:55 UTC; unix	GPL	R (>= 2.10), snow				CRAN									runtime
+splines	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 17:00:26 UTC; unix	Part of R 4.3.3		graphics, stats												runtime
+stats	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 16:59:43 UTC; unix	Part of R 4.3.3		utils, grDevices, graphics												runtime
+stats4	4.3.3	R 4.3.3; ; 2025-11-21 17:00:27 UTC; unix	Part of R 4.3.3		graphics, methods, stats												runtime
+stringi	1.8.7	R 4.3.3; x86_64-conda-linux-gnu; 2025-03-27 16:30:45 UTC; unix	file LICENSE	R (>= 3.4)	tools, utils, stats		ICU4C (>= 61, optional)	CRAN								https://stringi.gagolewski.com/, https://github.com/gagolews/stringi, https://icu.unicode.org/	runtime
+stringr	1.5.2	R 4.3.3; ; 2025-09-09 03:36:19 UTC; unix	MIT + file LICENSE	R (>= 3.6)	cli, glue (>= 1.6.1), lifecycle (>= 1.0.3), magrittr, rlang (>= 1.0.0), stringi (>= 1.5.3), vctrs (>= 0.4.0)			CRAN								https://stringr.tidyverse.org, https://github.com/tidyverse/stringr	runtime
+tcltk	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 17:00:28 UTC; unix	Part of R 4.3.3		utils												runtime
+tibble	3.3.0	R 4.3.3; x86_64-conda-linux-gnu; 2025-06-08 19:56:12 UTC; unix	MIT + file LICENSE	R (>= 3.4.0)	cli, lifecycle (>= 1.0.0), magrittr, methods, pillar (>= 1.8.1), pkgconfig, rlang (>= 1.0.2), utils, vctrs (>= 0.5.0)			CRAN								https://tibble.tidyverse.org/, https://github.com/tidyverse/tibble	runtime
+tidyr	1.3.1	R 4.3.3; x86_64-conda-linux-gnu; 2024-07-18 16:32:42 UTC; unix	MIT + file LICENSE	R (>= 3.6)	cli (>= 3.4.1), dplyr (>= 1.0.10), glue, lifecycle (>= 1.0.3), magrittr, purrr (>= 1.0.1), rlang (>= 1.1.1), stringr (>= 1.5.0), tibble (>= 2.1.1), tidyselect (>= 1.2.0), utils, vctrs (>= 0.5.2)	cpp11 (>= 0.4.0)		CRAN								https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr	runtime
+tidyselect	1.2.1	R 4.3.3; ; 2024-07-17 15:07:10 UTC; unix	MIT + file LICENSE	R (>= 3.4)	cli (>= 3.3.0), glue (>= 1.3.0), lifecycle (>= 1.0.3), rlang (>= 1.0.4), vctrs (>= 0.5.2), withr			CRAN								https://tidyselect.r-lib.org, https://github.com/r-lib/tidyselect	runtime
+tools	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 16:58:57 UTC; unix	Part of R 4.3.3														runtime
+tzdb	0.5.0	R 4.3.3; x86_64-conda-linux-gnu; 2025-08-30 08:16:54 UTC; unix	MIT + file LICENSE	R (>= 4.0.0)		cpp11 (>= 0.5.2)		CRAN								https://tzdb.r-lib.org, https://github.com/r-lib/tzdb	runtime
+utf8	1.2.6	R 4.3.3; x86_64-conda-linux-gnu; 2025-06-09 00:34:02 UTC; unix	Apache License (== 2.0) | file LICENSE	R (>= 2.10)				CRAN								https://krlmlr.github.io/utf8/, https://github.com/krlmlr/utf8	runtime
+utils	4.3.3	R 4.3.3; x86_64-conda-linux-gnu; 2025-11-21 16:59:22 UTC; unix	Part of R 4.3.3														runtime
+vctrs	0.6.5	R 4.3.3; x86_64-conda-linux-gnu; 2024-07-17 04:53:58 UTC; unix	MIT + file LICENSE	R (>= 3.5.0)	cli (>= 3.4.0), glue, lifecycle (>= 1.0.3), rlang (>= 1.1.0)			CRAN								https://vctrs.r-lib.org/, https://github.com/r-lib/vctrs	runtime
+vroom	1.6.5	R 4.3.3; x86_64-conda-linux-gnu; 2024-07-18 07:24:57 UTC; unix	MIT + file LICENSE	R (>= 3.6)	bit64, cli (>= 3.2.0), crayon, glue, hms, lifecycle (>= 1.0.3), methods, rlang (>= 0.4.2), stats, tibble (>= 2.0.0), tidyselect, tzdb (>= 0.1.1), vctrs (>= 0.2.0), withr	cpp11 (>= 0.2.0), progress (>= 1.2.1), tzdb (>= 0.1.1)		CRAN								https://vroom.r-lib.org, https://github.com/tidyverse/vroom	runtime
+withr	3.0.2	R 4.3.3; ; 2024-10-28 18:00:38 UTC; unix	MIT + file LICENSE	R (>= 3.6.0)	graphics, grDevices			CRAN								https://withr.r-lib.org, https://github.com/r-lib/withr#readme	runtime
+XVector	0.40.0	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-10 18:35:16 UTC; unix	Artistic-2.0	R (>= 4.0.0), methods, BiocGenerics (>= 0.37.0), S4Vectors (>= 0.27.12), IRanges (>= 2.23.9)	methods, utils, tools, zlibbioc, BiocGenerics, S4Vectors, IRanges	S4Vectors, IRanges										https://bioconductor.org/packages/XVector	runtime
+zlibbioc	1.46.0	R 4.3.0; x86_64-conda-linux-gnu; 2023-07-07 10:56:08 UTC; unix	Artistic-2.0 + file LICENSE													https://bioconductor.org/packages/zlibbioc	runtime

@@ -1,0 +1,132 @@
+{
+  "evidence_scope": "Historical Phase 4 runtime checkpoint, before pilot launch; not a live pilot status or fresh release-wide regression run",
+  "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096",
+  "status": "cached metrics reproduced on one host; end-to-end prepared, not launched",
+  "date": "2026-11-05",
+  "build_method": "private installed-prefix preservation; no package installation/upgrades; public source-restoration Dockerfiles not rebuilt",
+  "image_hashes": {
+    "llr": {
+      "sha256": "a2b0be333391a92966af7409c69835d452f205bba817917a246d71d80f95b7a1",
+      "bytes": 1048100864,
+      "role": "build intermediate; metadata/isolation checked, no independent numerical run"
+    },
+    "metrics": {
+      "sha256": "ae7c40c285c19a6db6d01bb61f839cdd348f4cfd3f7510ae533091e2ed9f7151",
+      "bytes": 3454234624,
+      "role": "validated cached-metric runtime"
+    }
+  },
+  "runtimes": {
+    "qdnaseq": {
+      "R": "4.4.3",
+      "Bioconductor": "3.20.0",
+      "QDNAseq": "1.42.0",
+      "CGHcall": "2.68.0",
+      "recorded_packages_matched": 122
+    },
+    "general": {
+      "R": "4.5.3",
+      "Bioconductor": "3.22.0",
+      "QDNAseq": "1.46.0",
+      "CGHcall": "2.72.0",
+      "UTANOS": "0.1.0.9000",
+      "recorded_packages_matched": 373
+    },
+    "llr": {
+      "R": "4.3.3",
+      "Bioconductor": null,
+      "Bioconductor_note": "BiocVersion absent; mixed historical package set",
+      "QDNAseq": "1.36.0",
+      "Clonality": "1.47.0",
+      "QDNAseq_dev": "0.1",
+      "recorded_packages_matched": 89
+    },
+    "python": "3.14.6 (embedded general prefix)"
+  },
+  "regressions": {
+    "llr": {
+      "pairs": 62,
+      "matched": 62,
+      "max_abs_difference": 4.973799150320701e-14,
+      "tolerance": 1e-12
+    },
+    "missing_sample_guard": {
+      "rejected": true,
+      "results_published": false
+    },
+    "pcc": {
+      "pairs": 66,
+      "matched": 66,
+      "max_abs_difference": 4.996003610813204e-16,
+      "tolerance": 1e-12
+    },
+    "fraction_shared": {
+      "pairs": 38,
+      "exact_counts": 38,
+      "supplied_fraction_precision_matches": 38
+    }
+  },
+  "isolated_execution": {
+    "options": [
+      "--cleanenv",
+      "--containall",
+      "--no-home",
+      "--no-mount hostfs,cwd"
+    ],
+    "host_conda_bind_detected": false,
+    "unresolved_linked_dependencies": 0,
+    "normalized_paths_checked": {
+      "llr": 81,
+      "general": 89,
+      "qdnaseq": 126,
+      "python": 29
+    },
+    "source_binary_checksums_matched": 69,
+    "source_binary_device_inode_distinct": 69,
+    "live_llr_mapped_files_on_image_root": 73,
+    "host_environment_poison_test": "passed",
+    "absolute_installation_prefixes": "original general/LLR prefixes retained inside SIF; exact paths remain in private operator report"
+  },
+  "development_tests": {
+    "discovered": 37,
+    "passed": 36,
+    "skipped": 1,
+    "skip_note": "opt-in cached gate executed separately in contained SIF"
+  },
+  "workflow_checks": {
+    "full_graph_stub_tasks": 16,
+    "stub_samples": 4,
+    "stub_pairs": 2,
+    "all_completed": true,
+    "cached_nextflow_comparison_count": 1,
+    "pcc_llr_max_abs_difference": {
+      "pcc": 0.0,
+      "llr": 0.0
+    },
+    "pipeline_llr_runtime_pcc": {
+      "pairs": 66,
+      "matched": 66,
+      "max_abs_difference": 4.996003610813204e-16,
+      "tolerance": 1e-12
+    },
+    "monitoring_limitation": {
+      "stage": "pinned-container-full-graph-stubs",
+      "cause": "Picard uutils date 0.8.0 emits 19 digits for date +%s%3N; Nextflow 24.10.3 expects 13.",
+      "resolution": "Optional Nextflow trace/report/timeline monitoring disabled; image and scientific commands unchanged."
+    }
+  },
+  "temporary_storage": {
+    "parameter": "temp_directory",
+    "same_path_container_mount": true,
+    "validated_runtimes": [
+      "Apptainer 1.3.1-1 / Nextflow 24.10.3"
+    ],
+    "docker_execution_tested": false
+  },
+  "cross_host_validated": false,
+  "full_qdnaseq_cghcall_run": false,
+  "fastq_analysis_launched": false,
+  "images_published": false,
+  "pushed": false,
+  "reference_assets_modified": false
+}

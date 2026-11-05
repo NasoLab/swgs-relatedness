@@ -1,0 +1,8 @@
+# DRAFT: local immutable archive preservation, not a new scientific build.
+# After permission review: apptainer build --build-arg SOURCE_SIF=/path/to/verified.img output.sif upstream.def
+# Verify SOURCE_SIF against inventory.json BEFORE building; no URI pulls allowed.
+Bootstrap: localimage
+From: {{ SOURCE_SIF }}
+
+%labels
+    org.opencontainers.image.description Unvalidated preservation wrapper; no scientific validation claimed

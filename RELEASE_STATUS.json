@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0-dev",
+  "label": "v0.1.0 development",
+  "publication_authorized": false,
+  "project_license_status": "pending ownership and compatible license authorization",
+  "end_to_end_validation": "pending",
+  "cross_host_validation": "pending",
+  "third_party_source_bundled": false,
+  "sequencing_or_clinical_data_bundled": false,
+  "reference_payloads_bundled": false,
+  "images_bundled": false,
+  "git_history_policy": "orphan root snapshot; do not merge source history",
+  "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096"
+}

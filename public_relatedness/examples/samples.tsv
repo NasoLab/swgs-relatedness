@@ -1,0 +1,3 @@
+sample_id	fastq_1	fastq_2
+sampleA	/path/to/authorized/sampleA_R1.fastq.gz	/path/to/authorized/sampleA_R2.fastq.gz
+sampleB	/path/to/authorized/sampleB_R1.fastq.gz	/path/to/authorized/sampleB_R2.fastq.gz
