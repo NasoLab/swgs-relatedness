@@ -1,6 +1,8 @@
 # Public workflow — v0.1.1 development candidate
 
-Read the [root README](../README.md), [installation](INSTALL.md),
+Start with the [usage guide](../docs/USAGE.md) for setup, manifests, parameters,
+execution, outputs and troubleshooting. Read the [root README](../README.md),
+[installation](INSTALL.md),
 [metric contract](METRIC_ADAPTERS.md) and [source provenance](scientific_sources.json).
 End-to-end and cross-host validation remain pending.
 

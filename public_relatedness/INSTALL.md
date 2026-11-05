@@ -1,5 +1,8 @@
 # Installation — v0.1.1 development candidate
 
+For the complete user workflow, parameter reference and troubleshooting, see the
+[detailed usage guide](../docs/USAGE.md).
+
 Project scientific source is bundled; operators supply sequencing inputs,
 frozen external assets and an execution environment. No internal research source
 directory is needed. End-to-end and cross-host validation remain pending.

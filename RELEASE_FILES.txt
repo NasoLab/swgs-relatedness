@@ -11,6 +11,7 @@ THIRD_PARTY_NOTICES.md
 VERSION
 bin/prepare_cghcall_cohort.R
 bin/runQDNAseq.R
+docs/USAGE.md
 modules/local/alignment/main.nf
 modules/local/mark_duplicates/main.nf
 modules/local/trimmomatic/main.nf
