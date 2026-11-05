@@ -1,9 +1,10 @@
 # SWGS Processing Pipeline — v0.1.0 — Development
 
-**Development snapshot; end-to-end validation pending. Publication licensing is
-not yet cleared.** Publication is intended for
+**MIT-licensed development source snapshot; end-to-end validation pending.**
+Publication is intended for
 [NasoLab/swgs-relatedness](https://github.com/NasoLab/swgs-relatedness); no push,
-tag or release has been performed. This local release candidate contains pipeline code, tests,
+tag or release has been performed. This local release candidate contains
+pipeline code, tests,
 configuration templates and provenance metadata. It contains no sequencing
 reads, clinical tables, research workbooks, reference payloads or images.
 
@@ -83,13 +84,11 @@ an invitation to publish those fixtures. See [test instructions](public_relatedn
 
 ## Licensing and publication
 
-[MIT](LICENSE.MIT.proposed) is the intended license for project-owned code and
-contributions the project is authorized to distribute. [LICENSE](LICENSE) keeps
-the grant pending because authorization for four retained legacy files remains
-unconfirmed. Acknowledgement does not replace that authorization. The maintainer has left
-this question for a final decision before publication; no copyright-holder
-designation or approval reference is inferred from Git history. MIT is not
-applied to external packages, scientific implementations, references or images. Preserve [author credits](AUTHORS.md) and review
+Project-owned code, including the retained internal Huntsman research-pipeline
+components, is released under [MIT](LICENSE). External scientific implementations,
+packages, reference datasets and container images retain their own terms and are
+outside the project MIT grant. Contributor credits are attribution, not an
+assignment of copyright ownership. Preserve [author credits](AUTHORS.md) and review
 [third-party notices](THIRD_PARTY_NOTICES.md) and the [permissions audit](public_relatedness/LICENSING.md).
 The unpublished source-restoration recipes and internal metric snapshots are
 not public distribution clearances.
@@ -98,7 +97,7 @@ This branch starts with the audited independent root commit and contains only
 its clean release-preparation descendants. It does not include the development
 repository's research history, and it must not be merged with that history.
 It also does not remove anything already reachable from existing remote refs.
-Publication requires a separate owner review and explicit authorization; see
+The prepared source is ready for the maintainer's instruction to publish; see
 [PUBLISHING.md](PUBLISHING.md). No push, tag or public release was performed.
 
 ## Known limitations

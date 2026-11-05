@@ -2,8 +2,9 @@
 
 Prepared for [NasoLab/swgs-relatedness](https://github.com/NasoLab/swgs-relatedness).
 This is a development source release. No push, tag or GitHub release has been
-performed. Project licensing remains pending the maintainer's final decision;
-MIT is proposed and has not been applied to the unresolved legacy scope.
+performed. Project code, including the retained internal Huntsman research
+pipeline components, is licensed under MIT. External components retain their
+own terms.
 
 ## Purpose and included components
 
@@ -34,7 +35,9 @@ workflow comparison matched all metric strings, counts and orientation exactly.
 These are originating checkpoint results; the full historical gates were not
 rerun for this documentation/destination update. See [recorded numerical evidence](public_relatedness/verification/phase4_runtime_summary.json).
 
-Final lightweight results and source-identity checks are recorded in
+Final lightweight checks: **46 passed, one optional historical test skipped**,
+including all five Nextflow stub tests and nine release-audit guards. Results
+and source-identity checks are recorded in
 [release verification](verification/release_tests.json). The history auditor
 checks every reachable clean release snapshot and rejects unexpected files,
 modified hashes, known secret markers, unrelated ancestry and merges.
@@ -56,10 +59,11 @@ image requires the documented optional resource-monitoring workaround.
 The exact Huntsman group acknowledgement and original contributor credits are
 preserved in the [README](README.md#acknowledgements) and [AUTHORS.md](AUTHORS.md).
 Third-party attribution remains in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-The four retained legacy pipeline files still lack a confirmed ownership/MIT
-distribution grant. [LICENSE](LICENSE) records the pending decision; the MIT
-proposal does not relicense external packages, scientific implementations,
-references or images. No copyright holder or approval reference is inferred.
+The retained Huntsman components were developed within the research group as
+internal project software. [LICENSE](LICENSE) applies MIT to included project
+code. External scientific implementations, packages, references and images are
+outside that grant. Contributor attribution is preserved without inventing
+copyright ownership or creating individual permission/approval records.
 
 ## Release and history preparation
 
@@ -73,5 +77,11 @@ repository. The planned annotated tag is `v0.1.0`, with title
 **v0.1.0 — Development** and a GitHub prerelease designation. Its annotation is
 prepared in [release/v0.1.0-tag.txt](release/v0.1.0-tag.txt); no tag exists from
 this preparation. [PUBLISHING.md](PUBLISHING.md) contains gated commands for the
-maintainer's approval. The original fork's historical exposure is a separate
+maintainer's publication instruction. The original fork's historical exposure is a separate
 owner-led issue and is not remediated by this source release.
+
+The MIT preparation removes the obsolete individual-permission and approval-record
+gates. Source-readiness checks still require the applied project license, the
+correct publication destination, exact allowed contents and independent audited
+history. A successful check does not authorize publication. Scientific source,
+parameters, models, reference hashes and prior numerical results are unchanged.

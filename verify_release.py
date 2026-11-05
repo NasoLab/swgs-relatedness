@@ -100,16 +100,21 @@ def audit_snapshot(files, require_publishable=False):
     if status['version'] != '0.1.0-dev' or status['end_to_end_validation'] != 'pending':
         raise ValueError('Unexpected development release/validation label')
     if require_publishable:
-        if (not status['publication_authorized'] or status['project_license_status'] != 'cleared'
-                or status.get('legacy_authorization_required')
-                or not status.get('ownership_approval_reference')
-                or not status.get('publication_approval_reference')
-                or not status.get('publication_repository')):
-            raise ValueError('Publication blocked: ownership/MIT authorization, approval records and destination decision are required')
-        if 'LICENSE.MIT.proposed' in files or b'MIT License' not in files['LICENSE']:
-            raise ValueError('Publication blocked: the authorized MIT license must be applied, not proposed')
+        if (status.get('project_license') != 'MIT' or status['project_license_status'] != 'applied'
+                or status.get('publication_repository') != 'NasoLab/swgs-relatedness'):
+            raise ValueError('Source not ready: applied project MIT license and selected destination are required')
+        if (status.get('external_components_relicensed') is not False
+                or status.get('third_party_source_bundled') is not False
+                or status.get('reference_payloads_bundled') is not False
+                or status.get('images_bundled') is not False):
+            raise ValueError('Source not ready: external license boundaries and payload exclusions must be preserved')
+        if ('LICENSE.MIT.proposed' in files or not files['LICENSE'].startswith(b'MIT License\n')
+                or b'Permission is hereby granted, free of charge' not in files['LICENSE']
+                or b'[confirmed copyright holder' in files['LICENSE']):
+            raise ValueError('Source not ready: apply the project MIT terms without an ownership placeholder')
     return dict(status='snapshot_audit_passed', files=len(files), bytes=sum(map(len,files.values())),
-        end_to_end_validation=status['end_to_end_validation'], publication_authorized=status['publication_authorized'])
+        end_to_end_validation=status['end_to_end_validation'], publication_authorized=status['publication_authorized'],
+        source_readiness='passed' if require_publishable else 'not requested')
 
 
 def audit(commit=None, require_publishable=False):
@@ -129,7 +134,8 @@ def audit(commit=None, require_publishable=False):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--commit', help='Audit every reachable release commit and snapshot instead of working files')
-    p.add_argument('--require-publishable', action='store_true')
+    p.add_argument('--require-ready', '--require-publishable', dest='require_publishable', action='store_true',
+                   help='Check applied project license, external scope and destination; does not authorize a push')
     a = p.parse_args()
     try:
         print(json.dumps(audit(a.commit, a.require_publishable), indent=2))

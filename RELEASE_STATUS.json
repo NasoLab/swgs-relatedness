@@ -2,7 +2,7 @@
   "version": "0.1.0-dev",
   "label": "v0.1.0 \u2014 Development",
   "publication_authorized": false,
-  "project_license_status": "pending legacy-code ownership and MIT distribution authorization",
+  "project_license_status": "applied",
   "end_to_end_validation": "pending",
   "cross_host_validation": "pending",
   "third_party_source_bundled": false,
@@ -11,21 +11,15 @@
   "images_bundled": false,
   "git_history_policy": "independent audited release root plus clean descendants; no research ancestry",
   "source_checkpoint": "750ac226f6da0a36b72985fd897e35a3dad83096",
-  "intended_project_license": "MIT",
-  "license_proposal": "LICENSE.MIT.proposed",
-  "legacy_authorization_required": [
-    "bin/runQDNAseq.R",
-    "modules/local/trimmomatic/main.nf",
-    "modules/local/alignment/main.nf",
-    "modules/local/mark_duplicates/main.nf"
-  ],
   "publication_destination_decision": "selected by maintainer; existing empty public non-fork repository verified",
-  "ownership_approval_reference": null,
-  "publication_approval_reference": null,
   "publication_repository": "NasoLab/swgs-relatedness",
-  "license_decision": "pending maintainer final decision; no formal copyright-holder designation or separate written MIT authorization established for four legacy files",
+  "license_decision": "MIT applied to project code as instructed by the maintainer",
   "planned_tag": "v0.1.0",
   "planned_tag_annotation": "release/v0.1.0-tag.txt",
   "planned_release_title": "v0.1.0 \u2014 Development",
-  "planned_release_prerelease": true
+  "planned_release_prerelease": true,
+  "project_license": "MIT",
+  "project_license_scope": "project-owned code, including retained internal Huntsman research-pipeline components",
+  "external_components_relicensed": false,
+  "publication_status": "source preparation; stop before push, tag creation or GitHub release"
 }

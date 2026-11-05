@@ -21,16 +21,25 @@ class ReleaseAuditTests(unittest.TestCase):
     def test_working_snapshot_matches_exact_allowlist_and_checksums(self):
         self.assertEqual(m.audit()['status'], 'snapshot_audit_passed')
 
-    def test_publication_requires_actual_approval(self):
+    def test_source_readiness_requires_applied_project_license(self):
         files = m.working_files()
         status = json.loads(files['RELEASE_STATUS.json'])
-        status['publication_authorized'] = False
+        status['project_license_status'] = 'pending'
         files['RELEASE_STATUS.json'] = (json.dumps(status) + '\n').encode()
         files['RELEASE_SHA256SUMS.txt'] = ''.join(
             hashlib.sha256(data).hexdigest() + '  ' + path + '\n'
             for path, data in sorted(files.items()) if path != 'RELEASE_SHA256SUMS.txt').encode()
-        with self.assertRaisesRegex(ValueError, 'Publication blocked'):
+        with self.assertRaisesRegex(ValueError, 'Source not ready'):
             m.audit_snapshot(files, require_publishable=True)
+
+    def test_applied_mit_readiness_without_permission_records(self):
+        result = m.audit(require_publishable=True)
+        self.assertEqual(result['source_readiness'], 'passed')
+        self.assertFalse(result['publication_authorized'])
+        status = json.loads(m.working_files()['RELEASE_STATUS.json'])
+        self.assertNotIn('ownership_approval_reference', status)
+        self.assertNotIn('publication_approval_reference', status)
+        self.assertNotIn('legacy_authorization_required', status)
 
     def test_unapproved_root_is_rejected(self):
         with patch.object(m, 'git', return_value=(('1' * 40) + '\n').encode()):

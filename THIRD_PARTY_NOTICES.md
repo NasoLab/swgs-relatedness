@@ -21,7 +21,9 @@ Primary license evidence: [breakclone MIT](https://github.com/argymeg/breakclone
 The public source-restoration recipes do not authorize distribution of their
 operator-supplied inputs. This notice does not relicense external components.
 
-The intended project MIT license covers only project-owned contributions that
-are authorized for distribution. It does not alter any external component's
-terms. Legacy Huntsman pipeline attribution is preserved in AUTHORS.md and the
-root README; its four retained files still require the authorization in LICENSE.
+The project MIT license applies to project-owned code, including retained
+internal Huntsman research-pipeline components. It does not alter any external
+component's terms. Huntsman group acknowledgement and contributor credits are
+preserved in AUTHORS.md and the root README; these credits do not assign
+copyright ownership. No external implementation, package, reference or image is
+relicensed by LICENSE.

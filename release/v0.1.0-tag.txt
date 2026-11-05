@@ -8,6 +8,7 @@ Historical cached gates: PCC 66/66, LLR 62/62, breakpoint 38/38.
 End-to-end and cross-host validation remain pending.
 
 Huntsman group acknowledgement and contributor credits are preserved.
-Project licensing and third-party scope are recorded in LICENSE,
+Project code is MIT-licensed; external components retain their own terms.
+The project license and third-party scope are recorded in LICENSE,
 AUTHORS.md and THIRD_PARTY_NOTICES.md.
 No sequencing, clinical, reference or container payloads accompany this source.

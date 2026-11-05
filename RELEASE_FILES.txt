@@ -1,7 +1,6 @@
 .gitignore
 AUTHORS.md
 LICENSE
-LICENSE.MIT.proposed
 PUBLISHING.md
 README.md
 RELEASE_FILES.txt

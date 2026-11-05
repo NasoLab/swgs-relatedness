@@ -1,4 +1,4 @@
-# Attribution and ownership review
+# Contributor attribution
 
 The original project README credits Maxwell Douglas, Branden Lynch, Ding Ma
 and Sheila Nicholson. Git records identify Richard Corbett's workflow,
@@ -12,6 +12,8 @@ or package redistribution rights are inferred from scientific citation alone.
 
 The pre-refactor Huntsman workflow also records Branden Lynch's trimming,
 alignment and duplicate-marking contributions. Current-file line attribution
-does not fully describe that predecessor history. The four retained legacy
-files are listed in LICENSE and public_relatedness/LICENSING.md. Rights-holder
-authorization, rather than an assumed grant from these credits, is required.
+does not fully describe that predecessor history. The retained internal
+Huntsman components are included in the project MIT license; their file-level
+provenance is recorded in public_relatedness/LICENSING.md. Contributor credits
+are preserved without designating copyright ownership or creating approval
+records.
